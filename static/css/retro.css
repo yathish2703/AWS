@@ -1,0 +1,435 @@
+/* ====================================
+   RETRO 90s/EARLY 2000s STYLE CSS
+   Classic Web Design Aesthetic
+   ==================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #C0C0C0;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGklEQVQYlWNgYGD4z4AH/OMCDQ1M/w8gExggAQCUIAM/V6W0CAAAAABJRU5ErkJggg==');
+    color: #000000;
+    line-height: 1.4;
+}
+
+/* Classic table layout container */
+.container {
+    width: 95%;
+    max-width: 1000px;
+    margin: 10px auto;
+    background: #FFFFFF;
+    border: 3px ridge #999999;
+    box-shadow: 5px 5px 0px #666666;
+}
+
+/* Header with gradient background */
+.header {
+    background: linear-gradient(to bottom, #000080, #0000CD);
+    color: #FFFF00;
+    padding: 15px;
+    border-bottom: 3px ridge #FFD700;
+    text-align: center;
+}
+
+.header h1 {
+    font-family: 'Arial Black', Arial, sans-serif;
+    font-size: 28px;
+    text-shadow: 2px 2px 4px #000000;
+    margin-bottom: 5px;
+    letter-spacing: 2px;
+}
+
+.header .tagline {
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 14px;
+    color: #00FF00;
+    font-style: italic;
+}
+
+/* Blinking text animation */
+@keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+}
+
+.blink {
+    animation: blink 2s infinite;
+}
+
+/* Navigation bar */
+.navbar {
+    background: #008080;
+    border-bottom: 3px groove #FFFFFF;
+    padding: 0;
+}
+
+.navbar table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.navbar td {
+    border-right: 2px solid #FFFFFF;
+    text-align: center;
+    padding: 0;
+}
+
+.navbar td:last-child {
+    border-right: none;
+}
+
+.navbar a {
+    display: block;
+    color: #FFFF00;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    padding: 12px 20px;
+    background: #008080;
+    transition: background 0.2s;
+}
+
+.navbar a:hover {
+    background: #00CED1;
+    color: #000080;
+    text-decoration: underline;
+}
+
+/* User stats bar */
+.user-stats {
+    background: #FFFFCC;
+    border: 2px solid #FFD700;
+    padding: 8px;
+    margin: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    background: #FFFFFF;
+    border: 2px inset #999999;
+    padding: 5px 10px;
+    margin: 2px;
+    font-weight: bold;
+}
+
+/* Main content area */
+.main-content {
+    padding: 20px;
+    background: #FFFFFF;
+}
+
+/* Classic card/box design */
+.card {
+    background: #E0E0E0;
+    border: 3px outset #CCCCCC;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.card h2 {
+    font-family: 'Arial Black', Arial, sans-serif;
+    color: #000080;
+    font-size: 20px;
+    border-bottom: 2px solid #FF0000;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    font-family: Arial, sans-serif;
+    color: #008000;
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+/* Lesson grid using table */
+.lesson-grid {
+    width: 100%;
+}
+
+.lesson-card {
+    background: #FFFFFF;
+    border: 3px ridge #999999;
+    padding: 12px;
+    margin: 10px;
+    text-align: center;
+    vertical-align: top;
+}
+
+.lesson-card:hover {
+    background: #FFFACD;
+    border-color: #FFD700;
+}
+
+.lesson-icon {
+    font-size: 48px;
+    margin: 10px 0;
+}
+
+.lesson-card h4 {
+    font-family: 'Arial Black', Arial, sans-serif;
+    color: #8B0000;
+    font-size: 14px;
+    margin: 8px 0;
+}
+
+.lesson-card p {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #000000;
+    margin: 8px 0;
+}
+
+/* Classic button styles */
+.btn {
+    background: linear-gradient(to bottom, #CCCCCC, #999999);
+    border: 3px outset #CCCCCC;
+    color: #000000;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    margin: 5px;
+}
+
+.btn:hover {
+    background: linear-gradient(to bottom, #FFFF99, #FFFF00);
+    border-color: #FFD700;
+}
+
+.btn:active {
+    border-style: inset;
+}
+
+.btn-primary {
+    background: linear-gradient(to bottom, #0099FF, #0066CC);
+    color: #FFFFFF;
+    border-color: #0066CC;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(to bottom, #00CCFF, #0099FF);
+}
+
+/* Progress bar - old school */
+.progress-bar {
+    background: #CCCCCC;
+    border: 2px inset #999999;
+    padding: 2px;
+    margin: 10px 0;
+}
+
+.progress-fill {
+    background: linear-gradient(to right, #00FF00, #008000);
+    height: 20px;
+    border: 1px solid #006400;
+    transition: width 1s ease;
+}
+
+/* Stat boxes */
+.stat-box {
+    background: #FFFFCC;
+    border: 3px groove #FFD700;
+    padding: 15px;
+    text-align: center;
+    margin: 10px;
+}
+
+.stat-box .big-number {
+    font-family: 'Impact', Arial, sans-serif;
+    font-size: 32px;
+    color: #FF0000;
+    text-shadow: 2px 2px 0px #000000;
+}
+
+.stat-box .label {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #000080;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* Footer */
+.footer {
+    background: #000080;
+    color: #FFFFFF;
+    padding: 15px;
+    text-align: center;
+    border-top: 3px ridge #FFD700;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+}
+
+.footer a {
+    color: #FFFF00;
+    text-decoration: underline;
+}
+
+/* Scrolling text marquee style */
+.marquee {
+    background: #000000;
+    color: #00FF00;
+    padding: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    border: 2px solid #00FF00;
+    margin: 10px 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.marquee-content {
+    display: inline-block;
+    animation: scroll-left 20s linear infinite;
+}
+
+@keyframes scroll-left {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+/* Classic horizontal rule */
+hr {
+    border: none;
+    border-top: 2px groove #999999;
+    margin: 15px 0;
+}
+
+/* Links */
+a {
+    color: #0000FF;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #800080;
+}
+
+a:hover {
+    color: #FF0000;
+    background: #FFFF00;
+}
+
+/* Counter/badge style */
+.badge {
+    background: #FF0000;
+    color: #FFFFFF;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-size: 11px;
+    padding: 3px 8px;
+    border: 2px outset #CC0000;
+    display: inline-block;
+    margin: 0 3px;
+}
+
+/* Under construction style banner */
+.construction {
+    background: #FFFF00;
+    border: 3px dashed #FF0000;
+    padding: 10px;
+    text-align: center;
+    font-family: 'Arial Black', Arial, sans-serif;
+    color: #000000;
+    margin: 15px 0;
+}
+
+/* New/Updated badges */
+.new-badge {
+    background: #FF0000;
+    color: #FFFF00;
+    font-family: 'Arial Black', Arial, sans-serif;
+    font-size: 10px;
+    padding: 2px 6px;
+    border: 1px solid #000000;
+    display: inline-block;
+    margin-left: 5px;
+    animation: blink 1.5s infinite;
+}
+
+/* Guestbook style section */
+.guestbook {
+    background: #E6E6FA;
+    border: 3px double #000080;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+/* Hit counter style */
+.counter {
+    background: #000000;
+    color: #00FF00;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    padding: 5px 10px;
+    border: 2px solid #00FF00;
+    display: inline-block;
+    letter-spacing: 3px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 20px;
+    }
+
+    .navbar a {
+        font-size: 12px;
+        padding: 10px 8px;
+    }
+
+    .user-stats {
+        font-size: 10px;
+    }
+
+    .lesson-card {
+        margin: 5px;
+        padding: 8px;
+    }
+}
+
+/* Animated GIF style loading spinner */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading {
+    border: 4px solid #CCCCCC;
+    border-top: 4px solid #0000FF;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+/* Webring style footer links */
+.webring {
+    background: #FFFFCC;
+    border: 2px solid #FFD700;
+    padding: 10px;
+    text-align: center;
+    margin: 15px 0;
+    font-size: 11px;
+}
+
+.webring a {
+    margin: 0 10px;
+    font-weight: bold;
+}

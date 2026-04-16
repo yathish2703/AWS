@@ -1,0 +1,162 @@
+{
+  "serviceId": "deployment-models",
+  "title": "Cloud Deployment Models",
+  "icon": "🌐",
+  "difficulty": "Beginner",
+  "estimatedTime": 20,
+  "prerequisites": ["intro-to-cloud"],
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Types of Cloud Deployments",
+      "type": "text",
+      "content": "Organizations can deploy cloud computing in different ways based on their needs. The four main deployment models are: Public Cloud, Private Cloud, Hybrid Cloud, and Multi-Cloud. Each model offers different benefits in terms of cost, control, and flexibility.",
+      "duration": 2
+    },
+    {
+      "id": "public-cloud",
+      "title": "Public Cloud",
+      "type": "detail",
+      "content": "**What is Public Cloud?**\nCloud services offered by third-party providers over the public internet. Resources are shared among multiple customers ('multi-tenant') but data is kept separate and secure.\n\n**Characteristics:**\n- Owned and operated by cloud provider (AWS, Azure, Google Cloud)\n- Shared infrastructure across many customers\n- Pay-as-you-go pricing\n- No upfront costs\n- Fully managed by provider",
+      "examples": [
+        "Amazon Web Services (AWS)",
+        "Microsoft Azure",
+        "Google Cloud Platform (GCP)",
+        "IBM Cloud",
+        "Oracle Cloud"
+      ],
+      "bestFor": [
+        "Startups and small businesses",
+        "Web applications and websites",
+        "Development and testing",
+        "Temporary workloads",
+        "Applications with variable demand"
+      ],
+      "pros": [
+        "Low cost - no hardware investment",
+        "Infinite scalability",
+        "No maintenance required",
+        "Quick deployment",
+        "Global reach"
+      ],
+      "cons": [
+        "Less control over infrastructure",
+        "Shared resources",
+        "Internet dependency",
+        "May not meet strict compliance requirements"
+      ],
+      "duration": 6
+    },
+    {
+      "id": "private-cloud",
+      "title": "Private Cloud",
+      "type": "detail",
+      "content": "**What is Private Cloud?**\nCloud infrastructure dedicated exclusively to one organization. Can be hosted on-premises (your data center) or by a third-party provider, but resources are not shared with other organizations.\n\n**Characteristics:**\n- Dedicated infrastructure for single organization\n- Can be on-premises or hosted\n- More control and customization\n- Higher costs than public cloud\n- Organization responsible for management",
+      "examples": [
+        "VMware Private Cloud",
+        "OpenStack",
+        "AWS Outposts (AWS in your data center)",
+        "Azure Stack",
+        "On-premises data center with virtualization"
+      ],
+      "bestFor": [
+        "Regulated industries (healthcare, finance)",
+        "Organizations handling sensitive data",
+        "Companies with strict compliance requirements",
+        "Large enterprises with predictable workloads",
+        "Government agencies"
+      ],
+      "pros": [
+        "Maximum control and customization",
+        "Enhanced security and privacy",
+        "Meet compliance requirements",
+        "Predictable performance",
+        "No resource sharing"
+      ],
+      "cons": [
+        "High upfront costs",
+        "Requires IT staff",
+        "Limited scalability",
+        "Ongoing maintenance needed",
+        "Longer deployment time"
+      ],
+      "duration": 6
+    },
+    {
+      "id": "hybrid-cloud",
+      "title": "Hybrid Cloud",
+      "type": "detail",
+      "content": "**What is Hybrid Cloud?**\nCombination of public and private clouds that work together. Allows data and applications to move between the two environments. Offers 'best of both worlds' flexibility.\n\n**Characteristics:**\n- Mix of on-premises and public cloud\n- Data and applications can move between environments\n- Orchestration between platforms\n- Balanced control and scalability",
+      "examples": [
+        "AWS + On-premises data center",
+        "Azure Hybrid Cloud",
+        "Google Anthos",
+        "Critical data on-premises, web apps on public cloud"
+      ],
+      "bestFor": [
+        "Gradual cloud migration",
+        "Organizations with compliance requirements",
+        "Applications with variable workloads",
+        "Disaster recovery scenarios",
+        "Keeping sensitive data on-premises while using cloud for processing"
+      ],
+      "pros": [
+        "Flexibility - choose where to run workloads",
+        "Gradual cloud adoption",
+        "Cost optimization",
+        "Meet compliance while leveraging cloud",
+        "Business continuity"
+      ],
+      "cons": [
+        "Complex to manage",
+        "Integration challenges",
+        "Requires expertise in both environments",
+        "Security concerns across boundaries",
+        "Higher management costs"
+      ],
+      "duration": 5
+    },
+    {
+      "id": "multi-cloud",
+      "title": "Multi-Cloud",
+      "type": "detail",
+      "content": "**What is Multi-Cloud?**\nUsing multiple public cloud providers (AWS + Azure + Google Cloud) for different services. Different from hybrid cloud - all providers are public clouds, no private cloud component.\n\n**Characteristics:**\n- Multiple cloud providers simultaneously\n- Different services from different providers\n- Avoid vendor lock-in\n- Use best service from each provider",
+      "examples": [
+        "AWS for compute + Google Cloud for AI/ML",
+        "Azure for Microsoft workloads + AWS for storage",
+        "Distribute workloads across AWS, Azure, and GCP"
+      ],
+      "bestFor": [
+        "Large enterprises",
+        "Avoiding vendor lock-in",
+        "Using best-of-breed services",
+        "Geographic distribution",
+        "Redundancy and high availability"
+      ],
+      "pros": [
+        "No vendor lock-in",
+        "Use best service from each provider",
+        "Better negotiating position",
+        "Redundancy across providers",
+        "Regional compliance"
+      ],
+      "cons": [
+        "Very complex to manage",
+        "Higher costs",
+        "Requires expertise in multiple platforms",
+        "Difficult to monitor and secure",
+        "Data transfer costs between clouds"
+      ],
+      "duration": 4
+    }
+  ],
+  "quiz": "deployment-models-quiz",
+  "challenges": [],
+  "advantages": [
+    "Public Cloud - Best for cost and scalability",
+    "Private Cloud - Best for control and compliance",
+    "Hybrid Cloud - Best for gradual migration",
+    "Multi-Cloud - Best for avoiding vendor lock-in",
+    "Choose based on your security, cost, and control needs"
+  ]
+}

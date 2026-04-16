@@ -1,0 +1,389 @@
+{% extends "base.html" %}
+
+{% block title %}{{ lesson_title|default('Lesson') }} - AWS Learning Platform{% endblock %}
+
+{% block content %}
+<div class="lesson-viewer">
+    <div class="lesson-header card">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <div>
+                <h1 id="lesson-title" style="margin-bottom: 0.5rem;">Loading...</h1>
+                <div class="lesson-meta" style="display: flex; gap: 1.5rem; color: #666; font-size: 0.9rem;">
+                    <span id="lesson-difficulty">📌 Loading...</span>
+                    <span id="lesson-time">⏱️ Loading...</span>
+                </div>
+            </div>
+            <div>
+                <a href="/" class="btn" style="background: #666;">← Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="lesson-content" style="display: grid; grid-template-columns: 250px 1fr; gap: 2rem; margin-top: 2rem;">
+        <!-- Table of Contents -->
+        <div class="toc-sidebar card" style="height: fit-content; position: sticky; top: 20px;">
+            <h3 style="margin-bottom: 1rem;">Contents</h3>
+            <nav id="toc-nav">
+                <p style="color: #666;">Loading...</p>
+            </nav>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="lesson-main">
+            <div id="lesson-sections" class="card">
+                <p style="text-align: center; padding: 3rem; color: #666;">
+                    Loading lesson content...
+                </p>
+            </div>
+
+            <!-- Advantages Section -->
+            <div id="advantages-section" class="card" style="margin-top: 2rem; display: none;">
+                <h2>✨ Key Advantages</h2>
+                <ul id="advantages-list" style="list-style: none; padding: 0;">
+                </ul>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="lesson-nav" style="display: flex; justify-content: space-between; margin-top: 2rem;">
+                <button id="mark-complete" class="btn" style="background: #28a745;">
+                    ✓ Mark as Complete
+                </button>
+                <a id="take-quiz" href="#" class="btn" style="display: none;">
+                    Take Quiz →
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.toc-nav-item {
+    display: block;
+    padding: 0.75rem;
+    color: #333;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.3s;
+    margin-bottom: 0.5rem;
+    border-radius: 0 5px 5px 0;
+}
+
+.toc-nav-item:hover {
+    background: #f8f9fa;
+    border-left-color: #FF9900;
+}
+
+.toc-nav-item.active {
+    background: #fff3e0;
+    border-left-color: #FF9900;
+    font-weight: bold;
+}
+
+.section-content {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.section-content:last-child {
+    border-bottom: none;
+}
+
+.section-content h2 {
+    color: #FF9900;
+    margin-bottom: 1rem;
+}
+
+.section-content h3 {
+    color: #232F3E;
+    margin: 1.5rem 0 1rem 0;
+}
+
+.section-content ul, .section-content ol {
+    margin: 1rem 0 1rem 2rem;
+}
+
+.section-content li {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+}
+
+.comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.comparison-box {
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #FF9900;
+}
+
+.comparison-box h4 {
+    margin-bottom: 1rem;
+    color: #232F3E;
+}
+
+.comparison-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.comparison-box li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.comparison-box li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #28a745;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .lesson-content {
+        grid-template-columns: 1fr !important;
+    }
+
+    .toc-sidebar {
+        position: static !important;
+    }
+}
+</style>
+
+<script>
+// Fetch and display lesson content
+async function loadLesson() {
+    const service = '{{ service }}';
+    try {
+        const response = await fetch(`/api/lesson/${service}`);
+        const lesson = await response.json();
+
+        if (lesson.error) {
+            document.getElementById('lesson-sections').innerHTML = `
+                <div style="text-align: center; padding: 3rem;">
+                    <h2 style="color: #dc3545;">Lesson Not Found</h2>
+                    <p style="color: #666; margin: 1rem 0;">This lesson is not yet available.</p>
+                    <a href="/" class="btn">Return to Dashboard</a>
+                </div>
+            `;
+            return;
+        }
+
+        // Update header
+        document.getElementById('lesson-title').textContent = lesson.title;
+        document.getElementById('lesson-difficulty').textContent = `📌 ${lesson.difficulty}`;
+        document.getElementById('lesson-time').textContent = `⏱️ ${lesson.estimatedTime} min`;
+
+        // Build table of contents
+        const tocNav = document.getElementById('toc-nav');
+        tocNav.innerHTML = lesson.sections.map((section, index) => `
+            <a href="#section-${section.id}" class="toc-nav-item" data-section="${section.id}">
+                ${index + 1}. ${section.title}
+            </a>
+        `).join('');
+
+        // Build lesson content
+        const sectionsHtml = lesson.sections.map(section => {
+            let contentHtml = '';
+
+            // Helper function to convert markdown-style bold to HTML
+            const formatText = (text) => {
+                if (!text) return '';
+                return text
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // **bold**
+                    .replace(/\n\n/g, '</p><p>')  // Double newline = new paragraph
+                    .replace(/\n/g, '<br>');  // Single newline = line break
+            };
+
+            if (section.type === 'text') {
+                contentHtml = `<p>${formatText(section.content)}</p>`;
+            } else if (section.type === 'list') {
+                contentHtml = `
+                    ${section.content ? `<p>${formatText(section.content)}</p>` : ''}
+                    <ul>
+                        ${section.items.map(item => `<li>${formatText(item)}</li>`).join('')}
+                    </ul>
+                `;
+            } else if (section.type === 'comparison' && section.comparison) {
+                contentHtml = `
+                    ${section.content ? `<p>${formatText(section.content)}</p>` : ''}
+                    <div class="comparison-grid">
+                        <div class="comparison-box">
+                            <h4>${section.comparison.traditional.title}</h4>
+                            <ul>
+                                ${section.comparison.traditional.items.map(item => `<li>${formatText(item)}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="comparison-box">
+                            <h4>${section.comparison.cloud.title}</h4>
+                            <ul>
+                                ${section.comparison.cloud.items.map(item => `<li>${formatText(item)}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            } else if (section.type === 'detail') {
+                contentHtml = `<p>${formatText(section.content)}</p>`;
+
+                if (section.examples) {
+                    contentHtml += `
+                        <h4>Examples:</h4>
+                        <ul>
+                            ${section.examples.map(ex => `<li>${formatText(ex)}</li>`).join('')}
+                        </ul>
+                    `;
+                }
+                if (section.useCases) {
+                    contentHtml += `
+                        <h4>Use Cases:</h4>
+                        <ul>
+                            ${section.useCases.map(uc => `<li>${formatText(uc)}</li>`).join('')}
+                        </ul>
+                    `;
+                }
+                if (section.keyPoints) {
+                    contentHtml += `
+                        <h4>Key Points:</h4>
+                        <ul>
+                            ${section.keyPoints.map(kp => `<li>${formatText(kp)}</li>`).join('')}
+                        </ul>
+                    `;
+                }
+                if (section.bestFor) {
+                    contentHtml += `
+                        <h4>Best For:</h4>
+                        <ul>
+                            ${section.bestFor.map(bf => `<li>${formatText(bf)}</li>`).join('')}
+                        </ul>
+                    `;
+                }
+                if (section.pros) {
+                    contentHtml += `
+                        <h4>Pros:</h4>
+                        <ul style="color: #28a745;">
+                            ${section.pros.map(pro => `<li>${formatText(pro)}</li>`).join('')}
+                        </ul>
+                    `;
+                }
+                if (section.cons) {
+                    contentHtml += `
+                        <h4>Cons:</h4>
+                        <ul style="color: #dc3545;">
+                            ${section.cons.map(con => `<li>${formatText(con)}</li>`).join('')}
+                        </ul>
+                    `;
+                }
+                if (section.considerations) {
+                    contentHtml += `
+                        <h4>Considerations:</h4>
+                        <ul>
+                            ${section.considerations.map(con => `<li>${formatText(con)}</li>`).join('')}
+                        </ul>
+                    `;
+                }
+                if (section.categories) {
+                    contentHtml += `
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                            ${section.categories.map(cat => `
+                                <div style="padding: 1.5rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #FF9900;">
+                                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">${cat.icon}</div>
+                                    <h4 style="margin-bottom: 0.75rem;">${cat.name}</h4>
+                                    <ul style="font-size: 0.9rem; color: #666;">
+                                        ${cat.services.map(s => `<li>${s}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+            } else {
+                contentHtml = `<p>${formatText(section.content || '')}</p>`;
+            }
+
+            return `
+                <div id="section-${section.id}" class="section-content">
+                    <h2>${section.title}</h2>
+                    ${contentHtml}
+                </div>
+            `;
+        }).join('');
+
+        document.getElementById('lesson-sections').innerHTML = sectionsHtml;
+
+        // Show advantages
+        if (lesson.advantages && lesson.advantages.length > 0) {
+            document.getElementById('advantages-section').style.display = 'block';
+            document.getElementById('advantages-list').innerHTML = lesson.advantages.map(adv => `
+                <li style="padding: 0.75rem; margin: 0.5rem 0; background: #f8f9fa; border-radius: 5px; padding-left: 2.5rem; position: relative;">
+                    <span style="position: absolute; left: 0.75rem; color: #28a745; font-weight: bold;">✓</span>
+                    ${adv}
+                </li>
+            `).join('');
+        }
+
+        // Show quiz button if available
+        if (lesson.quiz) {
+            const quizBtn = document.getElementById('take-quiz');
+            quizBtn.style.display = 'inline-block';
+            quizBtn.href = `/quiz/${service}`;
+        }
+
+    } catch (error) {
+        console.error('Error loading lesson:', error);
+        document.getElementById('lesson-sections').innerHTML = `
+            <div style="text-align: center; padding: 3rem;">
+                <h2 style="color: #dc3545;">Error Loading Lesson</h2>
+                <p style="color: #666;">Please try again later.</p>
+            </div>
+        `;
+    }
+}
+
+// Mark lesson as complete
+document.getElementById('mark-complete').addEventListener('click', async function() {
+    const service = '{{ service }}';
+    const button = this;
+    button.disabled = true;
+    button.textContent = 'Marking complete...';
+
+    try {
+        const response = await fetch('/api/user/progress', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                lessonId: service,
+                completed: true,
+                score: 100
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            button.textContent = '✓ Completed!';
+            button.style.background = '#28a745';
+            alert(`Great job! You earned 100 points! 🎉\nYou are now Level ${result.level}.`);
+
+            if (result.newBadges && result.newBadges.length > 0) {
+                alert(`🏆 New Badge Unlocked!\n${result.newBadges.map(b => b.badgeId).join(', ')}`);
+            }
+        }
+    } catch (error) {
+        console.error('Error marking complete:', error);
+        button.disabled = false;
+        button.textContent = '✓ Mark as Complete';
+    }
+});
+
+// Load lesson on page load
+loadLesson();
+</script>
+{% endblock %}

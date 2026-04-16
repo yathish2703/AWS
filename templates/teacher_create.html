@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+
+{% block title %}Create Lesson - Teacher Dashboard{% endblock %}
+
+{% block content %}
+<div class="teacher-create">
+    <div class="create-header card">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <div>
+                <h1>✍️ Create New Lesson</h1>
+                <p style="color: #666;">Build engaging, gamified content for students</p>
+            </div>
+            <a href="/teacher" class="btn" style="background: #666;">← Back to Dashboard</a>
+        </div>
+    </div>
+
+    <div class="create-form card">
+        <form id="lessonForm">
+            <!-- Basic Info -->
+            <div class="form-section">
+                <h2>📋 Basic Information</h2>
+
+                <div class="form-group">
+                    <label>Lesson ID <span style="color: red;">*</span></label>
+                    <input type="text" id="serviceId" name="serviceId" placeholder="e.g., ec2, lambda, s3" required
+                           style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+                    <small style="color: #666;">Use lowercase, no spaces (use hyphens for multiple words)</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Title <span style="color: red;">*</span></label>
+                    <input type="text" id="title" name="title" placeholder="e.g., EC2 - Elastic Compute Cloud" required
+                           style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div class="form-group">
+                        <label>Icon (Emoji)</label>
+                        <input type="text" id="icon" name="icon" placeholder="💻" maxlength="2"
+                               style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1.5rem; text-align: center;">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Difficulty <span style="color: red;">*</span></label>
+                        <select id="difficulty" name="difficulty" required
+                                style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Estimated Time (minutes) <span style="color: red;">*</span></label>
+                        <input type="number" id="estimatedTime" name="estimatedTime" min="5" max="180" value="30" required
+                               style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="isCloudBasic" name="isCloudBasic" style="margin-right: 0.5rem;">
+                        This is a Cloud Basics lesson (Module 0)
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>Prerequisites (comma-separated)</label>
+                    <input type="text" id="prerequisites" name="prerequisites" placeholder="e.g., intro-to-cloud, iam"
+                           style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+                    <small style="color: #666;">Leave empty if no prerequisites</small>
+                </div>
+            </div>
+
+            <!-- Sections -->
+            <div class="form-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h2>📝 Lesson Sections</h2>
+                    <button type="button" onclick="addSection()" class="btn" style="padding: 0.5rem 1rem;">+ Add Section</button>
+                </div>
+
+                <div id="sectionsContainer"></div>
+            </div>
+
+            <!-- Advantages -->
+            <div class="form-section">
+                <h2>✨ Key Advantages</h2>
+                <div id="advantagesContainer">
+                    <div class="advantage-item" style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <input type="text" name="advantage" placeholder="e.g., Scalability - Scale on demand"
+                               style="flex: 1; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+                        <button type="button" onclick="this.parentElement.remove()" class="btn" style="background: #dc3545; padding: 0.75rem 1rem;">Remove</button>
+                    </div>
+                </div>
+                <button type="button" onclick="addAdvantage()" class="btn" style="margin-top: 0.5rem; padding: 0.5rem 1rem;">+ Add Advantage</button>
+            </div>
+
+            <!-- Submit -->
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="submit" class="btn" style="flex: 1;">💾 Create Lesson</button>
+                <button type="button" onclick="previewLesson()" class="btn" style="flex: 1; background: #17a2b8;">👁️ Preview</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+.form-section {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.form-section:last-child {
+    border-bottom: none;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #232F3E;
+}
+
+.section-card {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border-left: 4px solid #FF9900;
+}
+
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 100px;
+}
+</style>
+
+<script>
+let sectionCount = 0;
+
+function addSection() {
+    sectionCount++;
+    const container = document.getElementById('sectionsContainer');
+    const sectionHtml = `
+        <div class="section-card" data-section="${sectionCount}">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3>Section ${sectionCount}</h3>
+                <button type="button" onclick="this.closest('.section-card').remove()" class="btn" style="background: #dc3545; padding: 0.5rem 1rem;">Remove Section</button>
+            </div>
+
+            <div class="form-group">
+                <label>Section ID</label>
+                <input type="text" name="section_${sectionCount}_id" placeholder="e.g., intro, concepts" required
+                       style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+
+            <div class="form-group">
+                <label>Section Title</label>
+                <input type="text" name="section_${sectionCount}_title" placeholder="e.g., What is EC2?" required
+                       style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+
+            <div class="form-group">
+                <label>Section Type</label>
+                <select name="section_${sectionCount}_type" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+                    <option value="text">Text</option>
+                    <option value="list">List</option>
+                    <option value="detail">Detail</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Content (Supports **bold** formatting)</label>
+                <textarea name="section_${sectionCount}_content" rows="6" placeholder="Write your content here... Use **text** for bold."></textarea>
+                <small style="color: #666;">
+                    Formatting tips: Use **text** for bold, separate paragraphs with blank lines
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label>Duration (minutes)</label>
+                <input type="number" name="section_${sectionCount}_duration" value="5" min="1"
+                       style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px;">
+            </div>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', sectionHtml);
+}
+
+function addAdvantage() {
+    const container = document.getElementById('advantagesContainer');
+    const html = `
+        <div class="advantage-item" style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+            <input type="text" name="advantage" placeholder="e.g., Cost-effective - Pay only for what you use"
+                   style="flex: 1; padding: 0.75rem; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem;">
+            <button type="button" onclick="this.parentElement.remove()" class="btn" style="background: #dc3545; padding: 0.75rem 1rem;">Remove</button>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', html);
+}
+
+// Add first section by default
+addSection();
+
+document.getElementById('lessonForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    // Build lesson JSON
+    const lesson = {
+        serviceId: formData.get('serviceId'),
+        title: formData.get('title'),
+        icon: formData.get('icon') || '📦',
+        difficulty: formData.get('difficulty'),
+        estimatedTime: parseInt(formData.get('estimatedTime')),
+        isCloudBasic: document.getElementById('isCloudBasic').checked,
+        prerequisites: formData.get('prerequisites')
+            ? formData.get('prerequisites').split(',').map(s => s.trim())
+            : [],
+        sections: [],
+        advantages: [],
+        quiz: formData.get('serviceId') + '-quiz',
+        challenges: []
+    };
+
+    // Collect sections
+    const sectionCards = document.querySelectorAll('.section-card');
+    sectionCards.forEach(card => {
+        const num = card.dataset.section;
+        const section = {
+            id: formData.get(`section_${num}_id`),
+            title: formData.get(`section_${num}_title`),
+            type: formData.get(`section_${num}_type`),
+            content: formData.get(`section_${num}_content`),
+            duration: parseInt(formData.get(`section_${num}_duration`))
+        };
+        lesson.sections.push(section);
+    });
+
+    // Collect advantages
+    const advantages = formData.getAll('advantage').filter(a => a.trim());
+    lesson.advantages = advantages;
+
+    // Submit
+    try {
+        const response = await fetch('/teacher/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(lesson)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert('Lesson created successfully! 🎉');
+            window.location.href = '/teacher';
+        } else {
+            alert('Error creating lesson: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error creating lesson. Please try again.');
+    }
+});
+
+function previewLesson() {
+    alert('Preview feature coming soon! For now, create the lesson and view it from the student dashboard.');
+}
+</script>
+{% endblock %}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AWS Learning Platform{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">
+                <span class="logo-icon">☁️</span>
+                <span>AWS Learning Platform</span>
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/teacher">👨‍🏫 Teacher</a></li>
+                    <li><a href="/profile">Profile</a></li>
+                    <li><a href="/leaderboard">Leaderboard</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="user-stats-bar">
+        <div class="user-stats">
+            <div class="stat-item">
+                <span class="stat-icon">📊</span>
+                <div>
+                    <div class="stat-value">{{ user.level or 1 }}</div>
+                    <div class="stat-label">Level</div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-icon">⭐</span>
+                <div>
+                    <div class="stat-value">{{ user.totalPoints or 0 }}</div>
+                    <div class="stat-label">Points</div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-icon">🔥</span>
+                <div>
+                    <div class="stat-value">{{ user.streak or 0 }}</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-icon">🏆</span>
+                <div>
+                    <div class="stat-value">{{ user.badges|length or 0 }}</div>
+                    <div class="stat-label">Badges</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 AWS Learning Platform | Learn Cloud Computing with Gamification</p>
+        <p>Built with Python Flask | Not affiliated with Amazon Web Services</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/gamification.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,458 @@
+{% extends "base.html" %}
+
+{% block title %}{{ service|title }} - AWS Learning Platform{% endblock %}
+
+{% block content %}
+<!-- Animated Background -->
+<div class="animated-background"></div>
+
+<div class="lesson-viewer">
+    <!-- Lesson Header with Animation -->
+    <div class="lesson-header card" style="animation: slideInFromTop 0.8s ease-out;">
+        <div style="display: flex; align-items: center; gap: 2rem;">
+            <div class="lesson-icon-large" style="font-size: 5rem; animation: float 3s ease-in-out infinite;">
+                ☁️
+            </div>
+            <div style="flex: 1;">
+                <h1 id="lesson-title" style="font-size: 2.5rem; margin-bottom: 0.5rem; color: #232F3E;">
+                    Loading...
+                </h1>
+                <div id="lesson-meta" style="display: flex; gap: 2rem; color: #666; font-size: 1rem;">
+                    <span id="difficulty">⏳ Loading...</span>
+                    <span id="duration">📚 Loading...</span>
+                </div>
+                <div id="lesson-progress" style="margin-top: 1rem;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <p style="margin-top: 0.5rem; color: #666; font-size: 0.9rem;">
+                        <span id="progress-text">0% Complete</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 250px 1fr; gap: 2rem; margin-top: 2rem;">
+        <!-- Table of Contents (animated sidebar) -->
+        <div class="toc-sidebar card" style="animation: slideInFromLeft 0.8s ease-out 0.2s both; height: fit-content; position: sticky; top: 20px;">
+            <h3 style="color: #FF9900; margin-bottom: 1rem;">📚 Contents</h3>
+            <ul id="toc-list" style="list-style: none; padding: 0;">
+                <!-- Dynamically populated -->
+            </ul>
+        </div>
+
+        <!-- Lesson Content -->
+        <div class="lesson-content-area" style="animation: slideInFromRight 0.8s ease-out 0.3s both;">
+            <!-- AWS Service Diagram -->
+            <div class="card" style="margin-bottom: 2rem;">
+                <h3 style="color: #FF9900; margin-bottom: 1rem;">🏗️ Architecture Overview</h3>
+                <div id="aws-diagram-container"></div>
+            </div>
+
+            <!-- Lesson Sections -->
+            <div id="lesson-sections">
+                <!-- Dynamically populated -->
+            </div>
+
+            <!-- Key Advantages Box (Animated) -->
+            <div class="advantages-box card" id="advantages-box" style="background: linear-gradient(135deg, #146EB4, #232F3E); color: white; animation: fadeIn 1s ease-out 0.8s both;">
+                <h3 style="margin-bottom: 1rem; font-size: 1.8rem;">✨ Key Advantages</h3>
+                <ul id="advantages-list" style="list-style: none; padding: 0;">
+                    <!-- Dynamically populated -->
+                </ul>
+            </div>
+
+            <!-- Quiz and Challenge Buttons -->
+            <div style="display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
+                <button id="complete-lesson-btn" class="btn" style="flex: 1; padding: 1.2rem; font-size: 1.1rem; animation: pulse 2s ease-in-out infinite;">
+                    ✅ Mark as Complete
+                </button>
+                <button id="take-quiz-btn" class="btn" style="flex: 1; padding: 1.2rem; font-size: 1.1rem; background: linear-gradient(135deg, #3FB618, #146EB4);">
+                    📝 Take Quiz
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Lesson Specific Animations */
+.lesson-viewer {
+    position: relative;
+    z-index: 1;
+}
+
+.lesson-section {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideInSection 0.6s ease-out forwards;
+}
+
+@keyframes slideInSection {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.lesson-section:nth-child(1) { animation-delay: 0.1s; }
+.lesson-section:nth-child(2) { animation-delay: 0.2s; }
+.lesson-section:nth-child(3) { animation-delay: 0.3s; }
+.lesson-section:nth-child(4) { animation-delay: 0.4s; }
+.lesson-section:nth-child(5) { animation-delay: 0.5s; }
+
+.lesson-section:hover {
+    transform: translateX(10px);
+    box-shadow: 0 10px 40px rgba(255, 153, 0, 0.2);
+}
+
+.lesson-section h2 {
+    color: #232F3E;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    position: relative;
+    padding-left: 1rem;
+    border-left: 4px solid #FF9900;
+}
+
+.toc-item {
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.toc-item:hover {
+    background: #f8f9fa;
+    border-left-color: #FF9900;
+    transform: translateX(5px);
+}
+
+.toc-item.active {
+    background: #FFF4E6;
+    border-left-color: #FF9900;
+    font-weight: bold;
+}
+
+.code-block {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    position: relative;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.code-block::before {
+    content: 'AWS CLI';
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: #FF9900;
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+}
+
+.highlight-box {
+    background: linear-gradient(135deg, #FFF4E6, #FFE5B4);
+    border-left: 4px solid #FF9900;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    animation: slideInFromLeft 0.6s ease-out;
+}
+
+.highlight-box h4 {
+    color: #FF9900;
+    margin-bottom: 0.5rem;
+}
+
+.advantages-list-item {
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    animation: slideInFromLeft 0.6s ease-out;
+    transition: all 0.3s ease;
+}
+
+.advantages-list-item:nth-child(1) { animation-delay: 0.1s; }
+.advantages-list-item:nth-child(2) { animation-delay: 0.2s; }
+.advantages-list-item:nth-child(3) { animation-delay: 0.3s; }
+.advantages-list-item:nth-child(4) { animation-delay: 0.4s; }
+.advantages-list-item:nth-child(5) { animation-delay: 0.5s; }
+
+.advantages-list-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(10px);
+}
+
+.advantages-list-item::before {
+    content: '✓';
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 153, 0, 0.9);
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 50%;
+    margin-right: 1rem;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .lesson-viewer > div {
+        grid-template-columns: 1fr !important;
+    }
+
+    .toc-sidebar {
+        position: static !important;
+    }
+}
+</style>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Load lesson data and create animated content
+const serviceName = '{{ service }}';
+let lessonData = null;
+let currentSectionIndex = 0;
+
+async function loadLesson() {
+    try {
+        const response = await fetch(`/api/lesson/${serviceName}`);
+        lessonData = await response.json();
+
+        if (lessonData.error) {
+            showError('Lesson not found');
+            return;
+        }
+
+        renderLesson();
+        createDiagram();
+    } catch (error) {
+        console.error('Error loading lesson:', error);
+        showError('Failed to load lesson');
+    }
+}
+
+function renderLesson() {
+    // Update header
+    document.getElementById('lesson-title').textContent = lessonData.title;
+    document.getElementById('difficulty').innerHTML = `📌 ${lessonData.difficulty}`;
+    document.getElementById('duration').innerHTML = `⏱️ ${lessonData.estimatedTime} minutes`;
+
+    // Update icon
+    if (lessonData.icon) {
+        document.querySelector('.lesson-icon-large').textContent = lessonData.icon;
+    }
+
+    // Render table of contents
+    const tocList = document.getElementById('toc-list');
+    lessonData.sections.forEach((section, index) => {
+        const li = document.createElement('li');
+        li.className = 'toc-item';
+        li.innerHTML = `<div>${index + 1}. ${section.title}</div>`;
+        li.onclick = () => scrollToSection(index);
+        tocList.appendChild(li);
+    });
+
+    // Render sections
+    const sectionsContainer = document.getElementById('lesson-sections');
+    lessonData.sections.forEach((section, index) => {
+        const sectionDiv = document.createElement('div');
+        sectionDiv.className = 'lesson-section';
+        sectionDiv.id = `section-${index}`;
+        sectionDiv.innerHTML = `
+            <h2>${section.title}</h2>
+            <div class="section-content">${marked.parse(section.content)}</div>
+        `;
+        sectionsContainer.appendChild(sectionDiv);
+    });
+
+    // Render advantages
+    const advantagesList = document.getElementById('advantages-list');
+    if (lessonData.advantages && lessonData.advantages.length > 0) {
+        lessonData.advantages.forEach((advantage, index) => {
+            const li = document.createElement('li');
+            li.className = 'advantages-list-item';
+            li.textContent = advantage;
+            advantagesList.appendChild(li);
+        });
+    } else {
+        document.getElementById('advantages-box').style.display = 'none';
+    }
+
+    // Setup intersection observer for progress tracking
+    setupProgressTracking();
+}
+
+function createDiagram() {
+    // Create AWS architecture diagram based on service
+    const diagrams = {
+        'intro-to-cloud': [
+            { id: 'user', x: 100, y: 200, label: 'Your App', icon: '💻', color: '#232F3E' },
+            { id: 'cloud', x: 350, y: 200, label: 'Cloud', icon: '☁️', color: '#FF9900' },
+            { id: 'server', x: 600, y: 200, label: 'Services', icon: '🚀', color: '#146EB4' }
+        ],
+        'service-models': [
+            { id: 'iaas', x: 150, y: 100, label: 'IaaS', icon: '🏗️', color: '#146EB4' },
+            { id: 'paas', x: 350, y: 100, label: 'PaaS', icon: '🔧', color: '#FF9900' },
+            { id: 'saas', x: 550, y: 100, label: 'SaaS', icon: '📱', color: '#3FB618' }
+        ],
+        'aws-overview': [
+            { id: 'region', x: 200, y: 150, label: 'Region', icon: '🌍', color: '#146EB4' },
+            { id: 'az1', x: 100, y: 250, label: 'AZ-1', icon: '🏢', color: '#FF9900' },
+            { id: 'az2', x: 200, y: 250, label: 'AZ-2', icon: '🏢', color: '#FF9900' },
+            { id: 'az3', x: 300, y: 250, label: 'AZ-3', icon: '🏢', color: '#FF9900' }
+        ]
+    };
+
+    const diagramData = diagrams[serviceName] || diagrams['intro-to-cloud'];
+
+    if (window.AWSAnimations && window.AWSAnimations.createAWSArchitectureDiagram) {
+        window.AWSAnimations.createAWSArchitectureDiagram('aws-diagram-container', diagramData);
+    }
+}
+
+function setupProgressTracking() {
+    const sections = document.querySelectorAll('.lesson-section');
+    const progressBar = document.querySelector('.progress-fill');
+    const progressText = document.getElementById('progress-text');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const index = Array.from(sections).indexOf(entry.target);
+                updateProgress(index);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    sections.forEach(section => observer.observe(section));
+}
+
+function updateProgress(sectionIndex) {
+    const sections = document.querySelectorAll('.lesson-section');
+    const progress = ((sectionIndex + 1) / sections.length) * 100;
+
+    const progressBar = document.querySelector('.progress-fill');
+    const progressText = document.getElementById('progress-text');
+
+    progressBar.style.width = progress + '%';
+    progressText.textContent = Math.round(progress) + '% Complete';
+
+    // Update TOC active state
+    document.querySelectorAll('.toc-item').forEach((item, index) => {
+        item.classList.toggle('active', index === sectionIndex);
+    });
+
+    currentSectionIndex = sectionIndex;
+}
+
+function scrollToSection(index) {
+    const section = document.getElementById(`section-${index}`);
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        window.AWSAnimations.playSound('click');
+    }
+}
+
+function showError(message) {
+    document.querySelector('.lesson-viewer').innerHTML = `
+        <div class="card" style="text-align: center; padding: 3rem;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">😢</div>
+            <h2>${message}</h2>
+            <p style="color: #666; margin-top: 1rem;">Please try again or go back to the dashboard.</p>
+            <a href="/" class="btn" style="margin-top: 2rem;">Go to Dashboard</a>
+        </div>
+    `;
+}
+
+// Complete lesson button
+document.getElementById('complete-lesson-btn').addEventListener('click', async () => {
+    try {
+        const response = await fetch('/api/user/progress', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                lessonId: serviceName,
+                completed: true,
+                timeSpent: lessonData.estimatedTime
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            // Show celebration
+            if (window.AWSAnimations) {
+                window.AWSAnimations.createConfetti();
+
+                // Check for level up
+                if (result.newBadges && result.newBadges.length > 0) {
+                    result.newBadges.forEach(badge => {
+                        window.AWSAnimations.showBadgeUnlock(badge.badgeId, '🏆');
+                    });
+                }
+            }
+
+            // Update button
+            const btn = document.getElementById('complete-lesson-btn');
+            btn.textContent = '✅ Completed!';
+            btn.style.background = '#3FB618';
+            btn.disabled = true;
+
+            // Redirect after delay
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 2000);
+        }
+    } catch (error) {
+        console.error('Error completing lesson:', error);
+        alert('Failed to save progress. Please try again.');
+    }
+});
+
+// Quiz button
+document.getElementById('take-quiz-btn').addEventListener('click', () => {
+    window.location.href = `/quiz/${serviceName}`;
+});
+
+// Include marked.js for markdown rendering (inline to avoid external dependency)
+const marked = {
+    parse: (text) => {
+        // Simple markdown parser
+        return text
+            .replace(/### (.*)/g, '<h3>$1</h3>')
+            .replace(/## (.*)/g, '<h2>$1</h2>')
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            .replace(/`(.*?)`/g, '<code>$1</code>')
+            .replace(/\n\n/g, '</p><p>')
+            .replace(/\n/g, '<br>');
+    }
+};
+
+// Initialize
+loadLesson();
+</script>
+{% endblock %}

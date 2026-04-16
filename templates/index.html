@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - AWS Learning Platform{% endblock %}
+
+{% block content %}
+<div class="dashboard fade-in">
+    <div class="hero-section">
+        <h1>Welcome to AWS Learning Platform! 🚀</h1>
+        <p>Master cloud computing and AWS services through gamified, interactive lessons.</p>
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>Your Progress</span>
+                <span>{{ user.completedLessons|length or 0 }} / 13 lessons</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ ((user.completedLessons|length / 13) * 100) if user.completedLessons else 0 }}%"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-header">
+        <h2 class="section-title">📚 Learning Path</h2>
+        <p class="section-subtitle">Module 0: Cloud Computing Basics - Start Here!</p>
+    </div>
+
+    <div class="grid grid-cols-3">
+        <div class="lesson-card">
+            <span class="lesson-badge">Beginner</span>
+            <span class="lesson-icon">☁️</span>
+            <h4 class="lesson-title">Introduction to Cloud Computing</h4>
+            <p class="lesson-description">Learn what cloud computing is and why it matters.</p>
+            <div class="lesson-meta">
+                <span>⏱️ 20 min</span>
+                <span>📌 Level 1</span>
+            </div>
+            <a href="/lesson/intro-to-cloud" class="btn btn-primary btn-full mt-2">Start Lesson</a>
+        </div>
+
+        <div class="lesson-card">
+            <span class="lesson-badge">Beginner</span>
+            <span class="lesson-icon">🏗️</span>
+            <h4 class="lesson-title">Cloud Service Models</h4>
+            <p class="lesson-description">Understand IaaS, PaaS, and SaaS with real examples.</p>
+            <div class="lesson-meta">
+                <span>⏱️ 25 min</span>
+                <span>📌 Level 1</span>
+            </div>
+            <a href="/lesson/service-models" class="btn btn-primary btn-full mt-2">Start Lesson</a>
+        </div>
+
+        <div class="lesson-card">
+            <span class="lesson-badge">Beginner</span>
+            <span class="lesson-icon">🌐</span>
+            <h4 class="lesson-title">Cloud Deployment Models</h4>
+            <p class="lesson-description">Explore public, private, hybrid, and multi-cloud.</p>
+            <div class="lesson-meta">
+                <span>⏱️ 20 min</span>
+                <span>📌 Level 1</span>
+            </div>
+            <a href="/lesson/deployment-models" class="btn btn-primary btn-full mt-2">Start Lesson</a>
+        </div>
+
+        <div class="lesson-card">
+            <span class="lesson-badge">Beginner</span>
+            <span class="lesson-icon">⭐</span>
+            <h4 class="lesson-title">Benefits of Cloud Computing</h4>
+            <p class="lesson-description">Discover cost savings, scalability, and more.</p>
+            <div class="lesson-meta">
+                <span>⏱️ 25 min</span>
+                <span>📌 Level 1</span>
+            </div>
+            <a href="/lesson/cloud-benefits" class="btn btn-primary btn-full mt-2">Start Lesson</a>
+        </div>
+
+        <div class="lesson-card">
+            <span class="lesson-badge">Beginner</span>
+            <span class="lesson-icon">🚀</span>
+            <h4 class="lesson-title">AWS Overview & Global Infrastructure</h4>
+            <p class="lesson-description">Learn about AWS regions, AZs, and services.</p>
+            <div class="lesson-meta">
+                <span>⏱️ 30 min</span>
+                <span>📌 Level 1</span>
+            </div>
+            <a href="/lesson/aws-overview" class="btn btn-primary btn-full mt-2">Start Lesson</a>
+        </div>
+    </div>
+
+    <div class="section-header mt-4">
+        <h3 class="section-title">Module 1-4: AWS Services</h3>
+        <p class="section-subtitle">Complete Module 0 First to Unlock</p>
+    </div>
+
+    <div class="alert alert-info">
+        <strong>Coming Soon!</strong> More AWS service lessons are being prepared: IAM, VPC, EC2, Lambda, S3, Load Balancer, Route 53, and Security Groups.
+    </div>
+
+    <div class="grid grid-cols-3">
+        <div class="lesson-card" style="opacity: 0.6;">
+            <span class="lesson-icon">🔒</span>
+            <h4 class="lesson-title">IAM</h4>
+            <p class="lesson-description">Identity & Access Management</p>
+        </div>
+        <div class="lesson-card" style="opacity: 0.6;">
+            <span class="lesson-icon">🌐</span>
+            <h4 class="lesson-title">VPC</h4>
+            <p class="lesson-description">Virtual Private Cloud</p>
+        </div>
+        <div class="lesson-card" style="opacity: 0.6;">
+            <span class="lesson-icon">💻</span>
+            <h4 class="lesson-title">EC2</h4>
+            <p class="lesson-description">Virtual Servers</p>
+        </div>
+        <div class="lesson-card" style="opacity: 0.6;">
+            <span class="lesson-icon">⚡</span>
+            <h4 class="lesson-title">Lambda</h4>
+            <p class="lesson-description">Serverless Functions</p>
+        </div>
+        <div class="lesson-card" style="opacity: 0.6;">
+            <span class="lesson-icon">💾</span>
+            <h4 class="lesson-title">S3</h4>
+            <p class="lesson-description">Object Storage</p>
+        </div>
+        <div class="lesson-card" style="opacity: 0.6;">
+            <span class="lesson-icon">⚖️</span>
+            <h4 class="lesson-title">Load Balancer</h4>
+            <p class="lesson-description">Traffic Distribution</p>
+        </div>
+    </div>
+
+    <div class="section-header mt-4">
+        <h2 class="section-title">Your Achievements 🏆</h2>
+        <p class="section-subtitle">Track your learning progress and milestones</p>
+    </div>
+
+    <div class="grid grid-cols-4">
+        <div class="stat-box">
+            <div class="stat-box-icon">📊</div>
+            <div class="stat-box-value">{{ user.level or 1 }}</div>
+            <div class="stat-box-label">Current Level</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-box-icon">⭐</div>
+            <div class="stat-box-value">{{ user.totalPoints or 0 }}</div>
+            <div class="stat-box-label">Total Points</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-box-icon">🔥</div>
+            <div class="stat-box-value">{{ user.streak or 0 }}</div>
+            <div class="stat-box-label">Day Streak</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-box-icon">🏆</div>
+            <div class="stat-box-value">{{ user.badges|length or 0 }}</div>
+            <div class="stat-box-label">Badges Earned</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

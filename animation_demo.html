@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 AWS Learning Platform - Animation Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #232F3E 0%, #146EB4 50%, #232F3E 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: white;
+            padding: 2rem;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: slideInFromTop 1s ease-out;
+        }
+
+        @keyframes slideInFromTop {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            animation: slideInFromBottom 1s ease-out 0.3s both;
+        }
+
+        @keyframes slideInFromBottom {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .demo-card {
+            background: white;
+            color: #232F3E;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeIn 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 153, 0, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .demo-card:hover::before {
+            left: 100%;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 20px 60px rgba(255, 153, 0, 0.4);
+        }
+
+        .demo-card:nth-child(1) { animation-delay: 0.2s; }
+        .demo-card:nth-child(2) { animation-delay: 0.4s; }
+        .demo-card:nth-child(3) { animation-delay: 0.6s; }
+        .demo-card:nth-child(4) { animation-delay: 0.8s; }
+        .demo-card:nth-child(5) { animation-delay: 1s; }
+        .demo-card:nth-child(6) { animation-delay: 1.2s; }
+
+        .icon {
+            font-size: 4rem;
+            display: block;
+            text-align: center;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .demo-card:hover .icon {
+            animation: bounce 0.6s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-20px); }
+            50% { transform: translateY(0); }
+            75% { transform: translateY(-10px); }
+        }
+
+        h3 {
+            color: #FF9900;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .progress-demo {
+            margin-top: 3rem;
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            animation: fadeIn 1s ease-out 1.5s both;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 40px;
+            background: #e0e0e0;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3FB618, #FF9900, #146EB4);
+            background-size: 200% 100%;
+            border-radius: 20px;
+            animation: fillProgress 3s ease-out forwards, shimmer 2s linear infinite;
+            position: relative;
+        }
+
+        @keyframes fillProgress {
+            from { width: 0%; }
+            to { width: 75%; }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        .button-demo {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, #FF9900, #146EB4);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(255, 153, 0, 0.5);
+        }
+
+        .btn-pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 153, 0, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFloat 20s linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px) scale(1); opacity: 0; }
+        }
+
+        .stat-box {
+            background: white;
+            color: #232F3E;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 2rem;
+            animation: fadeIn 1s ease-out 2s both;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(255, 153, 0, 0.3);
+        }
+
+        .counter {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #FF9900;
+            display: block;
+            margin: 1rem 0;
+        }
+
+        .diagram {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-top: 3rem;
+            animation: fadeIn 1s ease-out 2.5s both;
+        }
+
+        .node {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .node:hover {
+            transform: scale(1.2);
+        }
+
+        .node-circle {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #FF9900, #146EB4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 0.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .node-label {
+            color: #232F3E;
+            font-weight: bold;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #3FB618, #146EB4);
+            color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: 3rem;
+            animation: fadeIn 1s ease-out 3s both;
+        }
+
+        @keyframes rotate360 {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .rotating {
+            animation: rotate360 20s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating particles -->
+    <div id="particles"></div>
+
+    <div class="container">
+        <div class="hero">
+            <h1>🎨 AWS Learning Platform</h1>
+            <p>Experience Stunning Animations for Student Education</p>
+        </div>
+
+        <div class="demo-grid">
+            <div class="demo-card">
+                <span class="icon">☁️</span>
+                <h3>Floating Animations</h3>
+                <p>Smooth floating effects on icons and elements create a dynamic, engaging interface.</p>
+            </div>
+
+            <div class="demo-card">
+                <span class="icon">🎨</span>
+                <h3>3D Card Effects</h3>
+                <p>Hover over cards to see 3D tilt effects with depth and perspective.</p>
+            </div>
+
+            <div class="demo-card">
+                <span class="icon">📊</span>
+                <h3>Progress Tracking</h3>
+                <p>Animated progress bars with gradient shimmer effects show learning progress.</p>
+            </div>
+
+            <div class="demo-card">
+                <span class="icon">🎉</span>
+                <h3>Celebrations</h3>
+                <p>Confetti explosions and level-up animations celebrate achievements!</p>
+            </div>
+
+            <div class="demo-card">
+                <span class="icon">🏆</span>
+                <h3>Gamification</h3>
+                <p>Badges, points, streaks, and leaderboards with smooth animations.</p>
+            </div>
+
+            <div class="demo-card">
+                <span class="icon rotating">🚀</span>
+                <h3>Interactive Diagrams</h3>
+                <p>Clickable AWS architecture diagrams with animated connections.</p>
+            </div>
+        </div>
+
+        <div class="progress-demo">
+            <h2 style="color: #232F3E; margin-bottom: 1rem;">📈 Animated Progress Bar Demo</h2>
+            <p style="color: #666; margin-bottom: 1rem;">Watch the progress bar fill smoothly with gradient shimmer:</p>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <p style="color: #666; margin-top: 1rem;"><strong>75%</strong> Complete - Amazing!</p>
+        </div>
+
+        <div class="diagram">
+            <h2 style="color: #232F3E; text-align: center; margin-bottom: 2rem;">🏗️ Interactive AWS Architecture</h2>
+            <div style="text-align: center;">
+                <div class="node">
+                    <div class="node-circle">👤</div>
+                    <span class="node-label">User</span>
+                </div>
+                <span style="font-size: 2rem; color: #666;">→</span>
+                <div class="node">
+                    <div class="node-circle" style="animation-delay: 0.5s;">☁️</div>
+                    <span class="node-label">Cloud</span>
+                </div>
+                <span style="font-size: 2rem; color: #666;">→</span>
+                <div class="node">
+                    <div class="node-circle" style="animation-delay: 1s;">💾</div>
+                    <span class="node-label">Storage</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-box">
+            <div style="font-size: 3rem;">⭐</div>
+            <span class="counter" id="counter">0</span>
+            <p style="color: #666;">Total Points Earned</p>
+        </div>
+
+        <div class="button-demo">
+            <h2 style="margin-bottom: 2rem;">🎯 Interactive Buttons</h2>
+            <button class="btn btn-pulse" onclick="showCelebration()">🎉 Celebrate Achievement</button>
+            <button class="btn" onclick="animateCounter()">📊 Animate Counter</button>
+            <a href="/" class="btn">🚀 Start Learning</a>
+        </div>
+
+        <div class="success-message">
+            <h2 style="font-size: 2rem; margin-bottom: 1rem;">✅ Ready to Transform Education!</h2>
+            <p style="font-size: 1.2rem; opacity: 0.9;">
+                Your AWS Learning Platform now features stunning animations that will captivate students
+                and make learning cloud computing fun and engaging!
+            </p>
+            <div style="margin-top: 2rem;">
+                <strong style="font-size: 1.3rem;">📖 Read ANIMATION_GUIDE.md for full details</strong>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 15; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Animate counter
+        function animateCounter() {
+            const counter = document.getElementById('counter');
+            const target = 1250;
+            let current = 0;
+            const increment = target / 60;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    counter.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    counter.textContent = Math.floor(current);
+                }
+            }, 16);
+        }
+
+        // Show celebration
+        function showCelebration() {
+            // Create confetti
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                const colors = ['#FF9900', '#146EB4', '#3FB618', '#7B42BC'];
+                confetti.style.cssText = `
+                    position: fixed;
+                    width: ${Math.random() * 10 + 5}px;
+                    height: ${Math.random() * 10 + 5}px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    left: ${Math.random() * 100}%;
+                    top: -20px;
+                    border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+                    animation: confettiFall ${Math.random() * 3 + 2}s linear;
+                    z-index: 10000;
+                `;
+                document.body.appendChild(confetti);
+
+                setTimeout(() => confetti.remove(), 5000);
+            }
+
+            // Show celebration message
+            const message = document.createElement('div');
+            message.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0);
+                background: linear-gradient(135deg, #FF9900, #146EB4);
+                color: white;
+                padding: 3rem;
+                border-radius: 20px;
+                text-align: center;
+                z-index: 10001;
+                animation: popIn 0.5s ease forwards;
+            `;
+            message.innerHTML = `
+                <div style="font-size: 5rem;">🎉</div>
+                <h2 style="font-size: 2.5rem; margin: 1rem 0;">AMAZING!</h2>
+                <p style="font-size: 1.3rem;">You completed a lesson!</p>
+            `;
+            document.body.appendChild(message);
+
+            setTimeout(() => {
+                message.style.animation = 'popOut 0.5s ease forwards';
+                setTimeout(() => message.remove(), 500);
+            }, 2500);
+        }
+
+        // Add confetti animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes confettiFall {
+                0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+            }
+            @keyframes popIn {
+                0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+                100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            }
+            @keyframes popOut {
+                0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Auto-animate counter on load
+        window.addEventListener('load', () => {
+            setTimeout(animateCounter, 2000);
+        });
+    </script>
+</body>
+</html>

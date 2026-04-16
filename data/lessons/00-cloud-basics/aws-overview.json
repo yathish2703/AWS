@@ -1,0 +1,119 @@
+{
+  "serviceId": "aws-overview",
+  "title": "AWS Overview & Global Infrastructure",
+  "icon": "🚀",
+  "difficulty": "Beginner",
+  "estimatedTime": 30,
+  "prerequisites": ["intro-to-cloud"],
+  "sections": [
+    {
+      "id": "what-is-aws",
+      "title": "What is Amazon Web Services (AWS)?",
+      "type": "text",
+      "content": "Amazon Web Services (AWS) is the world's largest and most comprehensive cloud platform, offering over 200 fully featured services from data centers globally.\n\n**Key Facts:**\n- Launched in 2006\n- Market leader with 32% market share\n- Millions of customers worldwide\n- From startups to Fortune 500 companies\n- Revenue: $90+ billion annually (2023)\n\n**Who Uses AWS?**\n- Netflix (video streaming)\n- Airbnb (hospitality platform)\n- NASA (space missions)\n- Moderna (vaccine development)\n- Lyft (ride-sharing)",
+      "duration": 5
+    },
+    {
+      "id": "global-infrastructure",
+      "title": "AWS Global Infrastructure",
+      "type": "detail",
+      "content": "**Three Levels of Infrastructure:**\n\n**1. Regions** - Geographic areas (33 regions worldwide)\n- Each region is completely independent\n- Example: US East (N. Virginia), Europe (Ireland), Asia Pacific (Singapore)\n\n**2. Availability Zones (AZs)** - Isolated data centers (105+ AZs)\n- Each region has multiple AZs (usually 2-6)\n- AZs are miles apart (protect against disasters)\n- Connected with high-speed private network\n\n**3. Edge Locations** - Content delivery points (400+ locations)\n- Cache content close to users\n- Reduce latency for global users\n- Used by CloudFront CDN",
+      "diagram": "Region → Contains multiple AZs → Each AZ has multiple data centers",
+      "duration": 7
+    },
+    {
+      "id": "regions-detail",
+      "title": "AWS Regions Explained",
+      "type": "detail",
+      "content": "**What is a Region?**\nA physical location around the world where AWS clusters data centers. Each region is isolated from other regions for maximum fault tolerance.\n\n**Major Regions:**\n- **US East (N. Virginia)** - us-east-1 - Oldest and largest\n- **US West (Oregon)** - us-west-2\n- **Europe (Ireland)** - eu-west-1\n- **Europe (Frankfurt)** - eu-central-1\n- **Asia Pacific (Singapore)** - ap-southeast-1\n- **Asia Pacific (Sydney)** - ap-southeast-2\n- **Asia Pacific (Tokyo)** - ap-northeast-1\n- **South America (São Paulo)** - sa-east-1\n\n**How to Choose a Region?**",
+      "considerations": [
+        "**Latency** - Choose closest to your users (100ms vs 300ms makes a difference)",
+        "**Compliance** - Data must stay in specific country (GDPR in EU, data residency laws)",
+        "**Cost** - Prices vary by region (US East usually cheapest)",
+        "**Service Availability** - New services launch in US East first, others later"
+      ],
+      "duration": 6
+    },
+    {
+      "id": "availability-zones",
+      "title": "Availability Zones (AZs)",
+      "type": "detail",
+      "content": "**What is an Availability Zone?**\nOne or more discrete data centers with redundant power, networking, and connectivity in a region. AZs are isolated from each other to prevent cascading failures.\n\n**Why Multiple AZs?**\n- **High Availability**: If one AZ fails (power outage, natural disaster), others keep running\n- **Fault Tolerance**: Distribute application across 2-3 AZs\n- **Zero Downtime**: Rolling updates without service interruption\n\n**Example:**\nUS East (N. Virginia) region has 6 AZs:\n- us-east-1a\n- us-east-1b\n- us-east-1c\n- us-east-1d\n- us-east-1e\n- us-east-1f\n\n**Best Practice**: Always deploy across at least 2 AZs for production",
+      "scenario": "If you run web servers in 3 different AZs and one AZ has power failure, your website stays online using servers in the other 2 AZs.",
+      "duration": 5
+    },
+    {
+      "id": "edge-locations",
+      "title": "Edge Locations",
+      "type": "detail",
+      "content": "**What are Edge Locations?**\nData centers used by Amazon CloudFront (CDN service) to cache content closer to users. Not the same as regions/AZs.\n\n**How They Work:**\n1. User in Brazil requests video from your website\n2. Instead of fetching from US server (slow), CloudFront serves from São Paulo edge location (fast)\n3. Content cached at edge for faster subsequent requests\n\n**Coverage:** 400+ edge locations in 90+ cities across 48 countries\n\n**Use Cases:**\n- Video streaming (Netflix uses this)\n- Website acceleration\n- Software downloads\n- Gaming content delivery",
+      "duration": 4
+    },
+    {
+      "id": "service-categories",
+      "title": "AWS Service Categories",
+      "type": "detail",
+      "content": "AWS offers 200+ services across many categories:",
+      "categories": [
+        {
+          "name": "Compute",
+          "services": ["EC2 (virtual servers)", "Lambda (serverless)", "ECS (containers)"],
+          "icon": "💻"
+        },
+        {
+          "name": "Storage",
+          "services": ["S3 (object storage)", "EBS (block storage)", "Glacier (archive)"],
+          "icon": "💾"
+        },
+        {
+          "name": "Database",
+          "services": ["RDS (relational)", "DynamoDB (NoSQL)", "Aurora (high performance)"],
+          "icon": "🗄️"
+        },
+        {
+          "name": "Networking",
+          "services": ["VPC (private network)", "Route 53 (DNS)", "CloudFront (CDN)"],
+          "icon": "🌐"
+        },
+        {
+          "name": "Security",
+          "services": ["IAM (access control)", "WAF (firewall)", "Shield (DDoS protection)"],
+          "icon": "🔒"
+        },
+        {
+          "name": "AI/ML",
+          "services": ["SageMaker (machine learning)", "Rekognition (image analysis)", "Polly (text-to-speech)"],
+          "icon": "🤖"
+        },
+        {
+          "name": "Analytics",
+          "services": ["Athena (query data)", "EMR (big data)", "Kinesis (streaming)"],
+          "icon": "📊"
+        },
+        {
+          "name": "Developer Tools",
+          "services": ["CodePipeline (CI/CD)", "CodeBuild (build service)", "CodeDeploy (deployment)"],
+          "icon": "🛠️"
+        }
+      ],
+      "duration": 5
+    },
+    {
+      "id": "aws-console",
+      "title": "AWS Management Console",
+      "type": "detail",
+      "content": "**Web-Based Interface**\n\nThe AWS Management Console is a web application for managing AWS services. You can access it at: https://aws.amazon.com/console/\n\n**Key Features:**\n- **Services Menu**: Access all 200+ services\n- **Search Bar**: Quickly find services\n- **Recently Visited**: Quick access to services you use often\n- **Resource Groups**: Organize and manage resources\n- **CloudShell**: Browser-based command line\n- **Billing Dashboard**: Monitor costs\n\n**Other Ways to Access AWS:**\n- **AWS CLI**: Command line interface\n- **SDKs**: Python (boto3), JavaScript, Java, etc.\n- **CloudFormation**: Infrastructure as code\n- **Terraform**: Third-party IaC tool",
+      "duration": 4
+    }
+  ],
+  "quiz": "aws-overview-quiz",
+  "challenges": [],
+  "advantages": [
+    "Largest cloud provider with 32% market share",
+    "200+ services for every use case",
+    "Global infrastructure in 33 regions",
+    "99.99% availability SLA",
+    "Used by millions of customers from startups to enterprises",
+    "Continuous innovation - new services every week"
+  ]
+}

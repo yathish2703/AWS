@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Leaderboard - AWS Learning Platform{% endblock %}
+
+{% block content %}
+<div class="leaderboard-page">
+    <div class="leaderboard-header card">
+        <h1 style="text-align: center; margin-bottom: 0.5rem;">🏆 Leaderboard</h1>
+        <p style="text-align: center; color: #666;">Top learners this week</p>
+    </div>
+
+    <div class="leaderboard-list card" style="margin-top: 2rem;">
+        <div id="leaderboard-content">
+            <p style="text-align: center; padding: 2rem; color: #666;">Loading...</p>
+        </div>
+    </div>
+</div>
+
+<style>
+.leader-item {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    margin: 0.5rem 0;
+    background: #f8f9fa;
+    border-radius: 10px;
+    transition: transform 0.2s;
+}
+
+.leader-item:hover {
+    transform: translateX(5px);
+}
+
+.leader-rank {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #FF9900;
+    min-width: 50px;
+}
+
+.leader-info {
+    flex: 1;
+}
+
+.leader-name {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.leader-stats {
+    display: flex;
+    gap: 1.5rem;
+    margin-left: auto;
+    font-size: 0.9rem;
+}
+</style>
+
+<script>
+async function loadLeaderboard() {
+    try {
+        const response = await fetch('/api/leaderboard');
+        const leaders = await response.json();
+
+        if (leaders.length === 0) {
+            document.getElementById('leaderboard-content').innerHTML = `
+                <p style="text-align: center; padding: 3rem; color: #666;">
+                    No leaderboard data yet. Complete lessons to appear here!
+                </p>
+            `;
+            return;
+        }
+
+        const html = leaders.map(leader => `
+            <div class="leader-item">
+                <div class="leader-rank">#${leader.rank}</div>
+                <div class="leader-info">
+                    <div class="leader-name">${leader.name}</div>
+                </div>
+                <div class="leader-stats">
+                    <span>📊 Level ${leader.level}</span>
+                    <span>⭐ ${leader.totalPoints} pts</span>
+                    <span>🏆 ${leader.badges} badges</span>
+                </div>
+            </div>
+        `).join('');
+
+        document.getElementById('leaderboard-content').innerHTML = html;
+
+    } catch (error) {
+        console.error('Error loading leaderboard:', error);
+        document.getElementById('leaderboard-content').innerHTML = `
+            <p style="text-align: center; padding: 3rem; color: #dc3545;">
+                Error loading leaderboard. Please try again later.
+            </p>
+        `;
+    }
+}
+
+loadLeaderboard();
+</script>
+{% endblock %}

@@ -1,0 +1,617 @@
+/* ============================================
+   ANIMATED AWS LEARNING PLATFORM - STYLES
+   Modern, engaging design for student education
+   ============================================ */
+
+/* ===== Global Animation Variables ===== */
+:root {
+    --primary-aws: #FF9900;
+    --secondary-aws: #232F3E;
+    --accent-blue: #146EB4;
+    --accent-green: #3FB618;
+    --accent-purple: #7B42BC;
+    --accent-red: #D13212;
+    --light-bg: #F8F9FA;
+    --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    --hover-shadow: 0 20px 60px rgba(255, 153, 0, 0.3);
+}
+
+/* ===== Floating Animation for Cloud Elements ===== */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(2deg);
+    }
+}
+
+@keyframes float-reverse {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(20px) rotate(-2deg);
+    }
+}
+
+/* ===== Pulse Animation ===== */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+}
+
+/* ===== Glow Animation ===== */
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 153, 0, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(255, 153, 0, 0.8);
+    }
+}
+
+/* ===== Slide In Animations ===== */
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromTop {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromBottom {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ===== Fade In Animation ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ===== Rotate Animation ===== */
+@keyframes rotate360 {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ===== Bounce Animation ===== */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    25% {
+        transform: translateY(-10px);
+    }
+    50% {
+        transform: translateY(0);
+    }
+    75% {
+        transform: translateY(-5px);
+    }
+}
+
+/* ===== Gradient Animation ===== */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ===== 3D Flip Animation ===== */
+@keyframes flip3D {
+    from {
+        transform: perspective(1000px) rotateY(0deg);
+    }
+    to {
+        transform: perspective(1000px) rotateY(360deg);
+    }
+}
+
+/* ===== Shimmer/Loading Animation ===== */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+/* ===== Progress Bar Fill Animation ===== */
+@keyframes fillProgress {
+    from {
+        width: 0%;
+    }
+    to {
+        width: var(--progress-width);
+    }
+}
+
+/* ===== Particle Float Animation ===== */
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) translateX(0) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(100px) scale(1);
+        opacity: 0;
+    }
+}
+
+/* ===== ANIMATED BACKGROUND ===== */
+.animated-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(135deg, #232F3E 0%, #146EB4 50%, #232F3E 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+/* Floating particles in background */
+.particle {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 153, 0, 0.6);
+    border-radius: 50%;
+    animation: particleFloat 20s linear infinite;
+    z-index: -1;
+}
+
+.particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 15s; }
+.particle:nth-child(2) { left: 25%; animation-delay: 2s; animation-duration: 18s; }
+.particle:nth-child(3) { left: 40%; animation-delay: 4s; animation-duration: 20s; }
+.particle:nth-child(4) { left: 60%; animation-delay: 6s; animation-duration: 22s; }
+.particle:nth-child(5) { left: 80%; animation-delay: 8s; animation-duration: 25s; }
+
+/* ===== ANIMATED LESSON CARDS ===== */
+.lesson-card {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeIn 0.6s ease-out;
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+}
+
+.lesson-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 153, 0, 0.1),
+        transparent
+    );
+    transition: left 0.5s;
+}
+
+.lesson-card:hover::before {
+    left: 100%;
+}
+
+.lesson-card:hover {
+    transform: translateY(-15px) rotateX(5deg);
+    box-shadow: var(--hover-shadow);
+}
+
+/* Stagger animation for cards */
+.lesson-card:nth-child(1) { animation-delay: 0.1s; }
+.lesson-card:nth-child(2) { animation-delay: 0.2s; }
+.lesson-card:nth-child(3) { animation-delay: 0.3s; }
+.lesson-card:nth-child(4) { animation-delay: 0.4s; }
+.lesson-card:nth-child(5) { animation-delay: 0.5s; }
+.lesson-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* ===== ANIMATED ICONS ===== */
+.lesson-icon {
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
+    font-size: 3rem;
+    transition: all 0.3s ease;
+}
+
+.lesson-card:hover .lesson-icon {
+    animation: bounce 0.6s ease;
+    transform: scale(1.2);
+}
+
+/* ===== ANIMATED BUTTONS ===== */
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, var(--primary-aws), var(--accent-blue));
+    border: none;
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 153, 0, 0.4);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+/* ===== ANIMATED PROGRESS BAR ===== */
+.progress-bar {
+    width: 100%;
+    height: 30px;
+    background: #e0e0e0;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg,
+        var(--accent-green),
+        var(--primary-aws),
+        var(--accent-blue)
+    );
+    background-size: 200% 100%;
+    border-radius: 15px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: shimmer 2s linear infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    animation: shimmer 1.5s linear infinite;
+}
+
+/* ===== ANIMATED STATS BOXES ===== */
+.stat-box {
+    animation: fadeIn 0.8s ease-out;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle,
+        rgba(255, 153, 0, 0.1) 0%,
+        transparent 70%
+    );
+    transition: transform 0.6s;
+}
+
+.stat-box:hover::before {
+    transform: scale(1.5);
+}
+
+.stat-box:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(255, 153, 0, 0.3);
+}
+
+/* ===== ANIMATED HERO SECTION ===== */
+.hero-section {
+    background: linear-gradient(135deg,
+        var(--secondary-aws),
+        var(--accent-blue),
+        var(--accent-purple)
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 10s ease infinite;
+    color: white;
+    padding: 3rem;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 50%
+    );
+    animation: rotate360 30s linear infinite;
+}
+
+.hero-section h1 {
+    animation: slideInFromTop 0.8s ease-out;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-section p {
+    animation: slideInFromBottom 0.8s ease-out 0.2s both;
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== BADGE ANIMATIONS ===== */
+.badge-icon {
+    display: inline-block;
+    transition: all 0.3s ease;
+    animation: float 4s ease-in-out infinite;
+}
+
+.badge-icon:hover {
+    animation: rotate360 1s ease-in-out, glow 1s ease-in-out infinite;
+    transform: scale(1.3);
+}
+
+/* ===== TOOLTIP ANIMATIONS ===== */
+.tooltip {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.tooltip.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===== LOADING SPINNER ===== */
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid rgba(255, 153, 0, 0.2);
+    border-top-color: var(--primary-aws);
+    border-radius: 50%;
+    animation: rotate360 1s linear infinite;
+}
+
+/* ===== NOTIFICATION POPUP ===== */
+.notification {
+    transform: translateX(400px);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.notification.show {
+    transform: translateX(0);
+    animation: bounce 0.6s ease;
+}
+
+/* ===== AWS SERVICE ICON ANIMATIONS ===== */
+.service-icon {
+    transition: all 0.4s ease;
+    display: inline-block;
+}
+
+.service-icon:hover {
+    transform: scale(1.2) rotate(10deg);
+    filter: drop-shadow(0 10px 20px rgba(255, 153, 0, 0.5));
+}
+
+/* ===== MODAL ANIMATIONS ===== */
+.modal {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ===== RIBBON ANIMATION (for "NEW" badges) ===== */
+.ribbon {
+    position: absolute;
+    top: 10px;
+    right: -5px;
+    background: var(--accent-red);
+    color: white;
+    padding: 5px 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    transform: rotate(10deg);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    animation: bounce 2s ease-in-out infinite;
+}
+
+/* ===== COUNTER ANIMATION ===== */
+@keyframes countUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.counter {
+    animation: countUp 0.6s ease-out;
+}
+
+/* ===== RESPONSIVE ANIMATIONS ===== */
+@media (max-width: 768px) {
+    .lesson-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .particle {
+        display: none; /* Hide particles on mobile for performance */
+    }
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+@media (prefers-color-scheme: dark) {
+    .lesson-card {
+        background: #1a1a2e;
+        color: white;
+    }
+}
+
+/* ===== ACCESSIBILITY: Respect reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ===== LEVEL UP CELEBRATION ANIMATION ===== */
+@keyframes levelUpCelebration {
+    0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.5) rotate(180deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+        opacity: 1;
+    }
+}
+
+.level-up-effect {
+    animation: levelUpCelebration 1s ease-out;
+}
+
+/* ===== CONFETTI ANIMATION ===== */
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: var(--primary-aws);
+    animation: confetti-fall 3s linear;
+    z-index: 9999;
+}

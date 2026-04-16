@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}Teacher Dashboard - AWS Learning Platform{% endblock %}
+
+{% block content %}
+<div class="teacher-dashboard">
+    <div class="teacher-header card">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <div>
+                <h1>👨‍🏫 Teacher Dashboard</h1>
+                <p style="color: #666;">Create and manage gamified AWS lessons</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <a href="/" class="btn" style="background: #666;">← Student View</a>
+                <a href="/teacher/create" class="btn">+ Create New Lesson</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats-overview" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+        <div class="card" style="text-align: center; padding: 2rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">📚</div>
+            <div style="font-size: 2rem; font-weight: bold; color: #FF9900;">{{ lessons|length }}</div>
+            <div style="color: #666;">Total Lessons</div>
+        </div>
+        <div class="card" style="text-align: center; padding: 2rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">☁️</div>
+            <div style="font-size: 2rem; font-weight: bold; color: #FF9900;">5</div>
+            <div style="color: #666;">Cloud Basics</div>
+        </div>
+        <div class="card" style="text-align: center; padding: 2rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">🚀</div>
+            <div style="font-size: 2rem; font-weight: bold; color: #FF9900;">{{ (lessons|length - 5) if lessons|length > 5 else 0 }}</div>
+            <div style="color: #666;">AWS Services</div>
+        </div>
+        <div class="card" style="text-align: center; padding: 2rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">⏱️</div>
+            <div style="font-size: 2rem; font-weight: bold; color: #FF9900;">{{ lessons | sum(attribute='estimatedTime') }}</div>
+            <div style="color: #666;">Total Minutes</div>
+        </div>
+    </div>
+
+    <div class="lessons-management card">
+        <h2 style="margin-bottom: 1.5rem;">📖 All Lessons</h2>
+
+        {% if lessons and lessons|length > 0 %}
+        <div class="lessons-table">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                        <th style="padding: 1rem; text-align: left;">Icon</th>
+                        <th style="padding: 1rem; text-align: left;">Title</th>
+                        <th style="padding: 1rem; text-align: left;">ID</th>
+                        <th style="padding: 1rem; text-align: left;">Difficulty</th>
+                        <th style="padding: 1rem; text-align: left;">Time</th>
+                        <th style="padding: 1rem; text-align: left;">Sections</th>
+                        <th style="padding: 1rem; text-align: center;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lesson in lessons %}
+                    <tr style="border-bottom: 1px solid #dee2e6;">
+                        <td style="padding: 1rem; font-size: 2rem;">{{ lesson.icon }}</td>
+                        <td style="padding: 1rem;">
+                            <strong>{{ lesson.title }}</strong>
+                            {% if lesson.prerequisites and lesson.prerequisites|length > 0 %}
+                            <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">
+                                Prerequisites: {{ lesson.prerequisites|join(', ') }}
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td style="padding: 1rem; color: #666; font-family: monospace; font-size: 0.9rem;">{{ lesson.serviceId }}</td>
+                        <td style="padding: 1rem;">
+                            <span style="display: inline-block; padding: 0.25rem 0.75rem; background:
+                            {% if lesson.difficulty == 'Beginner' %}#d4edda{% elif lesson.difficulty == 'Intermediate' %}#fff3cd{% else %}#f8d7da{% endif %};
+                            color: {% if lesson.difficulty == 'Beginner' %}#155724{% elif lesson.difficulty == 'Intermediate' %}#856404{% else %}#721c24{% endif %};
+                            border-radius: 20px; font-size: 0.85rem;">
+                                {{ lesson.difficulty }}
+                            </span>
+                        </td>
+                        <td style="padding: 1rem; color: #666;">{{ lesson.estimatedTime }} min</td>
+                        <td style="padding: 1rem; color: #666;">{{ lesson.sections|length }} sections</td>
+                        <td style="padding: 1rem; text-align: center;">
+                            <div style="display: flex; gap: 0.5rem; justify-content: center;">
+                                <a href="/lesson/{{ lesson.serviceId }}" class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: #17a2b8;" target="_blank">👁️ View</a>
+                                <a href="/teacher/edit/{{ lesson.filepath }}" class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">✏️ Edit</a>
+                                <button onclick="deleteLesson('{{ lesson.filepath }}', '{{ lesson.title }}')" class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem; background: #dc3545;">🗑️ Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p style="text-align: center; color: #666; padding: 3rem;">
+            No lessons created yet. Click "Create New Lesson" to get started!
+        </p>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.lessons-table {
+    overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+    .lessons-table table {
+        font-size: 0.85rem;
+    }
+
+    .lessons-table th,
+    .lessons-table td {
+        padding: 0.5rem !important;
+    }
+}
+</style>
+
+<script>
+async function deleteLesson(filepath, title) {
+    if (!confirm(`Are you sure you want to delete "${title}"?\n\nThis action cannot be undone.`)) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/teacher/delete/${filepath}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert('Lesson deleted successfully!');
+            window.location.reload();
+        } else {
+            alert('Error deleting lesson: ' + result.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error deleting lesson. Please try again.');
+    }
+}
+</script>
+{% endblock %}

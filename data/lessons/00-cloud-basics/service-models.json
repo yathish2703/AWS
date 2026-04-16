@@ -1,0 +1,107 @@
+{
+  "serviceId": "service-models",
+  "title": "Cloud Service Models (IaaS, PaaS, SaaS)",
+  "icon": "🏗️",
+  "difficulty": "Beginner",
+  "estimatedTime": 25,
+  "prerequisites": ["intro-to-cloud"],
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Understanding Service Models",
+      "type": "text",
+      "content": "Cloud computing offers three main service models, each providing different levels of control, flexibility, and management. Think of them as different levels of a restaurant experience:\n\n- **IaaS** = Grocery store (you control everything)\n- **PaaS** = Meal kit service (some prep done for you)\n- **SaaS** = Restaurant (everything done for you)",
+      "duration": 3
+    },
+    {
+      "id": "iaas",
+      "title": "IaaS - Infrastructure as a Service",
+      "type": "detail",
+      "content": "**What is IaaS?**\nIaaS provides virtualized computing resources over the internet. You rent servers, storage, and networking instead of buying physical hardware.\n\n**What YOU manage:**\n- Operating System (Windows, Linux, etc.)\n- Applications and software\n- Data and databases\n- Security configurations\n\n**What PROVIDER manages:**\n- Physical servers and data centers\n- Networking hardware\n- Storage systems\n- Virtualization layer",
+      "examples": [
+        "**Amazon EC2** - Virtual servers in the cloud",
+        "**Google Compute Engine** - Scalable VMs",
+        "**Microsoft Azure Virtual Machines**",
+        "**DigitalOcean Droplets**"
+      ],
+      "useCases": [
+        "Web hosting for custom applications",
+        "Development and testing environments",
+        "Big data analysis",
+        "Backup and disaster recovery"
+      ],
+      "duration": 7
+    },
+    {
+      "id": "paas",
+      "title": "PaaS - Platform as a Service",
+      "type": "detail",
+      "content": "**What is PaaS?**\nPaaS provides a platform for developers to build, run, and manage applications without dealing with infrastructure. You focus on your code, the platform handles the rest.\n\n**What YOU manage:**\n- Your application code\n- Your data\n- Application configuration\n\n**What PROVIDER manages:**\n- Operating system\n- Runtime environment (Python, Java, Node.js)\n- Web servers\n- Databases\n- Networking\n- Physical infrastructure",
+      "examples": [
+        "**AWS Elastic Beanstalk** - Deploy apps without managing servers",
+        "**Google App Engine** - Build scalable web apps",
+        "**Heroku** - Simple app deployment",
+        "**Microsoft Azure App Service**"
+      ],
+      "useCases": [
+        "Web application development",
+        "Mobile app backends",
+        "API development",
+        "Rapid prototyping"
+      ],
+      "duration": 7
+    },
+    {
+      "id": "saas",
+      "title": "SaaS - Software as a Service",
+      "type": "detail",
+      "content": "**What is SaaS?**\nSaaS delivers software applications over the internet on a subscription basis. You just use the software - everything else is managed by the provider.\n\n**What YOU manage:**\n- Your data only\n- User access and permissions\n- Application settings/preferences\n\n**What PROVIDER manages:**\n- The entire software application\n- Infrastructure\n- Platform\n- Security\n- Updates and patches",
+      "examples": [
+        "**Gmail / Google Workspace** - Email and productivity",
+        "**Salesforce** - Customer relationship management",
+        "**Dropbox** - File storage and sharing",
+        "**Zoom** - Video conferencing",
+        "**Microsoft 365** - Office applications",
+        "**Slack** - Team communication"
+      ],
+      "useCases": [
+        "Email and collaboration",
+        "Customer relationship management (CRM)",
+        "Enterprise resource planning (ERP)",
+        "Accounting and finance",
+        "Project management"
+      ],
+      "duration": 6
+    },
+    {
+      "id": "comparison",
+      "title": "Comparison Chart",
+      "type": "table",
+      "content": "Who manages what in each service model:",
+      "table": {
+        "headers": ["Component", "IaaS", "PaaS", "SaaS"],
+        "rows": [
+          ["Applications", "You", "You", "Provider"],
+          ["Data", "You", "You", "Provider"],
+          ["Runtime", "You", "Provider", "Provider"],
+          ["Middleware", "You", "Provider", "Provider"],
+          ["Operating System", "You", "Provider", "Provider"],
+          ["Virtualization", "Provider", "Provider", "Provider"],
+          ["Servers", "Provider", "Provider", "Provider"],
+          ["Storage", "Provider", "Provider", "Provider"],
+          ["Networking", "Provider", "Provider", "Provider"]
+        ]
+      },
+      "duration": 2
+    }
+  ],
+  "quiz": "service-models-quiz",
+  "challenges": [],
+  "advantages": [
+    "Choose the right level of control for your needs",
+    "IaaS offers maximum flexibility and control",
+    "PaaS speeds up development time",
+    "SaaS eliminates all management overhead",
+    "Mix and match models for different workloads"
+  ]
+}

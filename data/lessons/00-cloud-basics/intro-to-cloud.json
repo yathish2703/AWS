@@ -1,0 +1,103 @@
+{
+  "serviceId": "intro-to-cloud",
+  "title": "Introduction to Cloud Computing",
+  "icon": "☁️",
+  "difficulty": "Beginner",
+  "estimatedTime": 20,
+  "prerequisites": [],
+  "sections": [
+    {
+      "id": "what-is-cloud",
+      "title": "What is Cloud Computing?",
+      "type": "text",
+      "content": "Cloud computing is the delivery of computing services—including servers, storage, databases, networking, software, analytics, and intelligence—over the Internet ('the cloud') to offer faster innovation, flexible resources, and economies of scale.\n\nInstead of owning and maintaining physical data centers and servers, you can access technology services, such as computing power, storage, and databases, on an as-needed basis from a cloud provider like Amazon Web Services (AWS).",
+      "duration": 5
+    },
+    {
+      "id": "evolution",
+      "title": "Evolution from Traditional IT to Cloud",
+      "type": "comparison",
+      "content": "Let's compare traditional IT infrastructure with cloud computing:",
+      "comparison": {
+        "traditional": {
+          "title": "Traditional IT (On-Premises)",
+          "items": [
+            "Buy and own physical servers",
+            "Maintain data centers (cooling, power, security)",
+            "Hire IT staff for hardware management",
+            "Pay upfront capital costs ($10,000s - $100,000s)",
+            "Weeks/months to provision new servers",
+            "Pay for peak capacity even during low usage",
+            "Limited geographic reach"
+          ]
+        },
+        "cloud": {
+          "title": "Cloud Computing",
+          "items": [
+            "Rent virtual servers on-demand",
+            "Provider manages all infrastructure",
+            "Focus your team on applications, not hardware",
+            "Pay-as-you-go (start at $0.01/hour)",
+            "Minutes to provision new resources",
+            "Scale up or down based on actual demand",
+            "Deploy globally in minutes"
+          ]
+        }
+      },
+      "duration": 5
+    },
+    {
+      "id": "real-world-examples",
+      "title": "Real-World Examples",
+      "type": "list",
+      "content": "Major companies using cloud computing:",
+      "items": [
+        "**Netflix** - Streams to 230M+ subscribers using AWS, handles massive traffic spikes without owning servers",
+        "**Spotify** - Delivers music to 500M+ users globally using Google Cloud, scales automatically with demand",
+        "**Dropbox** - Stores billions of files on AWS, provides reliable access from anywhere",
+        "**Airbnb** - Runs entire platform on AWS, scaled from startup to billions in revenue without buying servers",
+        "**NASA** - Uses AWS for Mars rover data processing, only pays for compute time during missions"
+      ],
+      "duration": 3
+    },
+    {
+      "id": "why-move-to-cloud",
+      "title": "Why Businesses Move to the Cloud",
+      "type": "list",
+      "content": "Key reasons organizations adopt cloud computing:",
+      "items": [
+        "**Cost Savings** - No upfront hardware costs, pay only for what you use",
+        "**Speed** - Deploy applications in minutes, not months",
+        "**Global Scale** - Reach customers worldwide from multiple data centers",
+        "**Flexibility** - Scale resources up or down instantly based on demand",
+        "**Innovation** - Access to AI, machine learning, and analytics tools without building from scratch",
+        "**Reliability** - 99.99% uptime with automatic backups and disaster recovery",
+        "**Security** - Enterprise-grade security tools and compliance certifications"
+      ],
+      "duration": 4
+    },
+    {
+      "id": "key-characteristics",
+      "title": "Key Characteristics of Cloud Computing",
+      "type": "list",
+      "content": "What defines cloud computing?",
+      "items": [
+        "**On-Demand Self-Service** - Provision resources automatically without human interaction",
+        "**Broad Network Access** - Access from anywhere via internet (phone, tablet, laptop)",
+        "**Resource Pooling** - Provider serves multiple customers from same physical resources",
+        "**Rapid Elasticity** - Scale up or down automatically based on demand",
+        "**Measured Service** - Pay only for resources you actually use, like electricity"
+      ],
+      "duration": 3
+    }
+  ],
+  "quiz": "intro-to-cloud-quiz",
+  "challenges": [],
+  "advantages": [
+    "Cost savings - No upfront hardware investment",
+    "Scalability - Grow or shrink resources on demand",
+    "Flexibility - Access from anywhere with internet",
+    "Speed - Deploy in minutes instead of weeks",
+    "Disaster recovery - Automatic backups and redundancy"
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "badges": [
+    {
+      "id": "first-lesson",
+      "name": "🎓 Getting Started",
+      "description": "Complete your first lesson",
+      "icon": "🎓",
+      "rarity": "common",
+      "points": 50
+    },
+    {
+      "id": "cloud-beginner",
+      "name": "☁️ Cloud Beginner",
+      "description": "Complete all Module 0 cloud computing basics",
+      "icon": "☁️",
+      "rarity": "common",
+      "points": 100
+    },
+    {
+      "id": "week-warrior",
+      "name": "🔥 Week Warrior",
+      "description": "Maintain a 7-day learning streak",
+      "icon": "🔥",
+      "rarity": "epic",
+      "points": 300,
+      "criteria": {
+        "streak": 7
+      }
+    },
+    {
+      "id": "ec2-master",
+      "name": "💻 EC2 Master",
+      "description": "Complete all EC2 lessons and quizzes with 90%+ score",
+      "icon": "💻",
+      "rarity": "rare",
+      "points": 200,
+      "criteria": {
+        "service": "ec2",
+        "minScore": 90,
+        "lessonsCompleted": true,
+        "challengesCompleted": false
+      }
+    },
+    {
+      "id": "iam-expert",
+      "name": "🔒 IAM Expert",
+      "description": "Master IAM concepts and best practices",
+      "icon": "🔒",
+      "rarity": "rare",
+      "points": 200,
+      "criteria": {
+        "service": "iam",
+        "minScore": 90,
+        "lessonsCompleted": true
+      }
+    },
+    {
+      "id": "s3-champion",
+      "name": "💾 S3 Champion",
+      "description": "Become an S3 storage expert",
+      "icon": "💾",
+      "rarity": "rare",
+      "points": 200,
+      "criteria": {
+        "service": "s3",
+        "minScore": 90,
+        "lessonsCompleted": true
+      }
+    },
+    {
+      "id": "lambda-ninja",
+      "name": "⚡ Lambda Ninja",
+      "description": "Master serverless computing with Lambda",
+      "icon": "⚡",
+      "rarity": "rare",
+      "points": 200,
+      "criteria": {
+        "service": "lambda",
+        "minScore": 90,
+        "lessonsCompleted": true
+      }
+    },
+    {
+      "id": "networking-pro",
+      "name": "🌐 Networking Pro",
+      "description": "Master VPC, Load Balancer, and Route 53",
+      "icon": "🌐",
+      "rarity": "epic",
+      "points": 500
+    },
+    {
+      "id": "aws-architect",
+      "name": "🏆 AWS Architect",
+      "description": "Complete all AWS service lessons",
+      "icon": "🏆",
+      "rarity": "legendary",
+      "points": 1000
+    },
+    {
+      "id": "perfect-score",
+      "name": "⭐ Perfect Score",
+      "description": "Get 100% on any quiz",
+      "icon": "⭐",
+      "rarity": "rare",
+      "points": 150
+    },
+    {
+      "id": "early-bird",
+      "name": "🌅 Early Bird",
+      "description": "Complete lesson in first 7 days",
+      "icon": "🌅",
+      "rarity": "common",
+      "points": 75
+    },
+    {
+      "id": "quiz-master",
+      "name": "🎯 Quiz Master",
+      "description": "Pass 10 quizzes",
+      "icon": "🎯",
+      "rarity": "epic",
+      "points": 400
+    }
+  ]
+}

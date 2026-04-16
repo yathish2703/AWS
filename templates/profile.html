@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - AWS Learning Platform{% endblock %}
+
+{% block content %}
+<div class="profile-page">
+    <div class="profile-header card">
+        <div style="text-align: center;">
+            <div style="font-size: 5rem; margin-bottom: 1rem;">👤</div>
+            <h1>{{ user.name or 'Guest User' }}</h1>
+            <p style="color: #666;">Member since {{ user.createdAt[:10] if user.createdAt else 'Today' }}</p>
+        </div>
+    </div>
+
+    <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+        <div class="card" style="text-align: center; padding: 2rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">📊</div>
+            <div style="font-size: 2.5rem; font-weight: bold; color: #FF9900;">{{ user.level or 1 }}</div>
+            <div style="color: #666;">Current Level</div>
+        </div>
+        <div class="card" style="text-align: center; padding: 2rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">⭐</div>
+            <div style="font-size: 2.5rem; font-weight: bold; color: #FF9900;">{{ user.totalPoints or 0 }}</div>
+            <div style="color: #666;">Total Points</div>
+        </div>
+        <div class="card" style="text-align: center; padding: 2rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">🔥</div>
+            <div style="font-size: 2.5rem; font-weight: bold; color: #FF9900;">{{ user.streak or 0 }}</div>
+            <div style="color: #666;">Day Streak</div>
+        </div>
+        <div class="card" style="text-align: center; padding: 2rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">📚</div>
+            <div style="font-size: 2.5rem; font-weight: bold; color: #FF9900;">{{ user.completedLessons|length or 0 }}</div>
+            <div style="color: #666;">Lessons Completed</div>
+        </div>
+    </div>
+
+    <div class="badges-section card">
+        <h2 style="margin-bottom: 1.5rem;">🏆 Badges ({{ user.badges|length or 0 }})</h2>
+        {% if user.badges and user.badges|length > 0 %}
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1.5rem;">
+            {% for badge in user.badges %}
+            <div style="text-align: center; padding: 1.5rem; background: #f8f9fa; border-radius: 10px;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🏆</div>
+                <div style="font-weight: bold;">{{ badge.badgeId }}</div>
+                <div style="font-size: 0.85rem; color: #666; margin-top: 0.3rem;">
+                    {{ badge.unlockedAt[:10] if badge.unlockedAt else 'Recently' }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p style="text-align: center; color: #666; padding: 2rem;">
+            Complete lessons and quizzes to earn badges!
+        </p>
+        {% endif %}
+    </div>
+
+    <div class="completed-lessons card" style="margin-top: 2rem;">
+        <h2 style="margin-bottom: 1.5rem;">📚 Completed Lessons</h2>
+        {% if user.completedLessons and user.completedLessons|length > 0 %}
+        <ul style="list-style: none; padding: 0;">
+            {% for lesson in user.completedLessons %}
+            <li style="padding: 1rem; margin: 0.5rem 0; background: #f8f9fa; border-radius: 5px; display: flex; align-items: center; gap: 1rem;">
+                <span style="font-size: 1.5rem;">✓</span>
+                <span style="flex: 1;">{{ lesson }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p style="text-align: center; color: #666; padding: 2rem;">
+            Start your learning journey from the <a href="/" style="color: #FF9900;">dashboard</a>!
+        </p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
