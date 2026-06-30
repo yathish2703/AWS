@@ -142,6 +142,10 @@ def security_services():
 def networking_services():
     return render_template('networking-services.html')
 
+@app.route('/serverless-vs-server')
+def serverless_vs_server():
+    return render_template('serverless-vs-server.html')
+
 if __name__ == '__main__':
     # Get port from command line argument or use default 8080
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8080

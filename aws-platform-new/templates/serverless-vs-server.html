@@ -1,0 +1,537 @@
+{% extends "base.html" %}
+
+{% block title %}Serverless vs Server-based - AWS Learning Platform{% endblock %}
+
+{% block content %}
+<style>
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.05); opacity: 0.9; }
+    }
+
+    @keyframes slideUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes server-spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    @keyframes lightning {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 1; }
+    }
+
+    @keyframes scale-in {
+        0% { transform: scale(0); opacity: 0; }
+        50% { transform: scale(1.1); opacity: 1; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes cost-flow {
+        0% { transform: translateY(0); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateY(-50px); opacity: 0; }
+    }
+
+    .pulse-animation {
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    .slide-up {
+        animation: slideUp 0.6s ease-out forwards;
+    }
+
+    .server-spin {
+        animation: server-spin 3s linear infinite;
+    }
+
+    .lightning {
+        animation: lightning 1.5s ease-in-out infinite;
+    }
+
+    .scale-in {
+        animation: scale-in 0.8s ease-out forwards;
+    }
+
+    .cost-flow {
+        animation: cost-flow 2s ease-in-out infinite;
+    }
+
+    .comparison-card {
+        transition: all 0.3s ease;
+    }
+
+    .comparison-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+</style>
+
+<div class="max-w-7xl mx-auto">
+    <!-- Breadcrumb -->
+    <div class="mb-6">
+        <a href="/" class="text-brand-blue hover:underline inline-flex items-center text-sm">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to dashboard
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-br from-brand-squidink via-brand-anchor to-brand-squidink rounded-2xl p-12 mb-12 text-center text-white relative overflow-hidden">
+        <div class="relative z-10">
+            <h1 class="text-4xl font-bold mb-4">Serverless vs Server-based Architecture</h1>
+            <p class="text-lg text-neutral-border">Understanding the fundamental differences and choosing the right approach</p>
+        </div>
+    </div>
+
+    <!-- Visual Comparison -->
+    <div class="mb-16">
+        <h2 class="text-2xl font-bold text-neutral-body mb-6">Architecture comparison</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Server-based -->
+            <div class="bg-neutral-surface rounded-xl border-2 border-brand-blue/30 p-8 comparison-card">
+                <div class="flex items-center justify-center mb-6">
+                    <div class="w-20 h-20 bg-brand-blue/10 rounded-full flex items-center justify-center server-spin">
+                        <svg class="w-12 h-12 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2" />
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold text-neutral-body mb-3 text-center">Server-based (EC2)</h3>
+                <p class="text-sm text-neutral-muted text-center mb-6">Traditional servers running 24/7</p>
+
+                <div class="bg-brand-blue/5 rounded-lg p-4 mb-4">
+                    <div class="flex items-center justify-around mb-4">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-brand-blue rounded-lg flex items-center justify-center mb-2 pulse-animation">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14" />
+                                </svg>
+                            </div>
+                            <p class="text-xs text-neutral-muted">Server 1</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-brand-blue rounded-lg flex items-center justify-center mb-2 pulse-animation" style="animation-delay: 0.2s;">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14" />
+                                </svg>
+                            </div>
+                            <p class="text-xs text-neutral-muted">Server 2</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-brand-blue rounded-lg flex items-center justify-center mb-2 pulse-animation" style="animation-delay: 0.4s;">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14" />
+                                </svg>
+                            </div>
+                            <p class="text-xs text-neutral-muted">Server 3</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-center text-neutral-muted">Always running, always paying</p>
+                </div>
+            </div>
+
+            <!-- Serverless -->
+            <div class="bg-neutral-surface rounded-xl border-2 border-brand-orange/30 p-8 comparison-card">
+                <div class="flex items-center justify-center mb-6">
+                    <div class="w-20 h-20 bg-brand-orange/10 rounded-full flex items-center justify-center">
+                        <svg class="w-12 h-12 text-brand-orange lightning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold text-neutral-body mb-3 text-center">Serverless (Lambda)</h3>
+                <p class="text-sm text-neutral-muted text-center mb-6">Functions run only when triggered</p>
+
+                <div class="bg-brand-orange/5 rounded-lg p-4 mb-4">
+                    <div class="flex items-center justify-around mb-4">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-brand-orange/20 border-2 border-dashed border-brand-orange rounded-lg flex items-center justify-center mb-2 scale-in">
+                                <svg class="w-8 h-8 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <p class="text-xs text-neutral-muted">Function 1</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-brand-orange/20 border-2 border-dashed border-brand-orange rounded-lg flex items-center justify-center mb-2 scale-in" style="animation-delay: 0.3s;">
+                                <svg class="w-8 h-8 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <p class="text-xs text-neutral-muted">Function 2</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-brand-orange/20 border-2 border-dashed border-brand-orange rounded-lg flex items-center justify-center mb-2 scale-in" style="animation-delay: 0.6s;">
+                                <svg class="w-8 h-8 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <p class="text-xs text-neutral-muted">Function 3</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-center text-neutral-muted">Only run on demand, pay per execution</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Advantages & Disadvantages -->
+    <div class="mb-16">
+        <h2 class="text-2xl font-bold text-neutral-body mb-6">Advantages & disadvantages</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Server-based Advantages -->
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-semantic-success/10 rounded-lg flex items-center justify-center mr-3">
+                        <svg class="w-6 h-6 text-semantic-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-neutral-body">Server-based Advantages</h3>
+                </div>
+                <ul class="space-y-2 text-sm text-neutral-muted">
+                    <li class="flex items-start">
+                        <span class="text-semantic-success mr-2">✓</span>
+                        <span><strong>Full control:</strong> Complete access to OS, libraries, and configurations</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-semantic-success mr-2">✓</span>
+                        <span><strong>No time limits:</strong> Long-running processes supported</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-semantic-success mr-2">✓</span>
+                        <span><strong>Predictable costs:</strong> Fixed monthly pricing for consistent workloads</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-semantic-success mr-2">✓</span>
+                        <span><strong>Better for stateful apps:</strong> Keep data in memory between requests</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-semantic-success mr-2">✓</span>
+                        <span><strong>Any runtime:</strong> Install any language, tools, or dependencies</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Server-based Disadvantages -->
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-semantic-error/10 rounded-lg flex items-center justify-center mr-3">
+                        <svg class="w-6 h-6 text-semantic-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-neutral-body">Server-based Disadvantages</h3>
+                </div>
+                <ul class="space-y-2 text-sm text-neutral-muted">
+                    <li class="flex items-start">
+                        <span class="text-semantic-error mr-2">✗</span>
+                        <span><strong>Always paying:</strong> Pay for idle time even with no traffic</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-semantic-error mr-2">✗</span>
+                        <span><strong>Manual scaling:</strong> Need to configure Auto Scaling groups</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-semantic-error mr-2">✗</span>
+                        <span><strong>Server maintenance:</strong> OS patches, security updates, monitoring</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-semantic-error mr-2">✗</span>
+                        <span><strong>Capacity planning:</strong> Need to predict and provision capacity</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-semantic-error mr-2">✗</span>
+                        <span><strong>Higher complexity:</strong> Manage infrastructure, networking, security</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Serverless Advantages -->
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-semantic-success/10 rounded-lg flex items-center justify-center mr-3">
+                        <svg class="w-6 h-6 text-semantic-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-neutral-body">Serverless Advantages</h3>
+                </div>
+                <ul class="space-y-2 text-sm text-neutral-muted">
+                    <li class="flex items-start">
+                        <span class="text-semantic-success mr-2">✓</span>
+                        <span><strong>Pay per use:</strong> Only pay for actual execution time (milliseconds)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-semantic-success mr-2">✓</span>
+                        <span><strong>Auto-scaling:</strong> Automatically scales from 0 to thousands</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-semantic-success mr-2">✓</span>
+                        <span><strong>No maintenance:</strong> AWS manages servers, OS, patches</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-semantic-success mr-2">✓</span>
+                        <span><strong>Built-in HA:</strong> High availability and fault tolerance included</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-semantic-success mr-2">✓</span>
+                        <span><strong>Fast deployment:</strong> Deploy code in seconds, no infrastructure setup</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Serverless Disadvantages -->
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-semantic-error/10 rounded-lg flex items-center justify-center mr-3">
+                        <svg class="w-6 h-6 text-semantic-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-neutral-body">Serverless Disadvantages</h3>
+                </div>
+                <ul class="space-y-2 text-sm text-neutral-muted">
+                    <li class="flex items-start">
+                        <span class="text-semantic-error mr-2">✗</span>
+                        <span><strong>Cold starts:</strong> First request takes longer (100-1000ms delay)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-semantic-error mr-2">✗</span>
+                        <span><strong>Time limits:</strong> Maximum 15 minutes execution (Lambda)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-semantic-error mr-2">✗</span>
+                        <span><strong>Vendor lock-in:</strong> Tight coupling with AWS services</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-semantic-error mr-2">✗</span>
+                        <span><strong>Limited resources:</strong> Max 10GB RAM, 512MB /tmp storage</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-semantic-error mr-2">✗</span>
+                        <span><strong>Complex debugging:</strong> Harder to test and debug locally</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Maintenance Comparison -->
+    <div class="mb-16">
+        <h2 class="text-2xl font-bold text-neutral-body mb-6">Maintenance responsibilities</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Server-based Maintenance -->
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-brand-blue/10 rounded-lg flex items-center justify-center mr-3">
+                        <svg class="w-6 h-6 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-neutral-body">Server-based Maintenance</h3>
+                </div>
+                <div class="space-y-3">
+                    <div class="bg-neutral-page rounded-lg p-3">
+                        <h4 class="text-sm font-semibold text-neutral-body mb-2">Your Responsibilities:</h4>
+                        <ul class="space-y-1 text-xs text-neutral-muted">
+                            <li>• OS patches and security updates</li>
+                            <li>• Application deployment and updates</li>
+                            <li>• Monitoring and logging setup</li>
+                            <li>• Security group configuration</li>
+                            <li>• Auto Scaling configuration</li>
+                            <li>• Load balancer setup</li>
+                            <li>• Backup and disaster recovery</li>
+                            <li>• Performance optimization</li>
+                        </ul>
+                    </div>
+                    <div class="bg-brand-blue/5 rounded-lg p-3">
+                        <h4 class="text-sm font-semibold text-neutral-body mb-2">AWS Responsibilities:</h4>
+                        <ul class="space-y-1 text-xs text-neutral-muted">
+                            <li>• Physical hardware maintenance</li>
+                            <li>• Network infrastructure</li>
+                            <li>• Hypervisor management</li>
+                            <li>• Data center security</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Serverless Maintenance -->
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6">
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-brand-orange/10 rounded-lg flex items-center justify-center mr-3">
+                        <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-neutral-body">Serverless Maintenance</h3>
+                </div>
+                <div class="space-y-3">
+                    <div class="bg-neutral-page rounded-lg p-3">
+                        <h4 class="text-sm font-semibold text-neutral-body mb-2">Your Responsibilities:</h4>
+                        <ul class="space-y-1 text-xs text-neutral-muted">
+                            <li>• Write and deploy function code</li>
+                            <li>• Configure IAM permissions</li>
+                            <li>• Set memory and timeout limits</li>
+                            <li>• Monitor with CloudWatch Logs</li>
+                            <li>• Manage dependencies in code</li>
+                        </ul>
+                    </div>
+                    <div class="bg-brand-orange/5 rounded-lg p-3">
+                        <h4 class="text-sm font-semibold text-neutral-body mb-2">AWS Responsibilities:</h4>
+                        <ul class="space-y-1 text-xs text-neutral-muted">
+                            <li>• Physical hardware maintenance</li>
+                            <li>• OS patches and security updates</li>
+                            <li>• Automatic scaling</li>
+                            <li>• High availability setup</li>
+                            <li>• Network infrastructure</li>
+                            <li>• Runtime environment</li>
+                            <li>• Load balancing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cost Comparison Animation -->
+    <div class="mb-16">
+        <h2 class="text-2xl font-bold text-neutral-body mb-6">Cost comparison example</h2>
+        <div class="bg-neutral-surface rounded-xl border border-neutral-border p-8">
+            <p class="text-sm text-neutral-muted mb-6 text-center">For a low-traffic API with 100,000 requests per month, average 200ms execution time</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Server-based Cost -->
+                <div class="text-center">
+                    <div class="mb-4">
+                        <div class="relative inline-block">
+                            <div class="w-24 h-24 bg-brand-blue/10 rounded-full flex items-center justify-center mb-3 mx-auto">
+                                <svg class="w-12 h-12 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div class="absolute top-0 right-0 cost-flow">
+                                <span class="text-2xl">💰</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold text-neutral-body mb-2">EC2 t3.micro</h3>
+                    <div class="bg-brand-blue/5 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-brand-blue mb-1">$8.35</div>
+                        <p class="text-xs text-neutral-muted mb-3">per month</p>
+                        <ul class="text-xs text-left text-neutral-muted space-y-1">
+                            <li>• Running 24/7 (730 hours)</li>
+                            <li>• $0.0104/hour × 730 hours</li>
+                            <li>• Same cost regardless of traffic</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Serverless Cost -->
+                <div class="text-center">
+                    <div class="mb-4">
+                        <div class="relative inline-block">
+                            <div class="w-24 h-24 bg-brand-orange/10 rounded-full flex items-center justify-center mb-3 mx-auto">
+                                <svg class="w-12 h-12 text-brand-orange lightning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div class="absolute top-0 right-0 cost-flow" style="animation-delay: 0.5s;">
+                                <span class="text-2xl">💰</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold text-neutral-body mb-2">Lambda 128MB</h3>
+                    <div class="bg-brand-orange/5 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-brand-orange mb-1">$0.42</div>
+                        <p class="text-xs text-neutral-muted mb-3">per month</p>
+                        <ul class="text-xs text-left text-neutral-muted space-y-1">
+                            <li>• 100,000 requests</li>
+                            <li>• 200ms avg execution time</li>
+                            <li>• Free tier: 1M requests/month</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 text-center">
+                <div class="inline-block bg-semantic-success/10 border border-semantic-success rounded-lg px-4 py-2">
+                    <span class="text-sm font-semibold text-semantic-success">Serverless saves ~95% ($7.93/month) for low-traffic scenarios</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- When to Use What -->
+    <div class="mb-16">
+        <h2 class="text-2xl font-bold text-neutral-body mb-6">When to use each approach</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Use Server-based When -->
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6">
+                <h3 class="text-lg font-bold text-neutral-body mb-4 flex items-center">
+                    <svg class="w-6 h-6 text-brand-blue mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Use Server-based When:
+                </h3>
+                <ul class="space-y-2 text-sm text-neutral-muted">
+                    <li>• Long-running processes (> 15 minutes)</li>
+                    <li>• Consistent high traffic (predictable load)</li>
+                    <li>• Need full OS control or custom software</li>
+                    <li>• Stateful applications with in-memory data</li>
+                    <li>• Legacy applications that can't be refactored</li>
+                    <li>• WebSocket connections or real-time apps</li>
+                    <li>• High-performance computing workloads</li>
+                </ul>
+            </div>
+
+            <!-- Use Serverless When -->
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6">
+                <h3 class="text-lg font-bold text-neutral-body mb-4 flex items-center">
+                    <svg class="w-6 h-6 text-brand-orange mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Use Serverless When:
+                </h3>
+                <ul class="space-y-2 text-sm text-neutral-muted">
+                    <li>• Event-driven workloads (API, file uploads)</li>
+                    <li>• Unpredictable or sporadic traffic</li>
+                    <li>• Short-lived operations (< 15 minutes)</li>
+                    <li>• Microservices and small independent functions</li>
+                    <li>• Need rapid development and deployment</li>
+                    <li>• Want to minimize operational overhead</li>
+                    <li>• Cost optimization for low/variable traffic</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hybrid Approach -->
+    <div class="bg-brand-blue/10 border-l-4 border-brand-blue rounded-r-xl p-8">
+        <h3 class="text-xl font-bold text-brand-blue mb-4">Hybrid approach: Best of both worlds</h3>
+        <p class="text-sm text-neutral-body mb-4">
+            Many modern applications use <strong>both server-based and serverless</strong> components together:
+        </p>
+        <div class="grid md:grid-cols-3 gap-4 text-sm">
+            <div class="bg-neutral-surface rounded-lg p-4">
+                <h4 class="font-semibold text-neutral-body mb-2">Core Application (EC2)</h4>
+                <p class="text-xs text-neutral-muted">Main API and business logic running on EC2 instances</p>
+            </div>
+            <div class="bg-neutral-surface rounded-lg p-4">
+                <h4 class="font-semibold text-neutral-body mb-2">Background Tasks (Lambda)</h4>
+                <p class="text-xs text-neutral-muted">Image processing, email sending, scheduled jobs</p>
+            </div>
+            <div class="bg-neutral-surface rounded-lg p-4">
+                <h4 class="font-semibold text-neutral-body mb-2">Event Processing (Lambda)</h4>
+                <p class="text-xs text-neutral-muted">S3 uploads, database triggers, IoT data streams</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

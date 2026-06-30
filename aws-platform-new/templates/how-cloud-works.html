@@ -396,45 +396,136 @@
         </div>
     </div>
 
-    <!-- Real-World Example -->
-    <div class="bg-neutral-surface rounded-xl border border-neutral-border p-8 mb-16">
-        <h2 class="text-2xl font-bold text-neutral-body mb-6">Real-world example: Netflix</h2>
-        <div class="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-                <p class="text-neutral-muted mb-4">
-                    Netflix serves 230+ million subscribers worldwide using AWS cloud infrastructure:
-                </p>
-                <ul class="space-y-3 text-neutral-muted">
-                    <li class="flex items-start">
-                        <svg class="w-5 h-5 text-brand-orange mr-2 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                        </svg>
-                        <span><strong>10,000+ microservices</strong> running on AWS EC2</span>
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="w-5 h-5 text-brand-orange mr-2 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                        </svg>
-                        <span><strong>Petabytes of data</strong> stored in Amazon S3</span>
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="w-5 h-5 text-brand-orange mr-2 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                        </svg>
-                        <span><strong>Global CDN</strong> via Amazon CloudFront</span>
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="w-5 h-5 text-brand-orange mr-2 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                        </svg>
-                        <span><strong>Auto-scaling</strong> handles peak traffic seamlessly</span>
-                    </li>
-                </ul>
+    <!-- Real-World Examples -->
+    <div class="mb-16">
+        <h2 class="text-2xl font-bold text-neutral-body mb-6">Real-world examples</h2>
+
+        <!-- Netflix -->
+        <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6 mb-6">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-semantic-error/10 rounded-lg flex items-center justify-center mr-3">
+                    <span class="text-xl font-bold text-semantic-error">N</span>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-neutral-body">Netflix</h3>
+                    <p class="text-sm text-neutral-muted">230+ million subscribers worldwide</p>
+                </div>
             </div>
-            <div class="bg-gradient-to-br from-semantic-error to-semantic-warning rounded-xl p-8 text-white text-center">
-                <div class="text-6xl font-bold mb-2">99.99%</div>
-                <div class="text-xl mb-4">Uptime</div>
-                <p class="text-sm opacity-90">Netflix delivers flawless streaming to millions simultaneously</p>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div>
+                    <h4 class="text-sm font-semibold text-neutral-body mb-2">Services Used:</h4>
+                    <ul class="space-y-1 text-sm text-neutral-muted">
+                        <li>• EC2 - 10,000+ microservices</li>
+                        <li>• S3 - Petabytes of video content</li>
+                        <li>• CloudFront - Global CDN</li>
+                        <li>• DynamoDB - User data storage</li>
+                        <li>• Kinesis - Real-time analytics</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold text-neutral-body mb-2">Architecture:</h4>
+                    <ul class="space-y-1 text-sm text-neutral-muted">
+                        <li>• Multi-region deployment</li>
+                        <li>• Auto Scaling groups</li>
+                        <li>• Chaos engineering with Simian Army</li>
+                        <li>• ELB for load distribution</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold text-neutral-body mb-2">Results:</h4>
+                    <ul class="space-y-1 text-sm text-neutral-muted">
+                        <li>• 99.99% uptime</li>
+                        <li>• Handles peak traffic seamlessly</li>
+                        <li>• Cost savings vs data centers</li>
+                        <li>• Global content delivery</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Airbnb -->
+        <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6 mb-6">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-brand-orange/10 rounded-lg flex items-center justify-center mr-3">
+                    <span class="text-xl font-bold text-brand-orange">A</span>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-neutral-body">Airbnb</h3>
+                    <p class="text-sm text-neutral-muted">7+ million listings in 220+ countries</p>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div>
+                    <h4 class="text-sm font-semibold text-neutral-body mb-2">Services Used:</h4>
+                    <ul class="space-y-1 text-sm text-neutral-muted">
+                        <li>• EC2 - Application hosting</li>
+                        <li>• RDS - MySQL databases</li>
+                        <li>• S3 - Photo storage (150+ PB)</li>
+                        <li>• ElastiCache - Redis for caching</li>
+                        <li>• EMR - Big data analytics</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold text-neutral-body mb-2">Architecture:</h4>
+                    <ul class="space-y-1 text-sm text-neutral-muted">
+                        <li>• Service-oriented architecture</li>
+                        <li>• CloudFront for image delivery</li>
+                        <li>• VPC with private subnets</li>
+                        <li>• Lambda for event processing</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold text-neutral-body mb-2">Results:</h4>
+                    <ul class="space-y-1 text-sm text-neutral-muted">
+                        <li>• 10x faster development</li>
+                        <li>• Scales for major events</li>
+                        <li>• Reduced infrastructure costs</li>
+                        <li>• Improved search performance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slack -->
+        <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-semantic-info/10 rounded-lg flex items-center justify-center mr-3">
+                    <span class="text-xl font-bold text-semantic-info">S</span>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-neutral-body">Slack</h3>
+                    <p class="text-sm text-neutral-muted">20+ million daily active users</p>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div>
+                    <h4 class="text-sm font-semibold text-neutral-body mb-2">Services Used:</h4>
+                    <ul class="space-y-1 text-sm text-neutral-muted">
+                        <li>• EC2 - Application servers</li>
+                        <li>• Aurora - Primary database</li>
+                        <li>• ElastiCache - Real-time messaging</li>
+                        <li>• S3 - File uploads and backups</li>
+                        <li>• CloudFront - Content delivery</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold text-neutral-body mb-2">Architecture:</h4>
+                    <ul class="space-y-1 text-sm text-neutral-muted">
+                        <li>• Multi-AZ deployment</li>
+                        <li>• Auto Scaling for peak hours</li>
+                        <li>• Route 53 for DNS</li>
+                        <li>• Direct Connect for offices</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-sm font-semibold text-neutral-body mb-2">Results:</h4>
+                    <ul class="space-y-1 text-sm text-neutral-muted">
+                        <li>• 99.99% availability</li>
+                        <li>• Billions of messages daily</li>
+                        <li>• Sub-second message delivery</li>
+                        <li>• Global presence</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

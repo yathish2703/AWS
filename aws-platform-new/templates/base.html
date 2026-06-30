@@ -35,23 +35,23 @@
         }
     </script>
 </head>
-<body class="bg-neutral-page text-neutral-body">
+<body class="bg-neutral-page text-neutral-body text-sm">
     <!-- Top Navigation -->
     <nav class="bg-brand-squidink text-white sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
+            <div class="flex items-center justify-between h-14">
                 <!-- Logo -->
                 <div class="flex items-center">
                     <button id="mobile-menu-button" class="lg:hidden mr-3 text-white hover:text-neutral-border" aria-label="Toggle menu">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
                     <a href="/" class="flex items-center space-x-2">
-                        <svg class="w-8 h-8 text-brand-orange" fill="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-7 h-7 text-brand-orange" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
                         </svg>
-                        <span class="text-xl font-semibold">AWS Learning</span>
+                        <span class="text-lg font-semibold">AWS Learning</span>
                     </a>
                 </div>
 
@@ -60,22 +60,22 @@
                     <div class="relative">
                         <input type="search"
                                placeholder="Search topics..."
-                               class="w-full px-4 py-2 pl-10 rounded-lg bg-brand-anchor text-white placeholder-neutral-muted border border-neutral-border/20 focus:outline-none focus:ring-2 focus:ring-brand-blue"
+                               class="w-full px-3 py-1.5 pl-9 rounded-lg bg-brand-anchor text-white text-sm placeholder-neutral-muted border border-neutral-border/20 focus:outline-none focus:ring-2 focus:ring-brand-blue"
                                aria-label="Search topics">
-                        <svg class="absolute left-3 top-2.5 w-5 h-5 text-neutral-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="absolute left-3 top-2 w-4 h-4 text-neutral-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </div>
                 </div>
 
                 <!-- User Menu -->
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-3">
                     <button class="text-neutral-border hover:text-white" aria-label="Notifications">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                         </svg>
                     </button>
-                    <div class="w-8 h-8 rounded-full bg-brand-blue flex items-center justify-center text-sm font-semibold cursor-pointer hover:bg-opacity-80" aria-label="User menu">
+                    <div class="w-7 h-7 rounded-full bg-brand-blue flex items-center justify-center text-xs font-semibold cursor-pointer hover:bg-opacity-80" aria-label="User menu">
                         JD
                     </div>
                 </div>
@@ -85,71 +85,78 @@
 
     <div class="flex">
         <!-- Sidebar -->
-        <aside id="sidebar" class="fixed lg:relative top-16 lg:top-0 left-0 h-[calc(100vh-4rem)] lg:h-auto w-64 bg-brand-squidink text-white transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-40 overflow-y-auto lg:sticky lg:top-20">
-            <nav class="p-4 space-y-2" role="navigation" aria-label="Main navigation">
-                <a href="/" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-brand-anchor transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <aside id="sidebar" class="fixed lg:relative top-14 lg:top-0 left-0 h-[calc(100vh-3.5rem)] lg:h-auto w-64 bg-brand-squidink text-white transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-40 overflow-y-auto lg:sticky lg:top-16">
+            <nav class="p-3 space-y-1 text-sm" role="navigation" aria-label="Main navigation">
+                <a href="/" class="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-brand-anchor transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
                     <span>Dashboard</span>
                 </a>
 
-                <div class="pt-4">
-                    <h3 class="px-4 text-xs font-semibold text-neutral-muted uppercase tracking-wider mb-2">Categories</h3>
+                <div class="pt-3">
+                    <h3 class="px-3 text-xs font-semibold text-neutral-muted uppercase tracking-wider mb-1">Categories</h3>
 
-                    <a href="/how-cloud-works" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-brand-anchor transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="/how-cloud-works" class="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-brand-anchor transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
                         </svg>
                         <span>How cloud works</span>
                     </a>
 
-                    <a href="/aws-fundamentals" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-brand-anchor transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="/serverless-vs-server" class="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-brand-anchor transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        <span>Serverless vs Server</span>
+                    </a>
+
+                    <a href="/aws-fundamentals" class="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-brand-anchor transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                         </svg>
                         <span>AWS fundamentals</span>
                     </a>
 
-                    <a href="/compute-services" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-brand-anchor transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="/compute-services" class="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-brand-anchor transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
                         </svg>
                         <span>Compute services</span>
                     </a>
 
-                    <a href="/storage-services" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-brand-anchor transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="/storage-services" class="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-brand-anchor transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
                         </svg>
                         <span>Storage & databases</span>
                     </a>
 
-                    <a href="/security-services" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-brand-anchor transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="/security-services" class="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-brand-anchor transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                         </svg>
                         <span>Security & identity</span>
                     </a>
 
-                    <a href="/networking-services" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-brand-anchor transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="/networking-services" class="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-brand-anchor transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                         </svg>
                         <span>Networking</span>
                     </a>
                 </div>
 
-                <div class="pt-4 border-t border-neutral-border/20">
-                    <a href="/" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-brand-anchor transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="pt-3 border-t border-neutral-border/20">
+                    <a href="/" class="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-brand-anchor transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                         </svg>
                         <span>My progress</span>
                     </a>
 
-                    <a href="/" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-brand-anchor transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="/" class="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-brand-anchor transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                         </svg>
                         <span>Bookmarks</span>
@@ -162,49 +169,49 @@
         <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden hidden" aria-hidden="true"></div>
 
         <!-- Main Content -->
-        <main class="flex-1 p-6 min-h-screen">
+        <main class="flex-1 p-4 min-h-screen">
             {% block content %}{% endblock %}
         </main>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-brand-anchor text-neutral-muted py-8 mt-12">
+    <footer class="bg-brand-anchor text-neutral-muted py-6 mt-8 text-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div>
-                    <h3 class="text-white font-semibold mb-3">Platform</h3>
-                    <ul class="space-y-2">
+                    <h3 class="text-white font-semibold mb-2 text-sm">Platform</h3>
+                    <ul class="space-y-1.5 text-xs">
                         <li><a href="#" class="hover:text-white transition-colors">About</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-white font-semibold mb-3">Support</h3>
-                    <ul class="space-y-2">
+                    <h3 class="text-white font-semibold mb-2 text-sm">Support</h3>
+                    <ul class="space-y-1.5 text-xs">
                         <li><a href="#" class="hover:text-white transition-colors">Help center</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">Contact us</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">FAQs</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-white font-semibold mb-3">Legal</h3>
-                    <ul class="space-y-2">
+                    <h3 class="text-white font-semibold mb-2 text-sm">Legal</h3>
+                    <ul class="space-y-1.5 text-xs">
                         <li><a href="#" class="hover:text-white transition-colors">Terms</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">Privacy</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">Cookies</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-white font-semibold mb-3">Connect</h3>
-                    <ul class="space-y-2">
+                    <h3 class="text-white font-semibold mb-2 text-sm">Connect</h3>
+                    <ul class="space-y-1.5 text-xs">
                         <li><a href="#" class="hover:text-white transition-colors">Twitter</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">LinkedIn</a></li>
                         <li><a href="#" class="hover:text-white transition-colors">YouTube</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="mt-8 pt-8 border-t border-neutral-border/20 text-center text-sm">
+            <div class="mt-6 pt-6 border-t border-neutral-border/20 text-center text-xs">
                 <p>&copy; 2026 AWS Learning Platform. Not affiliated with Amazon Web Services.</p>
             </div>
         </div>

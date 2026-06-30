@@ -55,49 +55,48 @@
         </div>
     </div>
 
-    <!-- Quick Learning Topics -->
-    <div class="mb-8">
-        <h2 class="text-2xl font-bold text-neutral-body mb-4">Quick learning topics</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <a href="/learn/ec2" class="bg-neutral-surface rounded-xl border border-neutral-border p-6 hover:shadow-lg transition-all hover:-translate-y-1">
-                <div class="w-12 h-12 bg-brand-blue/10 rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2" />
-                    </svg>
-                </div>
-                <h3 class="text-lg font-bold text-neutral-body mb-2">Learn EC2</h3>
-                <p class="text-sm text-neutral-muted">Master virtual servers and host websites</p>
-            </a>
-
-            <a href="/learn/iam" class="bg-neutral-surface rounded-xl border border-neutral-border p-6 hover:shadow-lg transition-all hover:-translate-y-1">
-                <div class="w-12 h-12 bg-semantic-warning/10 rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-semantic-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                </div>
-                <h3 class="text-lg font-bold text-neutral-body mb-2">Learn IAM</h3>
-                <p class="text-sm text-neutral-muted">Control access and permissions</p>
-            </a>
-
-            <a href="/learn/security-groups" class="bg-neutral-surface rounded-xl border border-neutral-border p-6 hover:shadow-lg transition-all hover:-translate-y-1">
-                <div class="w-12 h-12 bg-semantic-error/10 rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-semantic-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
-                </div>
-                <h3 class="text-lg font-bold text-neutral-body mb-2">Learn Security Groups</h3>
-                <p class="text-sm text-neutral-muted">Protect your instances with firewall rules</p>
-            </a>
-        </div>
-    </div>
-
     <!-- All Learning Content -->
     <div>
+        <h2 class="text-2xl font-bold text-neutral-body mb-4">All Learning Content</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {% for course in courses %}
             <div class="bg-neutral-surface rounded-xl border border-neutral-border overflow-hidden hover:shadow-lg transition-shadow">
-                <div class="relative">
-                    <img src="{{ course.thumbnail }}" alt="{{ course.title }}" class="w-full h-48 object-cover">
+                <!-- Icon/Logo Header -->
+                <div class="relative bg-gradient-to-br from-brand-squidink to-brand-anchor h-48 flex items-center justify-center">
+                    {% if course.id == 4 %}
+                    <!-- EC2 Icon -->
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-brand-orange/20 rounded-xl flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-12 h-12 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2" />
+                            </svg>
+                        </div>
+                        <p class="text-white font-semibold text-lg">Amazon EC2</p>
+                        <p class="text-neutral-border text-sm">Elastic Compute Cloud</p>
+                    </div>
+                    {% elif course.id == 5 %}
+                    <!-- IAM Icon -->
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-semantic-warning/20 rounded-xl flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-12 h-12 text-semantic-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </div>
+                        <p class="text-white font-semibold text-lg">AWS IAM</p>
+                        <p class="text-neutral-border text-sm">Identity & Access Management</p>
+                    </div>
+                    {% elif course.id == 6 %}
+                    <!-- Security Groups Icon -->
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-semantic-error/20 rounded-xl flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-12 h-12 text-semantic-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
+                        <p class="text-white font-semibold text-lg">Security Groups</p>
+                        <p class="text-neutral-border text-sm">Virtual Firewall</p>
+                    </div>
+                    {% endif %}
                 </div>
 
                 <div class="p-5">
