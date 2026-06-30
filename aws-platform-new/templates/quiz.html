@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz - {{ course.title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <!-- Quiz Header -->
+    <div class="mb-8">
+        <a href="/course/{{ course.id }}" class="text-brand-blue hover:underline mb-3 inline-flex items-center">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to course
+        </a>
+        <h1 class="text-3xl font-bold text-neutral-body mb-2">{{ course.title }} Quiz</h1>
+        <p class="text-neutral-muted">Test your knowledge and earn points</p>
+    </div>
+
+    <!-- Quiz Progress -->
+    <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6 mb-6">
+        <div class="flex items-center justify-between mb-3">
+            <span class="text-sm font-semibold text-neutral-body">Question <span id="current-question">1</span> of {{ questions|length }}</span>
+            <span class="text-sm font-semibold text-neutral-body">Score: <span id="score">0</span>/{{ questions|length }}</span>
+        </div>
+        <div class="w-full h-2 bg-neutral-page rounded-full overflow-hidden">
+            <div id="progress-bar" class="h-full bg-brand-blue rounded-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Quiz Questions -->
+    <div id="quiz-container">
+        {% for question in questions %}
+        <div class="quiz-question bg-neutral-surface rounded-xl border border-neutral-border p-8 mb-6 {% if loop.index > 1 %}hidden{% endif %}" data-question="{{ loop.index }}">
+            <h2 class="text-xl font-semibold text-neutral-body mb-6">{{ question.question }}</h2>
+
+            <div class="space-y-3">
+                {% for option in question.options %}
+                <button class="quiz-option w-full text-left p-4 rounded-lg border-2 border-neutral-border hover:border-brand-blue hover:bg-brand-blue/5 transition-all duration-200"
+                        data-question-id="{{ question.id }}"
+                        data-option-index="{{ loop.index0 }}"
+                        data-correct="{{ loop.index0 == question.correct }}"
+                        aria-label="Option {{ loop.index }}: {{ option }}">
+                    <div class="flex items-center space-x-3">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full border-2 border-neutral-border flex items-center justify-center font-semibold text-neutral-body">
+                            {{ ['A', 'B', 'C', 'D'][loop.index0] }}
+                        </div>
+                        <span class="text-neutral-body">{{ option }}</span>
+                    </div>
+                </button>
+                {% endfor %}
+            </div>
+
+            <div class="mt-6 hidden" id="feedback-{{ question.id }}">
+                <div class="feedback-box p-4 rounded-lg mb-4">
+                    <p class="font-semibold mb-1 feedback-text"></p>
+                    <p class="text-sm feedback-explanation"></p>
+                </div>
+                <button class="next-question-btn px-6 py-3 bg-brand-blue text-white font-semibold rounded-lg hover:bg-brand-blue/90 transition-colors"
+                        aria-label="Next question">
+                    Next question
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Quiz Results (hidden initially) -->
+    <div id="quiz-results" class="hidden">
+        <div class="bg-neutral-surface rounded-xl border border-neutral-border p-8 text-center">
+            <div class="mb-6">
+                <div id="results-icon" class="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center">
+                    <!-- Icon will be added by JavaScript -->
+                </div>
+                <h2 class="text-3xl font-bold text-neutral-body mb-2">Quiz complete!</h2>
+                <p class="text-neutral-muted">Here's how you did</p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 mb-8">
+                <div class="p-4 bg-neutral-page rounded-lg">
+                    <p class="text-3xl font-bold text-neutral-body" id="final-score">0</p>
+                    <p class="text-sm text-neutral-muted">Correct</p>
+                </div>
+                <div class="p-4 bg-neutral-page rounded-lg">
+                    <p class="text-3xl font-bold text-neutral-body" id="final-percentage">0%</p>
+                    <p class="text-sm text-neutral-muted">Score</p>
+                </div>
+                <div class="p-4 bg-neutral-page rounded-lg">
+                    <p class="text-3xl font-bold text-neutral-body">+<span id="points-earned">0</span></p>
+                    <p class="text-sm text-neutral-muted">Points</p>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                <button id="retake-quiz-btn"
+                        class="px-6 py-3 bg-brand-blue text-white font-semibold rounded-lg hover:bg-brand-blue/90 transition-colors"
+                        aria-label="Retake quiz">
+                    Retake quiz
+                </button>
+                <a href="/course/{{ course.id }}"
+                   class="px-6 py-3 bg-brand-orange text-brand-squidink font-semibold rounded-lg hover:bg-brand-orange/90 transition-colors inline-block text-center"
+                   aria-label="Back to course">
+                    Back to course
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let currentQuestion = 1;
+    let score = 0;
+    const totalQuestions = {{ questions|length }};
+    const questionsData = {{ questions|tojson }};
+
+    // Option selection handling
+    document.querySelectorAll('.quiz-option').forEach(button => {
+        button.addEventListener('click', function() {
+            // Disable all options for this question
+            const questionId = this.dataset.questionId;
+            const allOptions = document.querySelectorAll(`[data-question-id="${questionId}"]`);
+            allOptions.forEach(opt => opt.disabled = true);
+
+            const isCorrect = this.dataset.correct === 'true';
+            const feedback = document.getElementById(`feedback-${questionId}`);
+
+            // Update button style
+            if (isCorrect) {
+                this.classList.remove('border-neutral-border');
+                this.classList.add('border-semantic-success', 'bg-semantic-success/10');
+                this.querySelector('.flex-shrink-0').classList.add('bg-semantic-success', 'text-white', 'border-semantic-success');
+                score++;
+                document.getElementById('score').textContent = score;
+            } else {
+                this.classList.remove('border-neutral-border');
+                this.classList.add('border-semantic-error', 'bg-semantic-error/10');
+                this.querySelector('.flex-shrink-0').classList.add('bg-semantic-error', 'text-white', 'border-semantic-error');
+
+                // Highlight correct answer
+                allOptions.forEach(opt => {
+                    if (opt.dataset.correct === 'true') {
+                        opt.classList.remove('border-neutral-border');
+                        opt.classList.add('border-semantic-success', 'bg-semantic-success/10');
+                        opt.querySelector('.flex-shrink-0').classList.add('bg-semantic-success', 'text-white', 'border-semantic-success');
+                    }
+                });
+            }
+
+            // Show feedback
+            const feedbackBox = feedback.querySelector('.feedback-box');
+            const feedbackText = feedback.querySelector('.feedback-text');
+            const feedbackExplanation = feedback.querySelector('.feedback-explanation');
+
+            if (isCorrect) {
+                feedbackBox.classList.add('bg-semantic-success/10', 'border', 'border-semantic-success');
+                feedbackText.classList.add('text-semantic-success');
+                feedbackText.textContent = '✓ Correct!';
+                feedbackExplanation.textContent = 'Great job! You got it right.';
+                feedbackExplanation.classList.add('text-semantic-success');
+            } else {
+                feedbackBox.classList.add('bg-semantic-error/10', 'border', 'border-semantic-error');
+                feedbackText.classList.add('text-semantic-error');
+                feedbackText.textContent = '✗ Incorrect';
+                feedbackExplanation.textContent = 'Review the lesson material and try again.';
+                feedbackExplanation.classList.add('text-semantic-error');
+            }
+
+            feedback.classList.remove('hidden');
+        });
+    });
+
+    // Next question handling
+    document.querySelectorAll('.next-question-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            if (currentQuestion < totalQuestions) {
+                // Hide current question
+                document.querySelector(`[data-question="${currentQuestion}"]`).classList.add('hidden');
+
+                // Show next question
+                currentQuestion++;
+                document.querySelector(`[data-question="${currentQuestion}"]`).classList.remove('hidden');
+
+                // Update progress
+                document.getElementById('current-question').textContent = currentQuestion;
+                const progress = (currentQuestion - 1) / totalQuestions * 100;
+                document.getElementById('progress-bar').style.width = `${progress}%`;
+            } else {
+                // Show results
+                showResults();
+            }
+        });
+    });
+
+    function showResults() {
+        document.getElementById('quiz-container').classList.add('hidden');
+        document.getElementById('quiz-results').classList.remove('hidden');
+
+        const percentage = Math.round((score / totalQuestions) * 100);
+        const pointsEarned = score * 10;
+
+        document.getElementById('final-score').textContent = `${score}/${totalQuestions}`;
+        document.getElementById('final-percentage').textContent = `${percentage}%`;
+        document.getElementById('points-earned').textContent = pointsEarned;
+
+        // Set icon based on performance
+        const resultsIcon = document.getElementById('results-icon');
+        if (percentage >= 80) {
+            resultsIcon.classList.add('bg-semantic-success/10');
+            resultsIcon.innerHTML = `
+                <svg class="w-10 h-10 text-semantic-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            `;
+        } else if (percentage >= 60) {
+            resultsIcon.classList.add('bg-semantic-warning/10');
+            resultsIcon.innerHTML = `
+                <svg class="w-10 h-10 text-semantic-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            `;
+        } else {
+            resultsIcon.classList.add('bg-semantic-error/10');
+            resultsIcon.innerHTML = `
+                <svg class="w-10 h-10 text-semantic-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            `;
+        }
+
+        // Update progress bar to 100%
+        document.getElementById('progress-bar').style.width = '100%';
+    }
+
+    // Retake quiz
+    document.getElementById('retake-quiz-btn').addEventListener('click', function() {
+        location.reload();
+    });
+</script>
+{% endblock %}

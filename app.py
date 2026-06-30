@@ -258,7 +258,7 @@ def lesson(service):
     user_id = get_user_id()
     user_data = load_user_progress(user_id)
 
-    return render_template('lesson.html', service=service, user=user_data)
+    return render_template('lesson-modern.html', service=service, user=user_data)
 
 @app.route('/quiz/<service>')
 def quiz(service):
@@ -291,6 +291,16 @@ def leaderboard():
     user_data = load_user_progress(user_id)
 
     return render_template('leaderboard.html', user=user_data)
+
+@app.route('/aws-fundamentals')
+def aws_fundamentals():
+    """AWS Fundamentals animated page"""
+    return render_template('aws-fundamentals-new.html')
+
+@app.route('/how-cloud-works')
+def how_cloud_works():
+    """Educational page explaining how cloud computing works"""
+    return render_template('how-cloud-works.html')
 
 # API Endpoints
 @app.route('/api/lessons')

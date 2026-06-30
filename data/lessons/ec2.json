@@ -1,0 +1,473 @@
+{
+  "serviceId": "ec2",
+  "serviceName": "Amazon EC2",
+  "title": "Amazon EC2 - Elastic Compute Cloud",
+  "category": "Compute",
+  "difficulty": "Intermediate",
+  "estimatedTime": 60,
+  "icon": "💻",
+  "description": "Master Amazon EC2 - virtual servers in the cloud. Learn about instance types, pricing models, and best practices for running workloads on AWS.",
+  "objectives": [
+    "Understand what EC2 is and its core use cases",
+    "Master EC2 instance types and families",
+    "Learn all pricing models and cost optimization",
+    "Launch and manage EC2 instances effectively",
+    "Implement EC2 security best practices"
+  ],
+  "sections": [
+    {
+      "id": "what-is-ec2",
+      "title": "What is Amazon EC2?",
+      "type": "text",
+      "content": "**Amazon Elastic Compute Cloud (EC2)** is AWS's web service that provides secure, resizable compute capacity in the cloud. Think of it as renting virtual servers that you can configure however you need.\n\n**Key Benefits:**\n- Launch virtual servers in minutes\n- Pay only for what you use\n- Complete control over your instances\n- Scale up or down automatically\n- Choose from 500+ instance types\n\n**Real-World Use Cases:**\n✅ Web hosting and applications\n✅ Development and testing environments\n✅ Big data processing\n✅ Machine learning training\n✅ Gaming servers\n✅ Enterprise applications\n✅ Containerized workloads"
+    },
+    {
+      "id": "instance-types-overview",
+      "title": "EC2 Instance Types & Families",
+      "type": "text",
+      "content": "AWS offers **500+ instance types** across **7 main families**, each optimized for specific workloads.\n\n**Naming Convention:**\n`t3.large` = **Family** (t) + **Generation** (3) + **Size** (large)\n\n**Instance Families:**\n\n**1️⃣ General Purpose (T, M, A)** - Balanced compute, memory, networking\n**2️⃣ Compute Optimized (C)** - High-performance processors\n**3️⃣ Memory Optimized (R, X, Z)** - Large datasets in memory\n**4️⃣ Storage Optimized (I, D, H)** - High disk throughput\n**5️⃣ Accelerated Computing (P, G, Inf, Trn)** - GPUs and ML accelerators\n**6️⃣ HPC Optimized (Hpc)** - High-performance computing\n**7️⃣ Previous Generation** - Older instance types"
+    },
+    {
+      "id": "general-purpose",
+      "title": "General Purpose Instances (T, M, Mac)",
+      "type": "detail",
+      "content": "Ideal for applications with **balanced** compute, memory, and networking needs.",
+      "categories": [
+        {
+          "name": "T3/T3a - Burstable Performance",
+          "icon": "⚡",
+          "description": "Cost-effective for variable workloads",
+          "sizes": [
+            "**t3.nano** - 2 vCPU, 0.5 GB RAM, $0.0052/hr",
+            "**t3.micro** - 2 vCPU, 1 GB RAM, $0.0104/hr (Free Tier!)",
+            "**t3.small** - 2 vCPU, 2 GB RAM, $0.0208/hr",
+            "**t3.medium** - 2 vCPU, 4 GB RAM, $0.0416/hr",
+            "**t3.large** - 2 vCPU, 8 GB RAM, $0.0832/hr",
+            "**t3.xlarge** - 4 vCPU, 16 GB RAM, $0.1664/hr",
+            "**t3.2xlarge** - 8 vCPU, 32 GB RAM, $0.3328/hr"
+          ],
+          "useCases": [
+            "Web servers with variable traffic",
+            "Development environments",
+            "Small databases",
+            "Code repositories",
+            "Microservices"
+          ],
+          "notes": "**CPU Credits**: Earn credits when idle, use during bursts. T3 unlimited allows sustained high CPU (extra cost)."
+        },
+        {
+          "name": "M6i/M6a/M7i - Latest Generation",
+          "icon": "🚀",
+          "description": "Most versatile for production workloads",
+          "sizes": [
+            "**m6i.large** - 2 vCPU, 8 GB RAM, $0.096/hr",
+            "**m6i.xlarge** - 4 vCPU, 16 GB RAM, $0.192/hr",
+            "**m6i.2xlarge** - 8 vCPU, 32 GB RAM, $0.384/hr",
+            "**m6i.4xlarge** - 16 vCPU, 64 GB RAM, $0.768/hr",
+            "**m6i.8xlarge** - 32 vCPU, 128 GB RAM, $1.536/hr",
+            "**m6i.16xlarge** - 64 vCPU, 256 GB RAM, $3.072/hr",
+            "**m6i.32xlarge** - 128 vCPU, 512 GB RAM, $6.144/hr"
+          ],
+          "useCases": [
+            "Application servers",
+            "Enterprise applications",
+            "Medium databases",
+            "Gaming servers",
+            "Backend servers"
+          ]
+        },
+        {
+          "name": "Mac - macOS Instances",
+          "icon": "🍎",
+          "description": "Run macOS for iOS/macOS development",
+          "sizes": [
+            "**mac1.metal** - 12 vCPU, 32 GB RAM, $1.083/hr (24hr minimum)",
+            "**mac2.metal** - 8 vCPU, 16 GB RAM, $0.653/hr (24hr minimum)"
+          ],
+          "useCases": [
+            "iOS app development",
+            "macOS app development",
+            "CI/CD for Apple platforms",
+            "Xcode builds"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "compute-optimized",
+      "title": "Compute Optimized Instances (C Family)",
+      "type": "detail",
+      "content": "**High-performance processors** for compute-intensive workloads. Up to 3.5 GHz sustained all-core turbo frequency.",
+      "categories": [
+        {
+          "name": "C6i/C6a/C7i - Latest Generation",
+          "icon": "🔥",
+          "description": "Highest compute performance",
+          "sizes": [
+            "**c6i.large** - 2 vCPU, 4 GB RAM, $0.085/hr",
+            "**c6i.xlarge** - 4 vCPU, 8 GB RAM, $0.17/hr",
+            "**c6i.2xlarge** - 8 vCPU, 16 GB RAM, $0.34/hr",
+            "**c6i.4xlarge** - 16 vCPU, 32 GB RAM, $0.68/hr",
+            "**c6i.8xlarge** - 32 vCPU, 64 GB RAM, $1.36/hr",
+            "**c6i.16xlarge** - 64 vCPU, 128 GB RAM, $2.72/hr",
+            "**c6i.32xlarge** - 128 vCPU, 256 GB RAM, $5.44/hr"
+          ],
+          "useCases": [
+            "High-performance web servers",
+            "Scientific modeling",
+            "Batch processing",
+            "Distributed analytics",
+            "Gaming servers",
+            "Ad serving",
+            "Video encoding",
+            "Compute-heavy batch jobs"
+          ],
+          "notes": "**Best for**: CPU-bound applications that benefit from high-performance processors."
+        }
+      ]
+    },
+    {
+      "id": "memory-optimized",
+      "title": "Memory Optimized Instances (R, X, Z)",
+      "type": "detail",
+      "content": "Designed for memory-intensive applications that process **large datasets in memory**.",
+      "categories": [
+        {
+          "name": "R6i/R6a/R7i - Memory Optimized",
+          "icon": "🧠",
+          "description": "High memory-to-vCPU ratio",
+          "sizes": [
+            "**r6i.large** - 2 vCPU, 16 GB RAM, $0.126/hr",
+            "**r6i.xlarge** - 4 vCPU, 32 GB RAM, $0.252/hr",
+            "**r6i.2xlarge** - 8 vCPU, 64 GB RAM, $0.504/hr",
+            "**r6i.4xlarge** - 16 vCPU, 128 GB RAM, $1.008/hr",
+            "**r6i.8xlarge** - 32 vCPU, 256 GB RAM, $2.016/hr",
+            "**r6i.16xlarge** - 64 vCPU, 512 GB RAM, $4.032/hr",
+            "**r6i.32xlarge** - 128 vCPU, 1024 GB RAM, $8.064/hr"
+          ],
+          "useCases": [
+            "In-memory databases (Redis, Memcached)",
+            "Real-time big data analytics",
+            "High-performance databases",
+            "Distributed caches",
+            "In-memory analytics"
+          ]
+        },
+        {
+          "name": "X2idn/X2iedn - Extreme Memory",
+          "icon": "💎",
+          "description": "Highest memory per vCPU ratio",
+          "sizes": [
+            "**x2idn.16xlarge** - 64 vCPU, 1024 GB RAM, $6.669/hr",
+            "**x2idn.24xlarge** - 96 vCPU, 1536 GB RAM, $10.003/hr",
+            "**x2idn.32xlarge** - 128 vCPU, 2048 GB RAM, $13.338/hr"
+          ],
+          "useCases": [
+            "SAP HANA",
+            "In-memory databases",
+            "Big data analytics",
+            "High-performance computing"
+          ]
+        },
+        {
+          "name": "Z1d - High Compute + Memory",
+          "icon": "⚡",
+          "description": "High frequency + high memory",
+          "sizes": [
+            "**z1d.large** - 2 vCPU, 16 GB RAM, 4.0 GHz",
+            "**z1d.xlarge** - 4 vCPU, 32 GB RAM, 4.0 GHz",
+            "**z1d.2xlarge** - 8 vCPU, 64 GB RAM, 4.0 GHz",
+            "**z1d.3xlarge** - 12 vCPU, 96 GB RAM, 4.0 GHz",
+            "**z1d.6xlarge** - 24 vCPU, 192 GB RAM, 4.0 GHz",
+            "**z1d.12xlarge** - 48 vCPU, 384 GB RAM, 4.0 GHz"
+          ],
+          "useCases": [
+            "Electronic Design Automation (EDA)",
+            "Gaming",
+            "High single-threaded performance needs"
+          ],
+          "notes": "**Sustained 4.0 GHz** frequency - fastest in EC2!"
+        }
+      ]
+    },
+    {
+      "id": "storage-optimized",
+      "title": "Storage Optimized Instances (I, D, H)",
+      "type": "detail",
+      "content": "Optimized for workloads requiring **high sequential read/write access** to large datasets.",
+      "categories": [
+        {
+          "name": "I4i - NVMe SSD Storage",
+          "icon": "💾",
+          "description": "Highest storage I/O performance",
+          "sizes": [
+            "**i4i.large** - 2 vCPU, 16 GB RAM, 468 GB NVMe SSD",
+            "**i4i.xlarge** - 4 vCPU, 32 GB RAM, 937 GB NVMe SSD",
+            "**i4i.2xlarge** - 8 vCPU, 64 GB RAM, 1875 GB NVMe SSD",
+            "**i4i.4xlarge** - 16 vCPU, 128 GB RAM, 3750 GB NVMe SSD",
+            "**i4i.8xlarge** - 32 vCPU, 256 GB RAM, 7500 GB NVMe SSD",
+            "**i4i.16xlarge** - 64 vCPU, 512 GB RAM, 15000 GB NVMe SSD",
+            "**i4i.32xlarge** - 128 vCPU, 1024 GB RAM, 30000 GB NVMe SSD"
+          ],
+          "useCases": [
+            "NoSQL databases (Cassandra, MongoDB)",
+            "Transactional databases",
+            "Data warehousing",
+            "Elasticsearch",
+            "Real-time analytics"
+          ],
+          "notes": "**Up to 400,000 IOPS** and **100 GB/s throughput**"
+        },
+        {
+          "name": "D3/D3en - Dense HDD Storage",
+          "icon": "📀",
+          "description": "High disk throughput",
+          "useCases": [
+            "Distributed file systems (Hadoop)",
+            "Log processing",
+            "Data warehousing",
+            "MapReduce workloads"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "accelerated-computing",
+      "title": "Accelerated Computing (P, G, Inf, Trn)",
+      "type": "detail",
+      "content": "Instances with **GPUs** and **ML accelerators** for parallel processing workloads.",
+      "categories": [
+        {
+          "name": "P4/P5 - ML Training (NVIDIA GPUs)",
+          "icon": "🤖",
+          "description": "Most powerful for AI/ML training",
+          "sizes": [
+            "**p4d.24xlarge** - 96 vCPU, 1152 GB RAM, 8× A100 GPUs",
+            "**p5.48xlarge** - 192 vCPU, 2048 GB RAM, 8× H100 GPUs"
+          ],
+          "useCases": [
+            "Large language model training",
+            "Deep learning training",
+            "High-performance computing",
+            "Computational fluid dynamics"
+          ],
+          "notes": "**P5**: Latest with NVIDIA H100 GPUs, **3200 GB/s** GPU-to-GPU bandwidth"
+        },
+        {
+          "name": "G5/G5g - Graphics & ML Inference",
+          "icon": "🎮",
+          "description": "Graphics workloads & ML inference",
+          "sizes": [
+            "**g5.xlarge** - 4 vCPU, 16 GB RAM, 1× NVIDIA A10G GPU",
+            "**g5.2xlarge** - 8 vCPU, 32 GB RAM, 1× NVIDIA A10G GPU",
+            "**g5.4xlarge** - 16 vCPU, 64 GB RAM, 1× NVIDIA A10G GPU",
+            "**g5.8xlarge** - 32 vCPU, 128 GB RAM, 1× NVIDIA A10G GPU",
+            "**g5.16xlarge** - 64 vCPU, 256 GB RAM, 1× NVIDIA A10G GPU",
+            "**g5.12xlarge** - 48 vCPU, 192 GB RAM, 4× NVIDIA A10G GPUs",
+            "**g5.48xlarge** - 192 vCPU, 768 GB RAM, 8× NVIDIA A10G GPUs"
+          ],
+          "useCases": [
+            "ML inference",
+            "Graphics workstations",
+            "Video encoding/transcoding",
+            "Game streaming",
+            "3D rendering"
+          ]
+        },
+        {
+          "name": "Inf2 - AWS Inferentia (ML Inference)",
+          "icon": "⚡",
+          "description": "Purpose-built for ML inference",
+          "sizes": [
+            "**inf2.xlarge** - 4 vCPU, 16 GB, 1× Inferentia2",
+            "**inf2.8xlarge** - 32 vCPU, 128 GB, 1× Inferentia2",
+            "**inf2.24xlarge** - 96 vCPU, 384 GB, 6× Inferentia2",
+            "**inf2.48xlarge** - 192 vCPU, 768 GB, 12× Inferentia2"
+          ],
+          "useCases": [
+            "Large language model inference",
+            "Computer vision",
+            "NLP inference",
+            "Recommendation engines"
+          ],
+          "notes": "**Up to 70% lower cost** than GPU instances for inference"
+        },
+        {
+          "name": "Trn1/Trn1n - AWS Trainium (ML Training)",
+          "icon": "🧬",
+          "description": "Purpose-built for ML training",
+          "sizes": [
+            "**trn1.2xlarge** - 8 vCPU, 32 GB, 1× Trainium",
+            "**trn1.32xlarge** - 128 vCPU, 512 GB, 16× Trainium",
+            "**trn1n.32xlarge** - 128 vCPU, 512 GB, 16× Trainium + 1600 Gbps network"
+          ],
+          "useCases": [
+            "Training LLMs (GPT, BERT)",
+            "Computer vision training",
+            "NLP model training",
+            "Deep learning research"
+          ],
+          "notes": "**Up to 50% cost savings** vs GPU instances for training"
+        }
+      ]
+    },
+    {
+      "id": "pricing-models",
+      "title": "EC2 Pricing Models - Save Up to 90%",
+      "type": "detail",
+      "content": "Choose the right pricing model to optimize costs significantly.",
+      "categories": [
+        {
+          "name": "1. On-Demand Instances",
+          "icon": "💰",
+          "description": "Most flexible, highest cost",
+          "features": [
+            "Pay by the second (60 sec minimum)",
+            "No long-term commitments",
+            "No upfront payments",
+            "Scale up/down anytime"
+          ],
+          "bestFor": [
+            "Short-term workloads",
+            "Unpredictable traffic",
+            "Development/testing",
+            "Applications with spiky demand"
+          ],
+          "pricing": "**Example**: t3.medium = $0.0416/hour = ~$30/month"
+        },
+        {
+          "name": "2. Reserved Instances (RI)",
+          "icon": "📅",
+          "description": "Up to 72% savings",
+          "features": [
+            "1 or 3 year commitment",
+            "Standard RI: Specific instance type",
+            "Convertible RI: Change instance types",
+            "Payment: All, Partial, or No Upfront"
+          ],
+          "bestFor": [
+            "Steady-state workloads",
+            "Predictable usage",
+            "Production databases",
+            "Always-on applications"
+          ],
+          "pricing": "**Savings**: 40-72% vs On-Demand\n**Example**: t3.medium 1-year = ~$18/month (40% savings)"
+        },
+        {
+          "name": "3. Spot Instances",
+          "icon": "🎯",
+          "description": "Up to 90% savings",
+          "features": [
+            "Bid on spare EC2 capacity",
+            "Can be interrupted (2-min warning)",
+            "Price fluctuates based on supply/demand",
+            "Ideal for fault-tolerant workloads"
+          ],
+          "bestFor": [
+            "Batch processing",
+            "Big data analysis",
+            "CI/CD pipelines",
+            "Containerized workloads",
+            "Testing at scale"
+          ],
+          "pricing": "**Savings**: 70-90% vs On-Demand\n**Example**: t3.medium spot = ~$3-6/month"
+        },
+        {
+          "name": "4. Savings Plans",
+          "icon": "🎁",
+          "description": "Up to 72% savings, more flexible",
+          "features": [
+            "Commit to $/hour for 1 or 3 years",
+            "Automatically applies to usage",
+            "Compute Savings Plan: Any EC2, Lambda, Fargate",
+            "EC2 Instance Savings Plan: Any EC2 in family"
+          ],
+          "bestFor": [
+            "Flexible workloads",
+            "Multi-service usage",
+            "Growing applications",
+            "Organizations using multiple services"
+          ],
+          "pricing": "**Savings**: 66-72% vs On-Demand\n**Example**: $10/hour commitment = ~$7,200/month"
+        },
+        {
+          "name": "5. Dedicated Hosts",
+          "icon": "🏢",
+          "description": "Physical server for compliance",
+          "features": [
+            "Physical EC2 server",
+            "Full control over instance placement",
+            "Bring your own licenses (BYOL)",
+            "Visibility into sockets, cores, host ID"
+          ],
+          "bestFor": [
+            "Regulatory compliance",
+            "Licensing requirements (Windows Server, SQL Server)",
+            "Strong isolation needs"
+          ],
+          "pricing": "**Most Expensive**: $1,000-5,000+/month per host"
+        }
+      ]
+    },
+    {
+      "id": "launching-ec2",
+      "title": "Launching EC2 Instances - Step by Step",
+      "type": "text",
+      "content": "**Prerequisites:**\n✅ AWS Account\n✅ IAM permissions for EC2\n✅ Basic networking knowledge\n\n**Launch Steps:**\n\n**1. Choose AMI (Amazon Machine Image)**\n- Amazon Linux 2023 (Free Tier)\n- Ubuntu 22.04 LTS\n- Windows Server 2022\n- Red Hat Enterprise Linux\n- Custom AMIs\n\n**2. Choose Instance Type**\n- Free Tier: t2.micro or t3.micro\n- Development: t3.small/medium\n- Production: m5.large or larger\n\n**3. Configure Instance**\n- Network (VPC)\n- Subnet (Availability Zone)\n- Auto-assign Public IP\n- IAM Role (NO hardcoded credentials!)\n- User Data (startup scripts)\n\n**4. Add Storage**\n- Root volume (8 GB minimum)\n- EBS types: gp3 (general), io2 (high performance)\n- Instance Store (temporary)\n\n**5. Configure Security Group**\n- SSH (22) from My IP\n- HTTP (80) from 0.0.0.0/0\n- HTTPS (443) from 0.0.0.0/0\n\n**6. Create Key Pair**\n- Download .pem file\n- Keep secure (can't download again!)\n\n**7. Launch!**"
+    },
+    {
+      "id": "connecting",
+      "title": "Connecting to EC2 Instances",
+      "type": "text",
+      "content": "**Linux/Mac SSH:**\n\n```bash\n# Set permissions\nchmod 400 my-key.pem\n\n# Connect\nssh -i \"my-key.pem\" ec2-user@<public-ip>\n\n# Amazon Linux 2: ec2-user\n# Ubuntu: ubuntu\n# RHEL: ec2-user or root\n```\n\n**Windows:**\n- Use PuTTY (convert .pem to .ppk)\n- Use PowerShell\n- Use WSL (Windows Subsystem for Linux)\n\n**EC2 Instance Connect (Browser):**\n- Click \"Connect\" in AWS Console\n- No key needed\n- Works for Amazon Linux 2 and Ubuntu\n\n**AWS Systems Manager Session Manager:**\n- No SSH needed\n- No open ports needed\n- Full audit trail\n- IAM-based access control"
+    },
+    {
+      "id": "managing-instances",
+      "title": "Managing EC2 Instances",
+      "type": "text",
+      "content": "**Instance States:**\n\n**Pending** → **Running** → **Stopping** → **Stopped**\n                    ↓\n             **Terminating** → **Terminated**\n\n**Actions:**\n\n**Start**: Boot stopped instance\n- Pays for running time\n- May get new public IP (use Elastic IP to prevent)\n\n**Stop**: Shutdown instance\n- Stops compute charges\n- Still pay for EBS storage\n- Data preserved\n\n**Reboot**: Restart OS\n- Same IPs maintained\n- No data loss\n\n**Terminate**: Delete forever\n- ⚠️ Cannot be undone\n- Root volume deleted (unless configured)\n\n**Instance Metadata:**\n```bash\n# Access from within instance\ncurl http://169.254.169.254/latest/meta-data/instance-id\ncurl http://169.254.169.254/latest/meta-data/public-ipv4\ncurl http://169.254.169.254/latest/user-data\n```"
+    },
+    {
+      "id": "security-best-practices",
+      "title": "EC2 Security Best Practices",
+      "type": "list",
+      "items": [
+        "**Use IAM Roles** - Never hardcode AWS credentials on instances",
+        "**Security Groups** - Implement least privilege, restrict IPs where possible",
+        "**Key Management** - Unique keys per project, store securely, rotate regularly",
+        "**Keep Updated** - Regularly patch OS and software, enable auto-updates",
+        "**EBS Encryption** - Always encrypt volumes and snapshots at rest",
+        "**VPC Configuration** - Use private subnets for internal services",
+        "**Enable CloudWatch** - Monitor performance and set alarms",
+        "**Regular Backups** - Create AMIs and EBS snapshots frequently",
+        "**Use Systems Manager** - Centralized patch management and session access",
+        "**Enable CloudTrail** - Audit all API calls for compliance",
+        "**Termination Protection** - Enable for production instances",
+        "**No Root Login** - Disable root SSH access",
+        "**Multi-Factor Auth** - Require MFA for AWS Console access",
+        "**Security Scanning** - Use AWS Inspector for vulnerability assessment"
+      ]
+    },
+    {
+      "id": "monitoring",
+      "title": "Monitoring & Optimization",
+      "type": "text",
+      "content": "**CloudWatch Metrics (Basic - Free):**\n- CPU Utilization\n- Network In/Out\n- Disk Read/Write\n- Status Checks\n- Updated every 5 minutes\n\n**Detailed Monitoring ($0.10/instance/month):**\n- 1-minute intervals\n- Better for auto-scaling\n- Faster alerting\n\n**Status Checks:**\n\n**System Status Check** (AWS infrastructure):\n- Power, network connectivity issues\n- Hardware problems\n- Resolution: Stop and start instance\n\n**Instance Status Check** (Your OS):\n- Failed system startup\n- Network/firewall config\n- Kernel issues\n- Resolution: Reboot or fix configuration\n\n**Cost Optimization Tips:**\n✅ Right-size based on CloudWatch metrics\n✅ Use Auto Scaling for variable loads\n✅ Stop instances when not needed\n✅ Use Spot for batch jobs (90% savings)\n✅ Reserved Instances for base load (72% savings)\n✅ Enable Cost Allocation Tags\n✅ Set up billing alarms"
+    }
+  ],
+  "advantages": [
+    "**Elasticity** - Scale from 1 to 10,000+ instances in minutes",
+    "**500+ Instance Types** - Perfect fit for any workload",
+    "**Multiple Pricing Models** - Save up to 90% with Spot instances",
+    "**Global Infrastructure** - Deploy in 33 regions worldwide",
+    "**High Availability** - 99.99% SLA with Multi-AZ deployment",
+    "**Security** - AWS-owned data centers with extensive compliance certifications",
+    "**Integration** - Works seamlessly with 200+ AWS services",
+    "**No Upfront Investment** - Pay only for what you use",
+    "**Complete Control** - Root/Administrator access to instances",
+    "**Automatic Backups** - EBS snapshots and AMI creation"
+  ],
+  "quiz": true,
+  "nextLesson": "security-groups",
+  "prerequisites": ["aws-overview"]
+}

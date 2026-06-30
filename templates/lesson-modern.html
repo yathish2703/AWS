@@ -1,0 +1,620 @@
+{% extends "base-new.html" %}
+
+{% block title %}{{ lesson_title|default('Lesson') }} - AWS Learning Platform{% endblock %}
+
+{% block content %}
+<div class="lesson-viewer">
+    <!-- Lesson Header -->
+    <div class="card lesson-header">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+            <div style="flex: 1; min-width: 300px;">
+                <h1 id="lesson-title" style="font-size: 2.5rem; margin-bottom: 0.75rem; color: var(--text-primary);">
+                    Loading...
+                </h1>
+                <div class="lesson-meta" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                    <span class="badge badge-info" id="lesson-difficulty">📌 Loading...</span>
+                    <span class="badge" id="lesson-time">⏱️ Loading...</span>
+                    <span class="badge" id="lesson-sections-count">📚 Loading...</span>
+                </div>
+                <div id="lesson-description" style="color: var(--text-secondary); line-height: 1.6;"></div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <a href="/" class="btn" style="background: var(--dark-gradient);">← Dashboard</a>
+                <button id="toggle-dark-mode" class="btn" style="background: var(--glass-bg); border: 1px solid var(--glass-border);">🌙</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Bar for Lesson -->
+    <div class="card mt-3">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span style="font-weight: 600;">Lesson Progress</span>
+            <span id="progress-percentage">0%</span>
+        </div>
+        <div class="progress-bar">
+            <div id="lesson-progress-fill" class="progress-fill" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Main Content with Tabs -->
+    <div class="mt-4" style="display: grid; grid-template-columns: 250px 1fr; gap: 2rem;">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">📑 Contents</h3>
+                <nav id="toc-nav" class="toc-navigation">
+                    <p style="color: var(--text-muted);">Loading...</p>
+                </nav>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">⚡ Quick Actions</h3>
+                <button id="mark-complete" class="btn btn-full btn-success mb-2">
+                    ✓ Mark Complete
+                </button>
+                <a id="take-quiz" href="#" class="btn btn-full" style="display: none; background: var(--warning-gradient);">
+                    🧠 Take Quiz
+                </a>
+            </div>
+
+            <!-- Lesson Stats -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-title">📊 Stats</h3>
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: var(--text-secondary);">Sections</span>
+                        <span id="stats-sections" style="font-weight: 600;">-</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: var(--text-secondary);">Time</span>
+                        <span id="stats-time" style="font-weight: 600;">-</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: var(--text-secondary);">Level</span>
+                        <span id="stats-level" style="font-weight: 600;">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="lesson-main">
+            <!-- View Mode Tabs -->
+            <div class="tabs">
+                <button class="tab active" data-tab="content">📖 Content</button>
+                <button class="tab" data-tab="outline">📋 Outline</button>
+                <button class="tab" data-tab="notes">📝 Notes</button>
+            </div>
+
+            <!-- Content Tab -->
+            <div id="tab-content" class="tab-content active">
+                <div id="lesson-sections" class="card">
+                    <p style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                        Loading lesson content...
+                    </p>
+                </div>
+
+                <!-- Advantages Section -->
+                <div id="advantages-section" class="card mt-3" style="display: none;">
+                    <h2 style="color: var(--text-primary); margin-bottom: 1rem;">✨ Key Advantages</h2>
+                    <div id="advantages-list" style="display: grid; gap: 1rem;"></div>
+                </div>
+            </div>
+
+            <!-- Outline Tab -->
+            <div id="tab-outline" class="tab-content">
+                <div class="card">
+                    <h2 style="margin-bottom: 1.5rem;">📋 Lesson Outline</h2>
+                    <div id="lesson-outline" style="line-height: 2;"></div>
+                </div>
+            </div>
+
+            <!-- Notes Tab -->
+            <div id="tab-notes" class="tab-content">
+                <div class="card">
+                    <h2 style="margin-bottom: 1.5rem;">📝 Your Notes</h2>
+                    <textarea id="user-notes" placeholder="Write your notes here... (saved automatically)"
+                              style="width: 100%; min-height: 300px; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border);
+                              border-radius: var(--radius-md); padding: 1rem; color: var(--text-primary); font-family: inherit;
+                              font-size: 1rem; line-height: 1.6; resize: vertical;">
+                    </textarea>
+                    <p style="color: var(--text-muted); margin-top: 0.5rem; font-size: 0.9rem;">
+                        💡 Your notes are saved in your browser's local storage
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.toc-navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.toc-nav-item {
+    display: block;
+    padding: 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.toc-nav-item:hover {
+    background: var(--glass-bg);
+    color: var(--text-primary);
+    border-left-color: rgba(102, 126, 234, 0.5);
+}
+
+.toc-nav-item.active {
+    background: var(--glass-strong);
+    color: var(--text-primary);
+    border-left-color: #667eea;
+    font-weight: 600;
+}
+
+.section-content {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--glass-border);
+    scroll-margin-top: 100px;
+}
+
+.section-content:last-child {
+    border-bottom: none;
+}
+
+.section-content h2 {
+    color: var(--text-primary);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.section-content h3 {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    margin: 2rem 0 1rem 0;
+}
+
+.section-content h4 {
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    margin: 1.5rem 0 0.75rem 0;
+}
+
+.section-content p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin: 1rem 0;
+}
+
+.section-content ul,
+.section-content ol {
+    margin: 1rem 0 1rem 2rem;
+    color: var(--text-secondary);
+}
+
+.section-content li {
+    margin: 0.75rem 0;
+    line-height: 1.6;
+}
+
+.section-content strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.section-content code {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9em;
+    color: #4facfe;
+}
+
+.section-content pre {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+.section-content pre code {
+    background: none;
+    padding: 0;
+    color: #a9b7c6;
+}
+
+/* Code block with copy button */
+.code-block-wrapper {
+    position: relative;
+    margin: 1.5rem 0;
+}
+
+.code-block-wrapper .copy-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.code-block-wrapper .copy-btn:hover {
+    background: var(--glass-strong);
+}
+
+.code-block-wrapper .copy-btn.copied {
+    background: var(--success-gradient);
+    border-color: transparent;
+}
+
+.advantage-item {
+    padding: 1rem;
+    background: var(--glass-bg);
+    border-left: 4px solid #38ef7d;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: all 0.3s ease;
+}
+
+.advantage-item:hover {
+    transform: translateX(8px);
+    background: var(--glass-strong);
+}
+
+.advantage-item::before {
+    content: '✓';
+    color: #38ef7d;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+    .lesson-viewer > div:has(.sidebar) {
+        grid-template-columns: 1fr !important;
+    }
+
+    .sidebar {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        position: static !important;
+    }
+}
+</style>
+
+<script>
+let lessonData = null;
+let currentSectionIndex = 0;
+
+// Tab switching
+document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        const tabName = tab.dataset.tab;
+
+        // Update tabs
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        // Update content
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.getElementById(`tab-${tabName}`).classList.add('active');
+    });
+});
+
+// Copy to clipboard functionality
+function addCopyButtons() {
+    document.querySelectorAll('pre code').forEach((block) => {
+        if (block.parentElement.querySelector('.copy-btn')) return; // Already has button
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        block.parentElement.parentNode.insertBefore(wrapper, block.parentElement);
+        wrapper.appendChild(block.parentElement);
+
+        const button = document.createElement('button');
+        button.className = 'copy-btn';
+        button.textContent = '📋 Copy';
+        button.addEventListener('click', () => {
+            navigator.clipboard.writeText(block.textContent).then(() => {
+                button.textContent = '✓ Copied!';
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.textContent = '📋 Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        });
+
+        wrapper.appendChild(button);
+    });
+}
+
+// Load user notes
+function loadNotes() {
+    const service = '{{ service }}';
+    const notes = localStorage.getItem(`notes-${service}`);
+    if (notes) {
+        document.getElementById('user-notes').value = notes;
+    }
+}
+
+// Save user notes
+document.getElementById('user-notes')?.addEventListener('input', (e) => {
+    const service = '{{ service }}';
+    localStorage.setItem(`notes-${service}`, e.target.value);
+});
+
+// Scroll progress tracking
+function updateScrollProgress() {
+    const sections = document.querySelectorAll('.section-content');
+    const windowHeight = window.innerHeight;
+    const scrollTop = window.scrollY;
+
+    let visibleSections = 0;
+    sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < windowHeight * 0.5) {
+            visibleSections++;
+        }
+    });
+
+    const progress = Math.min((visibleSections / sections.length) * 100, 100);
+    document.getElementById('lesson-progress-fill').style.width = `${progress}%`;
+    document.getElementById('progress-percentage').textContent = `${Math.round(progress)}%`;
+
+    // Update active TOC item
+    sections.forEach((section, index) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top >= 0 && rect.top < windowHeight * 0.3) {
+            document.querySelectorAll('.toc-nav-item').forEach(item => item.classList.remove('active'));
+            document.querySelector(`.toc-nav-item[href="#${section.id}"]`)?.classList.add('active');
+        }
+    });
+}
+
+window.addEventListener('scroll', updateScrollProgress);
+
+// Fetch and display lesson content
+async function loadLesson() {
+    const service = '{{ service }}';
+    try {
+        const response = await fetch(`/api/lesson/${service}`);
+        lessonData = await response.json();
+
+        if (lessonData.error) {
+            document.getElementById('lesson-sections').innerHTML = `
+                <div style="text-align: center; padding: 3rem;">
+                    <h2 style="color: #f5576c;">Lesson Not Found</h2>
+                    <p style="color: var(--text-muted); margin: 1rem 0;">This lesson is not yet available.</p>
+                    <a href="/" class="btn">Return to Dashboard</a>
+                </div>
+            `;
+            return;
+        }
+
+        // Update header
+        document.getElementById('lesson-title').innerHTML = `${lessonData.icon || '📚'} ${lessonData.title}`;
+        document.getElementById('lesson-difficulty').textContent = `📌 ${lessonData.difficulty}`;
+        document.getElementById('lesson-time').textContent = `⏱️ ${lessonData.estimatedTime} min`;
+        document.getElementById('lesson-sections-count').textContent = `📚 ${lessonData.sections.length} sections`;
+        document.getElementById('lesson-description').textContent = lessonData.description || '';
+
+        // Update stats
+        document.getElementById('stats-sections').textContent = lessonData.sections.length;
+        document.getElementById('stats-time').textContent = `${lessonData.estimatedTime} min`;
+        document.getElementById('stats-level').textContent = lessonData.difficulty;
+
+        // Build table of contents
+        const tocNav = document.getElementById('toc-nav');
+        tocNav.innerHTML = lessonData.sections.map((section, index) => `
+            <a href="#section-${section.id}" class="toc-nav-item" data-section="${section.id}">
+                ${index + 1}. ${section.title}
+            </a>
+        `).join('');
+
+        // Build outline
+        const outline = document.getElementById('lesson-outline');
+        outline.innerHTML = '<ol style="line-height: 2; color: var(--text-secondary);">' +
+            lessonData.sections.map(section => `<li><strong>${section.title}</strong></li>`).join('') +
+            '</ol>';
+
+        // Build lesson content with accordion
+        const sectionsHtml = lessonData.sections.map((section, index) => {
+            let contentHtml = formatSectionContent(section);
+
+            return `
+                <div class="accordion-item ${index === 0 ? 'active' : ''}" id="section-${section.id}">
+                    <div class="accordion-header">
+                        <span><strong>${index + 1}.</strong> ${section.title}</span>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content" style="${index === 0 ? 'max-height: 2000px; padding: 0 1.5rem 1.5rem;' : ''}">
+                        ${contentHtml}
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        document.getElementById('lesson-sections').innerHTML = sectionsHtml;
+
+        // Add accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                const wasActive = item.classList.contains('active');
+
+                // Close all items
+                document.querySelectorAll('.accordion-item').forEach(i => {
+                    i.classList.remove('active');
+                    i.querySelector('.accordion-content').style.maxHeight = '0';
+                    i.querySelector('.accordion-content').style.padding = '0 1.5rem';
+                });
+
+                // Open clicked item if it wasn't active
+                if (!wasActive) {
+                    item.classList.add('active');
+                    item.querySelector('.accordion-content').style.maxHeight = '2000px';
+                    item.querySelector('.accordion-content').style.padding = '0 1.5rem 1.5rem';
+                }
+            });
+        });
+
+        // Show advantages
+        if (lessonData.advantages && lessonData.advantages.length > 0) {
+            document.getElementById('advantages-section').style.display = 'block';
+            document.getElementById('advantages-list').innerHTML = lessonData.advantages.map(adv => `
+                <div class="advantage-item">${adv}</div>
+            `).join('');
+        }
+
+        // Show quiz button
+        if (lessonData.quiz) {
+            const quizBtn = document.getElementById('take-quiz');
+            quizBtn.style.display = 'inline-block';
+            quizBtn.href = `/quiz/${service}`;
+        }
+
+        // Add copy buttons to code blocks
+        setTimeout(addCopyButtons, 100);
+
+        // Load notes
+        loadNotes();
+
+    } catch (error) {
+        console.error('Error loading lesson:', error);
+        document.getElementById('lesson-sections').innerHTML = `
+            <div style="text-align: center; padding: 3rem;">
+                <h2 style="color: #f5576c;">Error Loading Lesson</h2>
+                <p style="color: var(--text-muted);">Please try again later.</p>
+            </div>
+        `;
+    }
+}
+
+function formatSectionContent(section) {
+    const formatText = (text) => {
+        if (!text) return '';
+        return text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/`([^`]+)`/g, '<code>$1</code>')
+            .replace(/\n\n/g, '</p><p>')
+            .replace(/\n/g, '<br>');
+    };
+
+    let html = '';
+
+    if (section.type === 'text') {
+        html = `<p>${formatText(section.content)}</p>`;
+    } else if (section.type === 'list') {
+        html = `
+            ${section.content ? `<p>${formatText(section.content)}</p>` : ''}
+            <ul>
+                ${section.items.map(item => `<li>${formatText(item)}</li>`).join('')}
+            </ul>
+        `;
+    } else if (section.type === 'detail') {
+        html = `<p>${formatText(section.content)}</p>`;
+
+        if (section.examples) {
+            html += `<h4>Examples:</h4><ul>
+                ${section.examples.map(ex => `<li>${formatText(ex)}</li>`).join('')}
+            </ul>`;
+        }
+        if (section.useCases) {
+            html += `<h4>Use Cases:</h4><ul>
+                ${section.useCases.map(uc => `<li>${formatText(uc)}</li>`).join('')}
+            </ul>`;
+        }
+        if (section.keyPoints) {
+            html += `<h4>Key Points:</h4><ul>
+                ${section.keyPoints.map(kp => `<li>${formatText(kp)}</li>`).join('')}
+            </ul>`;
+        }
+    } else {
+        html = `<p>${formatText(section.content || '')}</p>`;
+    }
+
+    return html;
+}
+
+// Mark lesson as complete
+document.getElementById('mark-complete').addEventListener('click', async function() {
+    const service = '{{ service }}';
+    const button = this;
+    button.disabled = true;
+    button.textContent = 'Marking complete...';
+
+    try {
+        const response = await fetch('/api/user/progress', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                lessonId: service,
+                completed: true,
+                score: 100
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            button.textContent = '✓ Completed!';
+            button.style.background = 'var(--success-gradient)';
+            alert(`🎉 Great job! You earned 100 points!\nYou are now Level ${result.level}.`);
+
+            if (result.newBadges && result.newBadges.length > 0) {
+                alert(`🏆 New Badge Unlocked!\n${result.newBadges.map(b => b.badgeId).join(', ')}`);
+            }
+        }
+    } catch (error) {
+        console.error('Error marking complete:', error);
+        button.disabled = false;
+        button.textContent = '✓ Mark as Complete';
+    }
+});
+
+// Smooth scrolling for TOC links
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('toc-nav-item')) {
+        e.preventDefault();
+        const targetId = e.target.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+            // Open accordion if closed
+            if (!targetElement.classList.contains('active')) {
+                targetElement.querySelector('.accordion-header').click();
+            }
+            setTimeout(() => {
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+    }
+});
+
+// Load lesson on page load
+loadLesson();
+</script>
+{% endblock %}

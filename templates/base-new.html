@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AWS Learning Platform{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/earthy-palette.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">
+                <span class="logo-icon">☁️</span>
+                <span>AWS Learning</span>
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/">🏠 Dashboard</a></li>
+                    <li><a href="/aws-fundamentals">🎬 Demo</a></li>
+                    <li><a href="/profile">👤 Profile</a></li>
+                    <li><a href="/leaderboard">🏆 Leaderboard</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- User Stats Bar -->
+    <div class="user-stats-bar">
+        <div class="user-stats">
+            <div class="stat-item">
+                <span class="stat-icon">📊</span>
+                <div>
+                    <div class="stat-value">{{ user.level or 1 }}</div>
+                    <div class="stat-label">Level</div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-icon">⭐</span>
+                <div>
+                    <div class="stat-value">{{ user.totalPoints or 0 }}</div>
+                    <div class="stat-label">Points</div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-icon">🔥</span>
+                <div>
+                    <div class="stat-value">{{ user.streak or 0 }}</div>
+                    <div class="stat-label">Streak</div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-icon">🏆</span>
+                <div>
+                    <div class="stat-value">{{ user.badges|length or 0 }}</div>
+                    <div class="stat-label">Badges</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p style="font-weight: 600; margin-bottom: 0.5rem;">&copy; 2026 AWS Learning Platform</p>
+        <p style="font-size: 0.9rem;">Master Cloud Computing with Interactive Lessons</p>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

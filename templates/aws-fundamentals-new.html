@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Fundamentals: EC2, Security Groups & IAM - Interactive Demo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ultimate-modern.css') }}">
+    <style>
+        body {
+            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            min-height: 100vh;
+        }
+
+        .demo-header {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: white;
+        }
+
+        .demo-header h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .demo-header p {
+            font-size: 1.5rem;
+            opacity: 0.95;
+            animation: slideDown 0.8s ease-out 0.2s backwards;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .demo-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .demo-section {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .demo-section:nth-child(1) { animation-delay: 0.3s; }
+        .demo-section:nth-child(2) { animation-delay: 0.4s; }
+        .demo-section:nth-child(3) { animation-delay: 0.5s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #6366f1;
+        }
+
+        .section-icon {
+            font-size: 3.5rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #6366f1;
+        }
+
+        /* EC2 Animation Container */
+        .animation-box {
+            position: relative;
+            height: 450px;
+            background: linear-gradient(to bottom, #dbeafe 0%, #e0f2fe 50%, #f0f9ff 100%);
+            border-radius: 20px;
+            margin: 2rem 0;
+            overflow: hidden;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Clouds */
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            animation: floatCloud 30s linear infinite;
+        }
+
+        .cloud-1 {
+            width: 100px;
+            height: 50px;
+            top: 50px;
+            left: -150px;
+            animation: floatCloud1 25s linear infinite;
+        }
+
+        .cloud-2 {
+            width: 120px;
+            height: 60px;
+            top: 100px;
+            left: -150px;
+            animation: floatCloud2 30s linear infinite;
+        }
+
+        .cloud-3 {
+            width: 80px;
+            height: 40px;
+            top: 150px;
+            left: -150px;
+            animation: floatCloud3 20s linear infinite;
+        }
+
+        @keyframes floatCloud1 {
+            from { left: -150px; }
+            to { left: calc(100% + 150px); }
+        }
+
+        @keyframes floatCloud2 {
+            from { left: -150px; }
+            to { left: calc(100% + 150px); }
+        }
+
+        @keyframes floatCloud3 {
+            from { left: -150px; }
+            to { left: calc(100% + 150px); }
+        }
+
+        /* EC2 Instance */
+        .ec2-instance {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+            transform: translate(-50%, -50%) scale(0) rotate(0deg);
+            animation: bootInstance 2s ease-out 0.5s forwards, pulseGlow 2s ease-in-out 2.5s infinite;
+        }
+
+        @keyframes bootInstance {
+            0% {
+                transform: translate(-50%, -50%) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            60% {
+                transform: translate(-50%, -50%) scale(1.2) rotate(360deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1) rotate(360deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+            }
+            50% {
+                box-shadow: 0 15px 60px rgba(99, 102, 241, 0.8),
+                            0 0 40px rgba(99, 102, 241, 0.6);
+            }
+        }
+
+        /* Security Shield */
+        .security-shield {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 240px;
+            height: 240px;
+            border: 4px dashed #10b981;
+            border-radius: 50%;
+            opacity: 0;
+            animation: showShield 1s ease-out 3s forwards, rotateShield 15s linear 4s infinite;
+        }
+
+        .security-shield::before {
+            content: '🛡️';
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+        }
+
+        @keyframes showShield {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes rotateShield {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        /* Data Packets */
+        .data-packet {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.6);
+            opacity: 0;
+            animation: flowData 3s ease-in-out 4.5s infinite;
+        }
+
+        .data-packet:nth-child(2) {
+            animation-delay: 5s;
+        }
+
+        .data-packet:nth-child(3) {
+            animation-delay: 5.5s;
+        }
+
+        @keyframes flowData {
+            0% {
+                left: 10%;
+                top: 50%;
+                opacity: 0;
+                transform: scale(0);
+            }
+            25% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            75% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                left: 50%;
+                top: 50%;
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+
+        /* Feature Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            padding: 2rem;
+            border-radius: 16px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.6s; }
+        .feature-card:nth-child(2) { animation-delay: 0.7s; }
+        .feature-card:nth-child(3) { animation-delay: 0.8s; }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-desc {
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        /* IAM Diagram */
+        .iam-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .iam-entity {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
+            border-radius: 16px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+            animation: scaleIn 0.6s ease-out backwards;
+        }
+
+        .iam-entity:nth-child(1) { animation-delay: 0.7s; }
+        .iam-entity:nth-child(2) { animation-delay: 0.8s; }
+        .iam-entity:nth-child(3) { animation-delay: 0.9s; }
+        .iam-entity:nth-child(4) { animation-delay: 1s; }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .iam-entity-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .iam-entity-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .iam-entity-desc {
+            opacity: 0.95;
+        }
+
+        /* Security Flow */
+        .sg-flow {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 3rem;
+            background: #f1f5f9;
+            border-radius: 20px;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .sg-box {
+            width: 160px;
+            height: 160px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeInScale 0.8s ease-out backwards;
+        }
+
+        .sg-box:nth-child(1) {
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            animation-delay: 0.5s;
+        }
+
+        .sg-box:nth-child(2) {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            animation-delay: 0.8s;
+        }
+
+        .sg-box:nth-child(3) {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            animation-delay: 1.1s;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .sg-box-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.25rem 3rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .demo-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .sg-flow {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .animation-box {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-header">
+        <h1>🚀 AWS Fundamentals</h1>
+        <p>Interactive Demo: EC2, Security Groups & IAM</p>
+    </div>
+
+    <div class="demo-container">
+        <!-- EC2 Section -->
+        <div class="demo-section">
+            <div class="section-header">
+                <div class="section-icon">💻</div>
+                <h2 class="section-title">Amazon EC2 - Virtual Servers in the Cloud</h2>
+            </div>
+
+            <p style="font-size: 1.2rem; color: #475569; margin-bottom: 2rem;">
+                Watch as an EC2 instance boots up in the AWS cloud! EC2 provides resizable compute capacity,
+                allowing you to launch virtual servers in minutes.
+            </p>
+
+            <div class="animation-box">
+                <div class="cloud cloud-1"></div>
+                <div class="cloud cloud-2"></div>
+                <div class="cloud cloud-3"></div>
+                <div class="security-shield"></div>
+                <div class="ec2-instance">💻</div>
+                <div class="data-packet"></div>
+                <div class="data-packet"></div>
+                <div class="data-packet"></div>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Elastic & Scalable</div>
+                    <div class="feature-desc">
+                        Scale up or down within minutes. Launch hundreds of instances simultaneously
+                        to handle any workload.
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <div class="feature-title">Cost-Effective</div>
+                    <div class="feature-desc">
+                        Pay only for compute time you use. Multiple pricing models to optimize costs
+                        including On-Demand, Reserved, and Spot.
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">Flexible Configuration</div>
+                    <div class="feature-desc">
+                        Choose CPU, memory, storage, and networking. Multiple instance types optimized
+                        for different workloads.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Groups Section -->
+        <div class="demo-section">
+            <div class="section-header">
+                <div class="section-icon">🛡️</div>
+                <h2 class="section-title">Security Groups - Your Virtual Firewall</h2>
+            </div>
+
+            <p style="font-size: 1.2rem; color: #475569; margin-bottom: 2rem;">
+                Security Groups act as virtual firewalls, controlling inbound and outbound traffic to your EC2 instances.
+                They provide the first line of defense for your cloud resources.
+            </p>
+
+            <div class="sg-flow">
+                <div class="sg-box">
+                    <div class="sg-box-icon">🌐</div>
+                    <div>Internet</div>
+                </div>
+                <div class="sg-box">
+                    <div class="sg-box-icon">🛡️</div>
+                    <div>Security Group</div>
+                    <small style="font-size: 0.85rem; opacity: 0.9;">(Checks Rules)</small>
+                </div>
+                <div class="sg-box">
+                    <div class="sg-box-icon">💻</div>
+                    <div>EC2 Instance</div>
+                </div>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card" style="background: linear-gradient(135deg, #10b981, #059669);">
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-title">Stateful Firewall</div>
+                    <div class="feature-desc">
+                        Automatically allows return traffic. If inbound is allowed, outbound response
+                        is automatically permitted.
+                    </div>
+                </div>
+                <div class="feature-card" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                    <div class="feature-icon">✅</div>
+                    <div class="feature-title">Allow Rules Only</div>
+                    <div class="feature-desc">
+                        Everything is denied by default. Only create allow rules. No explicit deny needed.
+                    </div>
+                </div>
+                <div class="feature-card" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Instant Updates</div>
+                    <div class="feature-desc">
+                        Changes take effect immediately. No need to restart instances or wait for propagation.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- IAM Section -->
+        <div class="demo-section">
+            <div class="section-header">
+                <div class="section-icon">🔐</div>
+                <h2 class="section-title">IAM - Identity & Access Management</h2>
+            </div>
+
+            <p style="font-size: 1.2rem; color: #475569; margin-bottom: 2rem;">
+                IAM controls who can access your AWS resources and what they can do.
+                It's the foundation of AWS security, managing authentication and authorization.
+            </p>
+
+            <div class="iam-grid">
+                <div class="iam-entity">
+                    <div class="iam-entity-icon">👤</div>
+                    <div class="iam-entity-title">Users</div>
+                    <div class="iam-entity-desc">
+                        Individual people or applications with permanent credentials
+                    </div>
+                </div>
+                <div class="iam-entity">
+                    <div class="iam-entity-icon">👥</div>
+                    <div class="iam-entity-title">Groups</div>
+                    <div class="iam-entity-desc">
+                        Collections of users with shared permissions
+                    </div>
+                </div>
+                <div class="iam-entity">
+                    <div class="iam-entity-icon">🎭</div>
+                    <div class="iam-entity-title">Roles</div>
+                    <div class="iam-entity-desc">
+                        Temporary credentials assumed by users or services
+                    </div>
+                </div>
+                <div class="iam-entity">
+                    <div class="iam-entity-icon">📜</div>
+                    <div class="iam-entity-title">Policies</div>
+                    <div class="iam-entity-desc">
+                        JSON documents defining permissions
+                    </div>
+                </div>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card" style="background: linear-gradient(135deg, #ec4899, #f43f5e);">
+                    <div class="feature-icon">🔑</div>
+                    <div class="feature-title">Granular Permissions</div>
+                    <div class="feature-desc">
+                        Fine-grained control over who can access what. Implement least privilege principle effectively.
+                    </div>
+                </div>
+                <div class="feature-card" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">
+                    <div class="feature-icon">🌍</div>
+                    <div class="feature-title">Global Service</div>
+                    <div class="feature-desc">
+                        IAM is not regional. Users, groups, and roles work across all AWS regions globally.
+                    </div>
+                </div>
+                <div class="feature-card" style="background: linear-gradient(135deg, #10b981, #059669);">
+                    <div class="feature-icon">🔐</div>
+                    <div class="feature-title">Multi-Factor Auth</div>
+                    <div class="feature-desc">
+                        Add extra security layer with MFA. Protect sensitive operations and accounts from unauthorized access.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- How They Work Together -->
+        <div class="demo-section" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white;">
+            <div class="section-header" style="border-bottom-color: rgba(255, 255, 255, 0.3);">
+                <div class="section-icon">🔗</div>
+                <h2 class="section-title" style="color: white;">How They Work Together</h2>
+            </div>
+
+            <h3 style="font-size: 2rem; margin-bottom: 1.5rem; font-weight: 700;">Complete Security Architecture</h3>
+            <div style="font-size: 1.2rem; line-height: 2;">
+                <p><strong>1. IAM</strong> controls <strong>who</strong> can launch EC2 instances and manage resources</p>
+                <p><strong>2. EC2</strong> provides the compute capacity - your virtual servers in the cloud</p>
+                <p><strong>3. Security Groups</strong> control <strong>what</strong> network traffic reaches your EC2 instances</p>
+                <div style="margin-top: 2rem; padding: 2rem; background: rgba(255, 255, 255, 0.15); border-radius: 16px; backdrop-filter: blur(10px);">
+                    💡 <strong>Example:</strong> An IAM user (Alice) with EC2 permissions launches an instance.
+                    The Security Group ensures only HTTPS traffic from approved IPs can reach her web server.
+                    IAM policies prevent unauthorized users from accessing her resources.
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <h2 style="font-size: 2.5rem; font-weight: 800; color: #6366f1; margin-bottom: 1rem;">
+                Ready to Start Learning?
+            </h2>
+            <p style="font-size: 1.2rem; color: #475569; margin-bottom: 2rem;">
+                Dive deep into each topic with comprehensive lessons, interactive examples, and hands-on practice.
+            </p>
+            <a href="/" class="cta-button">🚀 Explore All Lessons</a>
+        </div>
+    </div>
+
+    <div style="text-align: center; padding: 3rem; color: white;">
+        <p style="font-size: 1.1rem; font-weight: 600;">© 2026 AWS Learning Platform</p>
+        <p style="opacity: 0.9;">Built for Learning Excellence</p>
+    </div>
+</body>
+</html>

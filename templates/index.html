@@ -1,16 +1,17 @@
-{% extends "base.html" %}
+{% extends "base-new.html" %}
 
 {% block title %}Dashboard - AWS Learning Platform{% endblock %}
 
 {% block content %}
-<div class="dashboard fade-in">
+<div class="dashboard">
+    <!-- Hero Section with Progress -->
     <div class="hero-section">
-        <h1>Welcome to AWS Learning Platform! 🚀</h1>
-        <p>Master cloud computing and AWS services through gamified, interactive lessons.</p>
+        <h1>Welcome to Your AWS Learning Journey! 🚀</h1>
+        <p>Master cloud computing through interactive lessons, hands-on labs, and real-world scenarios.</p>
         <div class="progress-container">
             <div class="progress-label">
-                <span>Your Progress</span>
-                <span>{{ user.completedLessons|length or 0 }} / 13 lessons</span>
+                <span>Your Learning Progress</span>
+                <span><strong>{{ user.completedLessons|length or 0 }}</strong> of <strong>13</strong> lessons completed</span>
             </div>
             <div class="progress-bar">
                 <div class="progress-fill" style="width: {{ ((user.completedLessons|length / 13) * 100) if user.completedLessons else 0 }}%"></div>
@@ -18,141 +19,305 @@
         </div>
     </div>
 
-    <div class="section-header">
-        <h2 class="section-title">📚 Learning Path</h2>
-        <p class="section-subtitle">Module 0: Cloud Computing Basics - Start Here!</p>
-    </div>
-
-    <div class="grid grid-cols-3">
-        <div class="lesson-card">
-            <span class="lesson-badge">Beginner</span>
-            <span class="lesson-icon">☁️</span>
-            <h4 class="lesson-title">Introduction to Cloud Computing</h4>
-            <p class="lesson-description">Learn what cloud computing is and why it matters.</p>
-            <div class="lesson-meta">
-                <span>⏱️ 20 min</span>
-                <span>📌 Level 1</span>
-            </div>
-            <a href="/lesson/intro-to-cloud" class="btn btn-primary btn-full mt-2">Start Lesson</a>
-        </div>
-
-        <div class="lesson-card">
-            <span class="lesson-badge">Beginner</span>
-            <span class="lesson-icon">🏗️</span>
-            <h4 class="lesson-title">Cloud Service Models</h4>
-            <p class="lesson-description">Understand IaaS, PaaS, and SaaS with real examples.</p>
-            <div class="lesson-meta">
-                <span>⏱️ 25 min</span>
-                <span>📌 Level 1</span>
-            </div>
-            <a href="/lesson/service-models" class="btn btn-primary btn-full mt-2">Start Lesson</a>
-        </div>
-
-        <div class="lesson-card">
-            <span class="lesson-badge">Beginner</span>
-            <span class="lesson-icon">🌐</span>
-            <h4 class="lesson-title">Cloud Deployment Models</h4>
-            <p class="lesson-description">Explore public, private, hybrid, and multi-cloud.</p>
-            <div class="lesson-meta">
-                <span>⏱️ 20 min</span>
-                <span>📌 Level 1</span>
-            </div>
-            <a href="/lesson/deployment-models" class="btn btn-primary btn-full mt-2">Start Lesson</a>
-        </div>
-
-        <div class="lesson-card">
-            <span class="lesson-badge">Beginner</span>
-            <span class="lesson-icon">⭐</span>
-            <h4 class="lesson-title">Benefits of Cloud Computing</h4>
-            <p class="lesson-description">Discover cost savings, scalability, and more.</p>
-            <div class="lesson-meta">
-                <span>⏱️ 25 min</span>
-                <span>📌 Level 1</span>
-            </div>
-            <a href="/lesson/cloud-benefits" class="btn btn-primary btn-full mt-2">Start Lesson</a>
-        </div>
-
-        <div class="lesson-card">
-            <span class="lesson-badge">Beginner</span>
-            <span class="lesson-icon">🚀</span>
-            <h4 class="lesson-title">AWS Overview & Global Infrastructure</h4>
-            <p class="lesson-description">Learn about AWS regions, AZs, and services.</p>
-            <div class="lesson-meta">
-                <span>⏱️ 30 min</span>
-                <span>📌 Level 1</span>
-            </div>
-            <a href="/lesson/aws-overview" class="btn btn-primary btn-full mt-2">Start Lesson</a>
-        </div>
-    </div>
-
-    <div class="section-header mt-4">
-        <h3 class="section-title">Module 1-4: AWS Services</h3>
-        <p class="section-subtitle">Complete Module 0 First to Unlock</p>
-    </div>
-
-    <div class="alert alert-info">
-        <strong>Coming Soon!</strong> More AWS service lessons are being prepared: IAM, VPC, EC2, Lambda, S3, Load Balancer, Route 53, and Security Groups.
-    </div>
-
-    <div class="grid grid-cols-3">
-        <div class="lesson-card" style="opacity: 0.6;">
-            <span class="lesson-icon">🔒</span>
-            <h4 class="lesson-title">IAM</h4>
-            <p class="lesson-description">Identity & Access Management</p>
-        </div>
-        <div class="lesson-card" style="opacity: 0.6;">
-            <span class="lesson-icon">🌐</span>
-            <h4 class="lesson-title">VPC</h4>
-            <p class="lesson-description">Virtual Private Cloud</p>
-        </div>
-        <div class="lesson-card" style="opacity: 0.6;">
-            <span class="lesson-icon">💻</span>
-            <h4 class="lesson-title">EC2</h4>
-            <p class="lesson-description">Virtual Servers</p>
-        </div>
-        <div class="lesson-card" style="opacity: 0.6;">
-            <span class="lesson-icon">⚡</span>
-            <h4 class="lesson-title">Lambda</h4>
-            <p class="lesson-description">Serverless Functions</p>
-        </div>
-        <div class="lesson-card" style="opacity: 0.6;">
-            <span class="lesson-icon">💾</span>
-            <h4 class="lesson-title">S3</h4>
-            <p class="lesson-description">Object Storage</p>
-        </div>
-        <div class="lesson-card" style="opacity: 0.6;">
-            <span class="lesson-icon">⚖️</span>
-            <h4 class="lesson-title">Load Balancer</h4>
-            <p class="lesson-description">Traffic Distribution</p>
-        </div>
-    </div>
-
-    <div class="section-header mt-4">
-        <h2 class="section-title">Your Achievements 🏆</h2>
-        <p class="section-subtitle">Track your learning progress and milestones</p>
-    </div>
-
-    <div class="grid grid-cols-4">
-        <div class="stat-box">
+    <!-- Stats Overview -->
+    <div class="stats-grid">
+        <div class="stat-box slide-in-left" style="animation-delay: 0.1s;">
             <div class="stat-box-icon">📊</div>
             <div class="stat-box-value">{{ user.level or 1 }}</div>
             <div class="stat-box-label">Current Level</div>
         </div>
-        <div class="stat-box">
+        <div class="stat-box slide-in-left" style="animation-delay: 0.2s;">
             <div class="stat-box-icon">⭐</div>
             <div class="stat-box-value">{{ user.totalPoints or 0 }}</div>
             <div class="stat-box-label">Total Points</div>
         </div>
-        <div class="stat-box">
+        <div class="stat-box slide-in-left" style="animation-delay: 0.3s;">
             <div class="stat-box-icon">🔥</div>
             <div class="stat-box-value">{{ user.streak or 0 }}</div>
             <div class="stat-box-label">Day Streak</div>
         </div>
-        <div class="stat-box">
+        <div class="stat-box slide-in-left" style="animation-delay: 0.4s;">
             <div class="stat-box-icon">🏆</div>
             <div class="stat-box-value">{{ user.badges|length or 0 }}</div>
             <div class="stat-box-label">Badges Earned</div>
         </div>
     </div>
+
+    <!-- Interactive Demo Highlight -->
+    <div class="card card-gradient mt-4" style="text-align: center; animation: slideInUp 0.6s ease;">
+        <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">🎬 Interactive AWS Fundamentals Demo</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.95;">
+            Experience AWS services come to life! Watch EC2 instances boot, Security Groups protect resources,
+            and IAM control access - all with stunning animations!
+        </p>
+        <a href="/aws-fundamentals" class="btn btn-lg" style="background: white; color: #667eea; font-size: 1.2rem;">
+            🎯 Launch Interactive Demo
+        </a>
+    </div>
+
+    <!-- Module 0: Cloud Basics -->
+    <div class="section-header mt-4">
+        <h2 class="section-title">☁️ Module 0: Cloud Computing Fundamentals</h2>
+        <p class="section-subtitle">Start your cloud journey with essential concepts</p>
+    </div>
+
+    <div class="lessons-grid">
+        <div class="lesson-card slide-in-up" style="animation-delay: 0.1s;">
+            <span class="lesson-badge">Beginner</span>
+            <span class="lesson-icon">☁️</span>
+            <h4 class="lesson-title">Introduction to Cloud Computing</h4>
+            <p class="lesson-description">Discover what cloud computing is, why it matters, and how it's transforming modern business.</p>
+            <div class="lesson-meta">
+                <span>⏱️ 20 min</span>
+                <span>📌 Level 1</span>
+            </div>
+            <a href="/lesson/intro-to-cloud" class="btn btn-full">Start Learning →</a>
+        </div>
+
+        <div class="lesson-card slide-in-up" style="animation-delay: 0.2s;">
+            <span class="lesson-badge">Beginner</span>
+            <span class="lesson-icon">🏗️</span>
+            <h4 class="lesson-title">Cloud Service Models</h4>
+            <p class="lesson-description">Master IaaS, PaaS, and SaaS with real-world examples and use cases.</p>
+            <div class="lesson-meta">
+                <span>⏱️ 25 min</span>
+                <span>📌 Level 1</span>
+            </div>
+            <a href="/lesson/service-models" class="btn btn-full">Start Learning →</a>
+        </div>
+
+        <div class="lesson-card slide-in-up" style="animation-delay: 0.3s;">
+            <span class="lesson-badge">Beginner</span>
+            <span class="lesson-icon">🌐</span>
+            <h4 class="lesson-title">Cloud Deployment Models</h4>
+            <p class="lesson-description">Explore public, private, hybrid, and multi-cloud deployment strategies.</p>
+            <div class="lesson-meta">
+                <span>⏱️ 20 min</span>
+                <span>📌 Level 1</span>
+            </div>
+            <a href="/lesson/deployment-models" class="btn btn-full">Start Learning →</a>
+        </div>
+
+        <div class="lesson-card slide-in-up" style="animation-delay: 0.4s;">
+            <span class="lesson-badge">Beginner</span>
+            <span class="lesson-icon">⭐</span>
+            <h4 class="lesson-title">Benefits of Cloud Computing</h4>
+            <p class="lesson-description">Learn about cost savings, scalability, flexibility, and other cloud advantages.</p>
+            <div class="lesson-meta">
+                <span>⏱️ 25 min</span>
+                <span>📌 Level 1</span>
+            </div>
+            <a href="/lesson/cloud-benefits" class="btn btn-full">Start Learning →</a>
+        </div>
+
+        <div class="lesson-card slide-in-up" style="animation-delay: 0.5s;">
+            <span class="lesson-badge">Beginner</span>
+            <span class="lesson-icon">🚀</span>
+            <h4 class="lesson-title">AWS Overview & Infrastructure</h4>
+            <p class="lesson-description">Understand AWS global infrastructure, regions, availability zones, and core services.</p>
+            <div class="lesson-meta">
+                <span>⏱️ 30 min</span>
+                <span>📌 Level 1</span>
+            </div>
+            <a href="/lesson/aws-overview" class="btn btn-full">Start Learning →</a>
+        </div>
+    </div>
+
+    <!-- Module 1: Core AWS Services -->
+    <div class="section-header mt-4">
+        <h2 class="section-title">⚡ Module 1: Core AWS Services</h2>
+        <p class="section-subtitle">Master EC2, Security Groups, and IAM</p>
+    </div>
+
+    <div class="alert alert-info">
+        <strong>🎉 Recently Added!</strong> These core AWS services are now available with comprehensive lessons and interactive examples.
+    </div>
+
+    <div class="lessons-grid">
+        <div class="lesson-card slide-in-up" style="animation-delay: 0.1s; border: 2px solid rgba(102, 126, 234, 0.3);">
+            <span class="lesson-badge badge-success">Popular</span>
+            <span class="lesson-icon">💻</span>
+            <h4 class="lesson-title">Amazon EC2 - Elastic Compute Cloud</h4>
+            <p class="lesson-description">Learn to launch and manage virtual servers in the cloud with complete flexibility and control.</p>
+            <div class="lesson-meta">
+                <span>⏱️ 45 min</span>
+                <span>📌 Level 2</span>
+                <span>🎓 15 sections</span>
+            </div>
+            <a href="/lesson/ec2" class="btn btn-full btn-success">Start Lesson →</a>
+        </div>
+
+        <div class="lesson-card slide-in-up" style="animation-delay: 0.2s; border: 2px solid rgba(76, 175, 80, 0.3);">
+            <span class="lesson-badge badge-success">Essential</span>
+            <span class="lesson-icon">🛡️</span>
+            <h4 class="lesson-title">Security Groups</h4>
+            <p class="lesson-description">Master virtual firewalls to control inbound and outbound traffic for your AWS resources.</p>
+            <div class="lesson-meta">
+                <span>⏱️ 35 min</span>
+                <span>📌 Level 2</span>
+                <span>🎓 12 sections</span>
+            </div>
+            <a href="/lesson/security-groups" class="btn btn-full btn-success">Start Lesson →</a>
+        </div>
+
+        <div class="lesson-card slide-in-up" style="animation-delay: 0.3s; border: 2px solid rgba(245, 87, 108, 0.3);">
+            <span class="lesson-badge badge-warning">Critical</span>
+            <span class="lesson-icon">🔐</span>
+            <h4 class="lesson-title">AWS IAM - Identity & Access Management</h4>
+            <p class="lesson-description">Control who can access your AWS resources and define granular permissions with IAM.</p>
+            <div class="lesson-meta">
+                <span>⏱️ 40 min</span>
+                <span>📌 Level 2</span>
+                <span>🎓 14 sections</span>
+            </div>
+            <a href="/lesson/iam" class="btn btn-full btn-danger">Start Lesson →</a>
+        </div>
+    </div>
+
+    <!-- Coming Soon -->
+    <div class="section-header mt-4">
+        <h2 class="section-title">🔮 Coming Soon</h2>
+        <p class="section-subtitle">More AWS services are on the way</p>
+    </div>
+
+    <div class="lessons-grid">
+        <div class="lesson-card" style="opacity: 0.6; cursor: not-allowed;">
+            <span class="lesson-badge" style="background: var(--dark-gradient);">Coming Soon</span>
+            <span class="lesson-icon">🌐</span>
+            <h4 class="lesson-title">Amazon VPC</h4>
+            <p class="lesson-description">Virtual Private Cloud - Isolated network environment</p>
+            <div class="lesson-meta">
+                <span>⏱️ TBD</span>
+                <span>📌 Level 2</span>
+            </div>
+        </div>
+
+        <div class="lesson-card" style="opacity: 0.6; cursor: not-allowed;">
+            <span class="lesson-badge" style="background: var(--dark-gradient);">Coming Soon</span>
+            <span class="lesson-icon">⚡</span>
+            <h4 class="lesson-title">AWS Lambda</h4>
+            <p class="lesson-description">Serverless compute - Run code without servers</p>
+            <div class="lesson-meta">
+                <span>⏱️ TBD</span>
+                <span>📌 Level 3</span>
+            </div>
+        </div>
+
+        <div class="lesson-card" style="opacity: 0.6; cursor: not-allowed;">
+            <span class="lesson-badge" style="background: var(--dark-gradient);">Coming Soon</span>
+            <span class="lesson-icon">💾</span>
+            <h4 class="lesson-title">Amazon S3</h4>
+            <p class="lesson-description">Simple Storage Service - Scalable object storage</p>
+            <div class="lesson-meta">
+                <span>⏱️ TBD</span>
+                <span>📌 Level 2</span>
+            </div>
+        </div>
+
+        <div class="lesson-card" style="opacity: 0.6; cursor: not-allowed;">
+            <span class="lesson-badge" style="background: var(--dark-gradient);">Coming Soon</span>
+            <span class="lesson-icon">⚖️</span>
+            <h4 class="lesson-title">Elastic Load Balancer</h4>
+            <p class="lesson-description">Distribute traffic across multiple targets</p>
+            <div class="lesson-meta">
+                <span>⏱️ TBD</span>
+                <span>📌 Level 3</span>
+            </div>
+        </div>
+
+        <div class="lesson-card" style="opacity: 0.6; cursor: not-allowed;">
+            <span class="lesson-badge" style="background: var(--dark-gradient);">Coming Soon</span>
+            <span class="lesson-icon">🌍</span>
+            <h4 class="lesson-title">Amazon Route 53</h4>
+            <p class="lesson-description">Scalable DNS and domain name management</p>
+            <div class="lesson-meta">
+                <span>⏱️ TBD</span>
+                <span>📌 Level 3</span>
+            </div>
+        </div>
+
+        <div class="lesson-card" style="opacity: 0.6; cursor: not-allowed;">
+            <span class="lesson-badge" style="background: var(--dark-gradient);">Coming Soon</span>
+            <span class="lesson-icon">📊</span>
+            <h4 class="lesson-title">Amazon CloudWatch</h4>
+            <p class="lesson-description">Monitoring and observability platform</p>
+            <div class="lesson-meta">
+                <span>⏱️ TBD</span>
+                <span>📌 Level 3</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Learning Path Recommendation -->
+    <div class="card mt-4" style="background: var(--primary-gradient); color: white; border: none;">
+        <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">🎯 Recommended Learning Path</h3>
+        <ol style="line-height: 2; font-size: 1.1rem;">
+            <li><strong>Start with Cloud Basics</strong> - Complete Module 0 to build foundational knowledge</li>
+            <li><strong>Master EC2</strong> - Learn to launch and manage virtual servers</li>
+            <li><strong>Secure with Security Groups</strong> - Control network access to your resources</li>
+            <li><strong>Control Access with IAM</strong> - Manage who can do what in your AWS account</li>
+            <li><strong>Continue Learning</strong> - Explore advanced services as they become available</li>
+        </ol>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="grid grid-cols-3 mt-4">
+        <div class="card" style="text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
+            <h4 style="margin-bottom: 0.5rem;">All Lessons</h4>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Browse all available lessons</p>
+            <a href="/" class="btn btn-full">View All</a>
+        </div>
+
+        <div class="card" style="text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">👤</div>
+            <h4 style="margin-bottom: 0.5rem;">Your Profile</h4>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Track progress and achievements</p>
+            <a href="/profile" class="btn btn-full">View Profile</a>
+        </div>
+
+        <div class="card" style="text-align: center;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🏆</div>
+            <h4 style="margin-bottom: 0.5rem;">Leaderboard</h4>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Compare with other learners</p>
+            <a href="/leaderboard" class="btn btn-full">View Rankings</a>
+        </div>
+    </div>
 </div>
+
+<style>
+    /* Additional dashboard-specific styles */
+    .lesson-card {
+        position: relative;
+        overflow: visible;
+    }
+
+    .lesson-card::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: var(--radius-lg);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+
+    .lesson-card:hover::after {
+        opacity: 1;
+        box-shadow: 0 0 30px rgba(102, 126, 234, 0.4);
+    }
+
+    @media (max-width: 768px) {
+        .hero-section h1 {
+            font-size: 2rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+</style>
 {% endblock %}
