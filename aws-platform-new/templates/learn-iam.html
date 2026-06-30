@@ -286,6 +286,210 @@
         </div>
     </div>
 
+    <!-- Authentication vs Authorization -->
+    <div class="mb-16">
+        <h2 class="text-3xl font-bold text-neutral-body mb-6">Authentication vs Authorization</h2>
+
+        <div class="bg-gradient-to-br from-brand-blue/10 to-semantic-info/10 rounded-xl border border-brand-blue/30 p-8 mb-8">
+            <p class="text-neutral-muted text-lg mb-6">
+                Understanding the difference between authentication and authorization is fundamental to AWS security.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Authentication -->
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-brand-blue/10 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-brand-blue">Authentication</h3>
+                            <p class="text-sm text-neutral-muted">AuthN</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-brand-blue/5 rounded-lg p-4 mb-4">
+                        <p class="text-2xl font-bold text-brand-blue text-center mb-2">"Who are you?"</p>
+                        <p class="text-center text-neutral-muted">Verifying identity</p>
+                    </div>
+
+                    <p class="text-neutral-body font-semibold mb-3">Authentication Methods:</p>
+                    <ul class="space-y-2 text-sm text-neutral-muted">
+                        <li class="flex items-start">
+                            <span class="text-brand-blue mr-2 font-bold">•</span>
+                            <span><strong>Username & Password</strong> - Console access</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-brand-blue mr-2 font-bold">•</span>
+                            <span><strong>Access Keys</strong> - Programmatic access (API/CLI)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-brand-blue mr-2 font-bold">•</span>
+                            <span><strong>MFA (Multi-Factor)</strong> - Extra security layer</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-brand-blue mr-2 font-bold">•</span>
+                            <span><strong>Temporary Tokens</strong> - From assumed roles</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-brand-blue mr-2 font-bold">•</span>
+                            <span><strong>Federated Identity</strong> - Corporate SSO</span>
+                        </li>
+                    </ul>
+
+                    <div class="mt-4 pt-4 border-t border-neutral-border">
+                        <p class="text-xs text-neutral-muted mb-2"><strong>Example:</strong></p>
+                        <div class="bg-brand-squidink rounded-lg p-3 text-white text-xs">
+                            <p class="mb-1">🔐 Login to AWS Console</p>
+                            <p class="mb-1">→ Enter username: <span class="text-brand-orange">alice</span></p>
+                            <p class="mb-1">→ Enter password: <span class="text-brand-orange">••••••••</span></p>
+                            <p>✅ Identity verified!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Authorization -->
+                <div class="bg-white rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-semantic-warning/10 rounded-lg flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-semantic-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-semantic-warning">Authorization</h3>
+                            <p class="text-sm text-neutral-muted">AuthZ</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-semantic-warning/5 rounded-lg p-4 mb-4">
+                        <p class="text-2xl font-bold text-semantic-warning text-center mb-2">"What can you do?"</p>
+                        <p class="text-center text-neutral-muted">Checking permissions</p>
+                    </div>
+
+                    <p class="text-neutral-body font-semibold mb-3">Defined by IAM Policies:</p>
+                    <ul class="space-y-2 text-sm text-neutral-muted">
+                        <li class="flex items-start">
+                            <span class="text-semantic-warning mr-2 font-bold">•</span>
+                            <span><strong>Effect</strong> - Allow or Deny actions</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-semantic-warning mr-2 font-bold">•</span>
+                            <span><strong>Action</strong> - What operations (s3:GetObject)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-semantic-warning mr-2 font-bold">•</span>
+                            <span><strong>Resource</strong> - Which AWS resources (ARN)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-semantic-warning mr-2 font-bold">•</span>
+                            <span><strong>Condition</strong> - When it applies (optional)</span>
+                        </li>
+                    </ul>
+
+                    <div class="mt-4 pt-4 border-t border-neutral-border">
+                        <p class="text-xs text-neutral-muted mb-2"><strong>Example:</strong></p>
+                        <div class="bg-brand-squidink rounded-lg p-3 text-white text-xs">
+                            <p class="mb-1">📋 Alice tries to list S3 objects</p>
+                            <p class="mb-1">→ AWS checks policies...</p>
+                            <p class="mb-1">→ Policy allows <span class="text-semantic-success">s3:ListBucket</span></p>
+                            <p>✅ Action authorized!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Differences Table -->
+        <div class="bg-neutral-surface rounded-xl border border-neutral-border p-8 mb-8">
+            <h3 class="text-xl font-bold text-neutral-body mb-4">Key differences</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b border-neutral-border">
+                            <th class="text-left p-3 text-neutral-body font-bold">Aspect</th>
+                            <th class="text-left p-3 text-brand-blue font-bold">Authentication</th>
+                            <th class="text-left p-3 text-semantic-warning font-bold">Authorization</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr class="border-b border-neutral-border/50">
+                            <td class="p-3 font-semibold text-neutral-body">Question</td>
+                            <td class="p-3 text-neutral-muted">Who are you?</td>
+                            <td class="p-3 text-neutral-muted">What can you do?</td>
+                        </tr>
+                        <tr class="border-b border-neutral-border/50">
+                            <td class="p-3 font-semibold text-neutral-body">Purpose</td>
+                            <td class="p-3 text-neutral-muted">Verify identity</td>
+                            <td class="p-3 text-neutral-muted">Grant permissions</td>
+                        </tr>
+                        <tr class="border-b border-neutral-border/50">
+                            <td class="p-3 font-semibold text-neutral-body">When</td>
+                            <td class="p-3 text-neutral-muted">First (at login)</td>
+                            <td class="p-3 text-neutral-muted">After authentication</td>
+                        </tr>
+                        <tr class="border-b border-neutral-border/50">
+                            <td class="p-3 font-semibold text-neutral-body">AWS Examples</td>
+                            <td class="p-3 text-neutral-muted">Password, access keys, MFA</td>
+                            <td class="p-3 text-neutral-muted">IAM policies, resource policies</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-semibold text-neutral-body">Error Message</td>
+                            <td class="p-3 text-neutral-muted">"Invalid credentials"</td>
+                            <td class="p-3 text-neutral-muted">"Access denied"</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Real-World Analogy -->
+        <div class="bg-gradient-to-br from-semantic-info/10 to-brand-blue/10 rounded-xl border border-semantic-info/30 p-8">
+            <h3 class="text-xl font-bold text-neutral-body mb-4 flex items-center">
+                <svg class="w-6 h-6 mr-2 text-semantic-info" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+                Real-world analogy: Airport security
+            </h3>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg p-6">
+                    <div class="flex items-center mb-3">
+                        <span class="text-3xl mr-3">🛂</span>
+                        <h4 class="font-bold text-brand-blue">Authentication</h4>
+                    </div>
+                    <p class="text-sm text-neutral-muted mb-2">
+                        TSA Agent: "Show me your ID and boarding pass"
+                    </p>
+                    <p class="text-sm text-neutral-muted mb-2">
+                        → Agent verifies photo matches your face
+                    </p>
+                    <p class="text-sm font-semibold text-semantic-success">
+                        ✅ "You are who you claim to be"
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-lg p-6">
+                    <div class="flex items-center mb-3">
+                        <span class="text-3xl mr-3">✈️</span>
+                        <h4 class="font-bold text-semantic-warning">Authorization</h4>
+                    </div>
+                    <p class="text-sm text-neutral-muted mb-2">
+                        Gate Agent: "Let me check your boarding pass"
+                    </p>
+                    <p class="text-sm text-neutral-muted mb-2">
+                        → Verifies flight number, seat, and ticket validity
+                    </p>
+                    <p class="text-sm font-semibold text-semantic-success">
+                        ✅ "You are authorized to board this flight"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Use Cases -->
     <div class="mb-16">
         <h2 class="text-3xl font-bold text-neutral-body mb-6">Common use cases</h2>
