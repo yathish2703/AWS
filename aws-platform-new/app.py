@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import json
+import sys
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dev-secret-key-change-in-production'
@@ -136,4 +137,8 @@ def learn_security_groups():
     return render_template('learn-security-groups.html')
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5002)
+    # Get port from command line argument or use default 8080
+    port = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
+    print(f"Starting Flask app on port {port}...")
+    print(f"Access at: http://localhost:{port}")
+    app.run(debug=True, port=port, host='0.0.0.0')
