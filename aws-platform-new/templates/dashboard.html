@@ -55,44 +55,6 @@
         </div>
     </div>
 
-    <!-- Continue Learning Section -->
-    <div class="mb-8">
-        <h2 class="text-2xl font-bold text-neutral-body mb-4">Continue learning</h2>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {% for course in courses[:2] if course.progress > 0 %}
-            <div class="bg-neutral-surface rounded-xl border border-neutral-border overflow-hidden hover:shadow-lg transition-shadow">
-                <img src="{{ course.thumbnail }}" alt="{{ course.title }}" class="w-full h-48 object-cover">
-                <div class="p-6">
-                    <div class="flex items-start justify-between mb-3">
-                        <div>
-                            <h3 class="text-lg font-semibold text-neutral-body mb-1">{{ course.title }}</h3>
-                            <p class="text-sm text-neutral-muted">{{ course.instructor }}</p>
-                        </div>
-                        <span class="px-2.5 py-1 bg-semantic-warning/10 text-semantic-warning text-xs font-semibold rounded-full">
-                            {{ course.difficulty }}
-                        </span>
-                    </div>
-
-                    <!-- Progress Bar -->
-                    <div class="mb-4">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-sm text-neutral-muted">{{ course.completed_lessons }}/{{ course.lessons }} lessons</span>
-                            <span class="text-sm font-semibold text-neutral-body">{{ course.progress }}%</span>
-                        </div>
-                        <div class="w-full h-2 bg-neutral-page rounded-full overflow-hidden">
-                            <div class="h-full bg-semantic-success rounded-full transition-all duration-300" style="width: {{ course.progress }}%"></div>
-                        </div>
-                    </div>
-
-                    <a href="/course/{{ course.id }}" class="w-full bg-brand-orange text-brand-squidink font-semibold py-3 px-4 rounded-lg hover:bg-brand-orange/90 transition-colors inline-block text-center" aria-label="Continue {{ course.title }}">
-                        Continue learning
-                    </a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-
     <!-- Quick Learning Topics -->
     <div class="mb-8">
         <h2 class="text-2xl font-bold text-neutral-body mb-4">Quick learning topics</h2>
@@ -164,7 +126,7 @@
                         </div>
                     </div>
 
-                    <a href="/course/{{ course.id }}" class="block w-full bg-brand-blue text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-brand-blue/90 transition-colors text-center" aria-label="View {{ course.title }}">
+                    <a href="{% if course.url %}{{ course.url }}{% else %}/course/{{ course.id }}{% endif %}" class="block w-full bg-brand-blue text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-brand-blue/90 transition-colors text-center" aria-label="View {{ course.title }}">
                         Start learning
                     </a>
                 </div>
