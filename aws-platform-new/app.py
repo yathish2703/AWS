@@ -122,6 +122,26 @@ def learn_iam():
 def learn_security_groups():
     return render_template('learn-security-groups.html')
 
+@app.route('/aws-fundamentals')
+def aws_fundamentals():
+    return render_template('aws-fundamentals.html')
+
+@app.route('/compute-services')
+def compute_services():
+    return render_template('compute-services.html')
+
+@app.route('/storage-services')
+def storage_services():
+    return render_template('storage-services.html')
+
+@app.route('/security-services')
+def security_services():
+    return render_template('security-services.html')
+
+@app.route('/networking-services')
+def networking_services():
+    return render_template('networking-services.html')
+
 if __name__ == '__main__':
     # Get port from command line argument or use default 8080
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8080

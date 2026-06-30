@@ -1,0 +1,579 @@
+{% extends "base.html" %}
+
+{% block title %}Storage & Databases - AWS Learning Platform{% endblock %}
+
+{% block content %}
+<style>
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.05); opacity: 0.9; }
+    }
+
+    @keyframes slideUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes data-flow {
+        0% { transform: translateY(0); opacity: 0.3; }
+        50% { opacity: 1; }
+        100% { transform: translateY(20px); opacity: 0.3; }
+    }
+
+    .pulse-animation {
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    .slide-up {
+        animation: slideUp 0.6s ease-out forwards;
+    }
+
+    .data-flow {
+        animation: data-flow 2s ease-in-out infinite;
+    }
+
+    .service-card {
+        transition: all 0.3s ease;
+    }
+
+    .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+</style>
+
+<div class="max-w-7xl mx-auto">
+    <!-- Breadcrumb -->
+    <div class="mb-6">
+        <a href="/" class="text-brand-blue hover:underline inline-flex items-center">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to dashboard
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-br from-brand-squidink via-brand-anchor to-brand-squidink rounded-2xl p-12 mb-12 text-center text-white relative overflow-hidden">
+        <div class="relative z-10">
+            <div class="w-20 h-20 bg-brand-orange/20 rounded-full flex items-center justify-center mx-auto mb-6 pulse-animation">
+                <svg class="w-12 h-12 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                </svg>
+            </div>
+            <h1 class="text-5xl font-bold mb-4">Storage & databases</h1>
+            <p class="text-xl text-neutral-border">Store, manage, and access your data at any scale</p>
+        </div>
+    </div>
+
+    <!-- What is Storage -->
+    <div class="mb-16">
+        <h2 class="text-3xl font-bold text-neutral-body mb-6">What are storage & database services?</h2>
+        <div class="bg-neutral-surface rounded-xl border border-neutral-border p-8">
+            <p class="text-neutral-body text-lg mb-4">
+                AWS provides a complete range of storage and database services to store and retrieve any amount of data, anytime, from anywhere. From object storage to managed databases, AWS has the right solution for your needs.
+            </p>
+            <div class="grid md:grid-cols-3 gap-6 mt-8">
+                <div class="text-center p-6 bg-brand-blue/5 rounded-xl">
+                    <div class="text-4xl font-bold text-brand-blue mb-2">100+ PB</div>
+                    <div class="text-neutral-body font-semibold">Data stored in S3</div>
+                </div>
+                <div class="text-center p-6 bg-brand-orange/5 rounded-xl">
+                    <div class="text-4xl font-bold text-brand-orange mb-2">15+</div>
+                    <div class="text-neutral-body font-semibold">Database engines</div>
+                </div>
+                <div class="text-center p-6 bg-semantic-success/5 rounded-xl">
+                    <div class="text-4xl font-bold text-semantic-success mb-2">99.999%</div>
+                    <div class="text-neutral-body font-semibold">S3 Durability</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Storage Services -->
+    <div class="mb-16">
+        <h2 class="text-3xl font-bold text-neutral-body mb-8">Storage services</h2>
+
+        <!-- S3 -->
+        <div class="bg-neutral-surface rounded-xl border border-neutral-border p-8 mb-6 service-card">
+            <div class="flex items-start gap-6">
+                <div class="w-16 h-16 bg-semantic-success/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-10 h-10 text-semantic-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-2xl font-bold text-neutral-body mb-3">S3 (Simple Storage Service)</h3>
+                    <p class="text-neutral-muted mb-4">Object storage service with 99.999999999% (11 9's) durability</p>
+
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <h4 class="font-semibold text-neutral-body mb-2">Key features:</h4>
+                            <ul class="space-y-2 text-sm text-neutral-muted">
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-semantic-success mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>Unlimited storage capacity</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-semantic-success mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>Storage classes for different access patterns</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-semantic-success mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>Versioning and lifecycle policies</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-neutral-body mb-2">Common use cases:</h4>
+                            <ul class="space-y-2 text-sm text-neutral-muted">
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-semantic-success rounded-full mr-2"></span>
+                                    <span>Data lakes and big data analytics</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-semantic-success rounded-full mr-2"></span>
+                                    <span>Backup and disaster recovery</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-semantic-success rounded-full mr-2"></span>
+                                    <span>Static website hosting</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-neutral-page rounded-lg p-4 mb-4">
+                        <h4 class="font-semibold text-neutral-body mb-2 text-sm">Storage Classes:</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-neutral-muted">
+                            <div class="bg-neutral-surface p-2 rounded">S3 Standard</div>
+                            <div class="bg-neutral-surface p-2 rounded">S3 Intelligent-Tiering</div>
+                            <div class="bg-neutral-surface p-2 rounded">S3 Glacier</div>
+                            <div class="bg-neutral-surface p-2 rounded">S3 Glacier Deep Archive</div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <span class="px-4 py-2 bg-brand-blue/10 text-brand-blue font-semibold rounded-lg">Regional Service</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EBS -->
+        <div class="bg-neutral-surface rounded-xl border border-neutral-border p-8 mb-6 service-card">
+            <div class="flex items-start gap-6">
+                <div class="w-16 h-16 bg-brand-orange/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-10 h-10 text-brand-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-2xl font-bold text-neutral-body mb-3">EBS (Elastic Block Store)</h3>
+                    <p class="text-neutral-muted mb-4">High-performance block storage for EC2 instances</p>
+
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <h4 class="font-semibold text-neutral-body mb-2">Key features:</h4>
+                            <ul class="space-y-2 text-sm text-neutral-muted">
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-brand-orange mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>Persistent block storage</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-brand-orange mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>Point-in-time snapshots</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-brand-orange mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>Encryption at rest</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-neutral-body mb-2">Volume types:</h4>
+                            <ul class="space-y-2 text-sm text-neutral-muted">
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-brand-orange rounded-full mr-2"></span>
+                                    <span>gp3/gp2 - General Purpose SSD</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-brand-orange rounded-full mr-2"></span>
+                                    <span>io2/io1 - Provisioned IOPS SSD</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-brand-orange rounded-full mr-2"></span>
+                                    <span>st1/sc1 - Throughput Optimized HDD</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <span class="px-4 py-2 bg-brand-blue/10 text-brand-blue font-semibold rounded-lg">AZ-Specific</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EFS -->
+        <div class="bg-neutral-surface rounded-xl border border-neutral-border p-8 service-card">
+            <div class="flex items-start gap-6">
+                <div class="w-16 h-16 bg-brand-blue/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-10 h-10 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-2xl font-bold text-neutral-body mb-3">EFS (Elastic File System)</h3>
+                    <p class="text-neutral-muted mb-4">Scalable, elastic file storage for use with EC2 and on-premises</p>
+
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <h4 class="font-semibold text-neutral-body mb-2">Key features:</h4>
+                            <ul class="space-y-2 text-sm text-neutral-muted">
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-brand-blue mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>Automatically scales as you add/remove files</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-brand-blue mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>Can be accessed by multiple EC2 instances</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-brand-blue mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>NFS v4 protocol support</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-neutral-body mb-2">Common use cases:</h4>
+                            <ul class="space-y-2 text-sm text-neutral-muted">
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-brand-blue rounded-full mr-2"></span>
+                                    <span>Content management systems</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-brand-blue rounded-full mr-2"></span>
+                                    <span>Shared development environments</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-brand-blue rounded-full mr-2"></span>
+                                    <span>Container storage</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <span class="px-4 py-2 bg-brand-blue/10 text-brand-blue font-semibold rounded-lg">Regional Service</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Database Services -->
+    <div class="mb-16">
+        <h2 class="text-3xl font-bold text-neutral-body mb-8">Database services</h2>
+
+        <!-- RDS -->
+        <div class="bg-neutral-surface rounded-xl border border-neutral-border p-8 mb-6 service-card">
+            <div class="flex items-start gap-6">
+                <div class="w-16 h-16 bg-semantic-info/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-10 h-10 text-semantic-info" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-2xl font-bold text-neutral-body mb-3">RDS (Relational Database Service)</h3>
+                    <p class="text-neutral-muted mb-4">Managed relational database service for MySQL, PostgreSQL, Oracle, SQL Server, MariaDB, and Aurora</p>
+
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <h4 class="font-semibold text-neutral-body mb-2">Key features:</h4>
+                            <ul class="space-y-2 text-sm text-neutral-muted">
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-semantic-info mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>Automated backups and patching</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-semantic-info mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>Multi-AZ deployment for high availability</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-semantic-info mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>Read replicas for scalability</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-neutral-body mb-2">Supported engines:</h4>
+                            <ul class="space-y-2 text-sm text-neutral-muted">
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-semantic-info rounded-full mr-2"></span>
+                                    <span>Amazon Aurora (MySQL & PostgreSQL compatible)</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-semantic-info rounded-full mr-2"></span>
+                                    <span>MySQL, PostgreSQL, MariaDB</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-semantic-info rounded-full mr-2"></span>
+                                    <span>Oracle, Microsoft SQL Server</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <span class="px-4 py-2 bg-brand-blue/10 text-brand-blue font-semibold rounded-lg">Regional Service</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DynamoDB -->
+        <div class="bg-neutral-surface rounded-xl border border-neutral-border p-8 mb-6 service-card">
+            <div class="flex items-start gap-6">
+                <div class="w-16 h-16 bg-semantic-warning/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-10 h-10 text-semantic-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-2xl font-bold text-neutral-body mb-3">DynamoDB</h3>
+                    <p class="text-neutral-muted mb-4">Fast, flexible NoSQL database with single-digit millisecond latency</p>
+
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <h4 class="font-semibold text-neutral-body mb-2">Key features:</h4>
+                            <ul class="space-y-2 text-sm text-neutral-muted">
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-semantic-warning mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>Fully managed, serverless</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-semantic-warning mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>Automatic scaling up and down</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-semantic-warning mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>Global tables for multi-region replication</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-neutral-body mb-2">Common use cases:</h4>
+                            <ul class="space-y-2 text-sm text-neutral-muted">
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-semantic-warning rounded-full mr-2"></span>
+                                    <span>Mobile and web applications</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-semantic-warning rounded-full mr-2"></span>
+                                    <span>Gaming leaderboards</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-semantic-warning rounded-full mr-2"></span>
+                                    <span>IoT and real-time applications</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <span class="px-4 py-2 bg-brand-blue/10 text-brand-blue font-semibold rounded-lg">Regional Service</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ElastiCache -->
+        <div class="bg-neutral-surface rounded-xl border border-neutral-border p-8 service-card">
+            <div class="flex items-start gap-6">
+                <div class="w-16 h-16 bg-semantic-error/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-10 h-10 text-semantic-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-2xl font-bold text-neutral-body mb-3">ElastiCache</h3>
+                    <p class="text-neutral-muted mb-4">In-memory caching service supporting Redis and Memcached</p>
+
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <h4 class="font-semibold text-neutral-body mb-2">Key features:</h4>
+                            <ul class="space-y-2 text-sm text-neutral-muted">
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-semantic-error mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>Microsecond latency</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-semantic-error mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>Fully managed (patching, monitoring)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 text-semantic-error mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                    </svg>
+                                    <span>Automatic failover and recovery</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-neutral-body mb-2">Common use cases:</h4>
+                            <ul class="space-y-2 text-sm text-neutral-muted">
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-semantic-error rounded-full mr-2"></span>
+                                    <span>Session store for web applications</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-semantic-error rounded-full mr-2"></span>
+                                    <span>Database query result caching</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-2 h-2 bg-semantic-error rounded-full mr-2"></span>
+                                    <span>Real-time leaderboards</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <span class="px-4 py-2 bg-brand-blue/10 text-brand-blue font-semibold rounded-lg">Regional Service</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comparison Table -->
+    <div class="mb-16">
+        <h2 class="text-3xl font-bold text-neutral-body mb-6">Service comparison</h2>
+        <div class="bg-neutral-surface rounded-xl border border-neutral-border overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-brand-squidink text-white">
+                        <tr>
+                            <th class="px-6 py-4 text-left font-semibold">Service</th>
+                            <th class="px-6 py-4 text-left font-semibold">Type</th>
+                            <th class="px-6 py-4 text-left font-semibold">Durability</th>
+                            <th class="px-6 py-4 text-left font-semibold">Best for</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-neutral-border">
+                        <tr class="hover:bg-neutral-page transition-colors">
+                            <td class="px-6 py-4 font-semibold text-neutral-body">S3</td>
+                            <td class="px-6 py-4 text-neutral-muted">Object Storage</td>
+                            <td class="px-6 py-4 text-neutral-muted">99.999999999%</td>
+                            <td class="px-6 py-4 text-neutral-muted">Unstructured data, backups</td>
+                        </tr>
+                        <tr class="hover:bg-neutral-page transition-colors">
+                            <td class="px-6 py-4 font-semibold text-neutral-body">EBS</td>
+                            <td class="px-6 py-4 text-neutral-muted">Block Storage</td>
+                            <td class="px-6 py-4 text-neutral-muted">99.999%</td>
+                            <td class="px-6 py-4 text-neutral-muted">EC2 persistent storage</td>
+                        </tr>
+                        <tr class="hover:bg-neutral-page transition-colors">
+                            <td class="px-6 py-4 font-semibold text-neutral-body">EFS</td>
+                            <td class="px-6 py-4 text-neutral-muted">File Storage</td>
+                            <td class="px-6 py-4 text-neutral-muted">99.999999999%</td>
+                            <td class="px-6 py-4 text-neutral-muted">Shared file systems</td>
+                        </tr>
+                        <tr class="hover:bg-neutral-page transition-colors">
+                            <td class="px-6 py-4 font-semibold text-neutral-body">RDS</td>
+                            <td class="px-6 py-4 text-neutral-muted">Relational DB</td>
+                            <td class="px-6 py-4 text-neutral-muted">Multi-AZ</td>
+                            <td class="px-6 py-4 text-neutral-muted">Structured data, ACID</td>
+                        </tr>
+                        <tr class="hover:bg-neutral-page transition-colors">
+                            <td class="px-6 py-4 font-semibold text-neutral-body">DynamoDB</td>
+                            <td class="px-6 py-4 text-neutral-muted">NoSQL DB</td>
+                            <td class="px-6 py-4 text-neutral-muted">Multi-AZ</td>
+                            <td class="px-6 py-4 text-neutral-muted">Key-value, high scale</td>
+                        </tr>
+                        <tr class="hover:bg-neutral-page transition-colors">
+                            <td class="px-6 py-4 font-semibold text-neutral-body">ElastiCache</td>
+                            <td class="px-6 py-4 text-neutral-muted">In-memory Cache</td>
+                            <td class="px-6 py-4 text-neutral-muted">Replicas available</td>
+                            <td class="px-6 py-4 text-neutral-muted">Fast data access</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Best Practices -->
+    <div class="bg-brand-orange/10 border-l-4 border-brand-orange rounded-r-xl p-8">
+        <h3 class="text-2xl font-bold text-brand-orange mb-4">Best practices</h3>
+        <ul class="space-y-3 text-neutral-body">
+            <li class="flex items-start">
+                <svg class="w-6 h-6 text-brand-orange mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span><strong>Choose the right storage type:</strong> Match storage service to your access patterns and durability needs</span>
+            </li>
+            <li class="flex items-start">
+                <svg class="w-6 h-6 text-brand-orange mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span><strong>Enable encryption:</strong> Use encryption at rest and in transit for sensitive data</span>
+            </li>
+            <li class="flex items-start">
+                <svg class="w-6 h-6 text-brand-orange mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span><strong>Implement backups:</strong> Regular automated backups for disaster recovery</span>
+            </li>
+            <li class="flex items-start">
+                <svg class="w-6 h-6 text-brand-orange mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span><strong>Use lifecycle policies:</strong> Automate data movement to cost-effective storage tiers</span>
+            </li>
+            <li class="flex items-start">
+                <svg class="w-6 h-6 text-brand-orange mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span><strong>Monitor performance:</strong> Use CloudWatch metrics to track storage and database performance</span>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
