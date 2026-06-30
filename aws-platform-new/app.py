@@ -123,5 +123,17 @@ def category(category_name):
     title = category_titles.get(category_name, 'AWS Courses')
     return render_template('category.html', courses=COURSES, category_title=title, category_name=category_name)
 
+@app.route('/learn/ec2')
+def learn_ec2():
+    return render_template('learn-ec2.html')
+
+@app.route('/learn/iam')
+def learn_iam():
+    return render_template('learn-iam.html')
+
+@app.route('/learn/security-groups')
+def learn_security_groups():
+    return render_template('learn-security-groups.html')
+
 if __name__ == '__main__':
     app.run(debug=True, port=5002)

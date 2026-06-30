@@ -1,0 +1,508 @@
+{% extends "base.html" %}
+
+{% block title %}Learn EC2 - AWS Learning Platform{% endblock %}
+
+{% block content %}
+<style>
+    @keyframes slideUp {
+        from { transform: translateY(50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.05); opacity: 0.9; }
+    }
+
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes deployFlow {
+        0% { transform: translateX(0) scale(0.5); opacity: 0; }
+        25% { opacity: 1; transform: translateX(25%) scale(1); }
+        50% { opacity: 1; transform: translateX(50%) scale(1); }
+        75% { opacity: 1; transform: translateX(75%) scale(1); }
+        100% { transform: translateX(100%) scale(0.5); opacity: 0; }
+    }
+
+    .slide-up {
+        animation: slideUp 0.8s ease-out forwards;
+    }
+
+    .pulse-slow {
+        animation: pulse 3s ease-in-out infinite;
+    }
+
+    .rotate-slow {
+        animation: rotate 10s linear infinite;
+    }
+
+    .deploy-animation {
+        animation: deployFlow 4s ease-in-out infinite;
+    }
+
+    .step-box {
+        transition: all 0.3s ease;
+    }
+
+    .step-box:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+</style>
+
+<div class="max-w-7xl mx-auto">
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-br from-brand-squidink via-brand-anchor to-brand-squidink rounded-2xl p-12 mb-12 relative overflow-hidden">
+        <div class="absolute top-10 right-10 opacity-20">
+            <svg width="200" height="200" viewBox="0 0 200 200" class="rotate-slow">
+                <rect x="50" y="50" width="100" height="100" fill="none" stroke="white" stroke-width="4" rx="10"/>
+                <rect x="40" y="40" width="120" height="120" fill="none" stroke="white" stroke-width="2" rx="15"/>
+            </svg>
+        </div>
+
+        <div class="relative z-10 text-white">
+            <a href="/" class="text-neutral-border hover:text-white mb-4 inline-flex items-center">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to dashboard
+            </a>
+            <h1 class="text-5xl font-bold mb-4">Amazon EC2</h1>
+            <p class="text-2xl text-neutral-border mb-2">Elastic Compute Cloud</p>
+            <p class="text-lg">Virtual servers in the cloud - Host websites, run applications, and scale on demand</p>
+        </div>
+    </div>
+
+    <!-- What is EC2 -->
+    <div class="mb-16">
+        <h2 class="text-3xl font-bold text-neutral-body mb-6">What is EC2?</h2>
+        <div class="bg-neutral-surface rounded-xl border border-neutral-border p-8">
+            <p class="text-neutral-muted text-lg mb-4">
+                Amazon Elastic Compute Cloud (EC2) provides <strong class="text-brand-blue">virtual servers</strong> called "instances"
+                that you can use to run applications in the cloud. Instead of buying physical servers, you rent computing power
+                from AWS and pay only for what you use.
+            </p>
+            <div class="grid md:grid-cols-3 gap-4 mt-6">
+                <div class="bg-brand-blue/10 rounded-lg p-4 text-center">
+                    <svg class="w-12 h-12 text-brand-blue mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <p class="font-semibold text-brand-squidink">Scalable</p>
+                    <p class="text-sm text-neutral-muted">Scale up or down instantly</p>
+                </div>
+                <div class="bg-semantic-success/10 rounded-lg p-4 text-center">
+                    <svg class="w-12 h-12 text-semantic-success mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p class="font-semibold text-brand-squidink">Cost-effective</p>
+                    <p class="text-sm text-neutral-muted">Pay per hour/second</p>
+                </div>
+                <div class="bg-semantic-warning/10 rounded-lg p-4 text-center">
+                    <svg class="w-12 h-12 text-semantic-warning mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                    <p class="font-semibold text-brand-squidink">Secure</p>
+                    <p class="text-sm text-neutral-muted">Built-in security features</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EC2 Instance Types -->
+    <div class="mb-16">
+        <h2 class="text-3xl font-bold text-neutral-body mb-6">EC2 instance types</h2>
+        <p class="text-neutral-muted mb-6">Choose the right instance type based on your workload requirements</p>
+
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- General Purpose -->
+            <div class="bg-neutral-surface rounded-xl border-2 border-brand-blue/30 p-6 step-box">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-brand-blue/10 rounded-lg flex items-center justify-center mr-4">
+                        <span class="text-2xl font-bold text-brand-blue">T</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-neutral-body">General Purpose (T3, T4g)</h3>
+                        <p class="text-sm text-neutral-muted">Balanced compute, memory, networking</p>
+                    </div>
+                </div>
+                <ul class="space-y-2 text-neutral-muted mb-4">
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-brand-blue mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                        </svg>
+                        <span><strong>Use case:</strong> Web servers, development environments</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-brand-blue mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                        </svg>
+                        <span><strong>Example:</strong> t3.medium (2 vCPU, 4 GB RAM)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-brand-blue mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                        </svg>
+                        <span><strong>Cost:</strong> ~$0.04/hour</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Compute Optimized -->
+            <div class="bg-neutral-surface rounded-xl border-2 border-semantic-success/30 p-6 step-box">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-semantic-success/10 rounded-lg flex items-center justify-center mr-4">
+                        <span class="text-2xl font-bold text-semantic-success">C</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-neutral-body">Compute Optimized (C6i)</h3>
+                        <p class="text-sm text-neutral-muted">High-performance processors</p>
+                    </div>
+                </div>
+                <ul class="space-y-2 text-neutral-muted mb-4">
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-semantic-success mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                        </svg>
+                        <span><strong>Use case:</strong> Gaming servers, scientific modeling</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-semantic-success mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                        </svg>
+                        <span><strong>Example:</strong> c6i.large (2 vCPU, 4 GB RAM)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-semantic-success mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                        </svg>
+                        <span><strong>Cost:</strong> ~$0.09/hour</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Memory Optimized -->
+            <div class="bg-neutral-surface rounded-xl border-2 border-semantic-warning/30 p-6 step-box">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-semantic-warning/10 rounded-lg flex items-center justify-center mr-4">
+                        <span class="text-2xl font-bold text-semantic-warning">R</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-neutral-body">Memory Optimized (R6i)</h3>
+                        <p class="text-sm text-neutral-muted">High memory for data processing</p>
+                    </div>
+                </div>
+                <ul class="space-y-2 text-neutral-muted mb-4">
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-semantic-warning mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                        </svg>
+                        <span><strong>Use case:</strong> Databases, in-memory caches</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-semantic-warning mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                        </svg>
+                        <span><strong>Example:</strong> r6i.large (2 vCPU, 16 GB RAM)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-semantic-warning mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                        </svg>
+                        <span><strong>Cost:</strong> ~$0.13/hour</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Storage Optimized -->
+            <div class="bg-neutral-surface rounded-xl border-2 border-semantic-info/30 p-6 step-box">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-semantic-info/10 rounded-lg flex items-center justify-center mr-4">
+                        <span class="text-2xl font-bold text-semantic-info">I</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-neutral-body">Storage Optimized (I4i)</h3>
+                        <p class="text-sm text-neutral-muted">High IOPS, low latency storage</p>
+                    </div>
+                </div>
+                <ul class="space-y-2 text-neutral-muted mb-4">
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-semantic-info mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                        </svg>
+                        <span><strong>Use case:</strong> NoSQL databases, data warehouses</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-semantic-info mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                        </svg>
+                        <span><strong>Example:</strong> i4i.large (2 vCPU, 16 GB RAM, 468 GB NVMe)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 text-semantic-info mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                        </svg>
+                        <span><strong>Cost:</strong> ~$0.24/hour</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- How to Host a Website on EC2 -->
+    <div class="mb-16">
+        <h2 class="text-3xl font-bold text-neutral-body mb-6">How to host a website on EC2</h2>
+
+        <div class="bg-gradient-to-br from-brand-squidink to-brand-anchor rounded-2xl p-8 mb-8">
+            <h3 class="text-2xl font-bold text-white mb-6 text-center">Deployment flow</h3>
+            <div class="relative flex items-center justify-center gap-4 flex-wrap">
+                <div class="text-center">
+                    <div class="bg-white rounded-lg p-4 w-32 h-32 flex flex-col items-center justify-center pulse-slow">
+                        <svg class="w-12 h-12 text-brand-blue mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                        <p class="text-xs font-bold text-brand-squidink">Your Code</p>
+                    </div>
+                </div>
+
+                <svg width="50" height="40" viewBox="0 0 50 40" class="deploy-animation">
+                    <circle cx="10" cy="20" r="5" fill="#FF9900"/>
+                </svg>
+
+                <div class="text-center">
+                    <div class="bg-white rounded-lg p-4 w-32 h-32 flex flex-col items-center justify-center pulse-slow" style="animation-delay: 0.5s;">
+                        <svg class="w-12 h-12 text-semantic-success mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2" />
+                        </svg>
+                        <p class="text-xs font-bold text-brand-squidink">EC2 Instance</p>
+                    </div>
+                </div>
+
+                <svg width="50" height="40" viewBox="0 0 50 40" class="deploy-animation" style="animation-delay: 1s;">
+                    <circle cx="10" cy="20" r="5" fill="#FF9900"/>
+                </svg>
+
+                <div class="text-center">
+                    <div class="bg-white rounded-lg p-4 w-32 h-32 flex flex-col items-center justify-center pulse-slow" style="animation-delay: 1s;">
+                        <svg class="w-12 h-12 text-brand-blue mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                        </svg>
+                        <p class="text-xs font-bold text-brand-squidink">Live Website</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid gap-6">
+            <!-- Step 1 -->
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6 slide-up">
+                <div class="flex items-start">
+                    <div class="w-12 h-12 bg-brand-orange rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <span class="text-xl font-bold text-white">1</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-neutral-body mb-2">Launch an EC2 instance</h3>
+                        <p class="text-neutral-muted mb-3">Go to AWS Console → EC2 → Launch Instance</p>
+                        <ul class="space-y-2 text-sm text-neutral-muted">
+                            <li class="flex items-start">
+                                <span class="text-brand-orange mr-2">•</span>
+                                <span><strong>Choose AMI:</strong> Amazon Linux 2 or Ubuntu Server</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-brand-orange mr-2">•</span>
+                                <span><strong>Instance type:</strong> t3.micro (free tier eligible)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-brand-orange mr-2">•</span>
+                                <span><strong>Storage:</strong> 8 GB SSD (default)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6 slide-up" style="animation-delay: 0.2s;">
+                <div class="flex items-start">
+                    <div class="w-12 h-12 bg-brand-orange rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <span class="text-xl font-bold text-white">2</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-neutral-body mb-2">Configure security group</h3>
+                        <p class="text-neutral-muted mb-3">Allow HTTP (port 80) and SSH (port 22) traffic</p>
+                        <div class="bg-neutral-page rounded-lg p-3 font-mono text-sm">
+                            <div class="text-semantic-success">✓ SSH (22) - Your IP only</div>
+                            <div class="text-semantic-success">✓ HTTP (80) - 0.0.0.0/0 (anywhere)</div>
+                            <div class="text-semantic-success">✓ HTTPS (443) - 0.0.0.0/0 (anywhere)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6 slide-up" style="animation-delay: 0.4s;">
+                <div class="flex items-start">
+                    <div class="w-12 h-12 bg-brand-orange rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <span class="text-xl font-bold text-white">3</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-neutral-body mb-2">Connect to your instance</h3>
+                        <p class="text-neutral-muted mb-3">Use SSH to connect to your EC2 instance</p>
+                        <div class="bg-brand-squidink rounded-lg p-4 font-mono text-sm text-white">
+                            <div class="text-semantic-success">$ ssh -i my-key.pem ec2-user@54.123.45.67</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6 slide-up" style="animation-delay: 0.6s;">
+                <div class="flex items-start">
+                    <div class="w-12 h-12 bg-brand-orange rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <span class="text-xl font-bold text-white">4</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-neutral-body mb-2">Install web server</h3>
+                        <p class="text-neutral-muted mb-3">Install Apache or Nginx to serve your website</p>
+                        <div class="bg-brand-squidink rounded-lg p-4 font-mono text-sm text-white space-y-1">
+                            <div class="text-brand-orange"># Update packages</div>
+                            <div>$ sudo yum update -y</div>
+                            <div class="text-brand-orange mt-2"># Install Apache</div>
+                            <div>$ sudo yum install httpd -y</div>
+                            <div class="text-brand-orange mt-2"># Start Apache</div>
+                            <div>$ sudo systemctl start httpd</div>
+                            <div>$ sudo systemctl enable httpd</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6 slide-up" style="animation-delay: 0.8s;">
+                <div class="flex items-start">
+                    <div class="w-12 h-12 bg-brand-orange rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                        <span class="text-xl font-bold text-white">5</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-neutral-body mb-2">Deploy your website</h3>
+                        <p class="text-neutral-muted mb-3">Upload your HTML/CSS/JS files to the web server</p>
+                        <div class="bg-brand-squidink rounded-lg p-4 font-mono text-sm text-white space-y-1">
+                            <div class="text-brand-orange"># Navigate to web directory</div>
+                            <div>$ cd /var/www/html</div>
+                            <div class="text-brand-orange mt-2"># Create your website</div>
+                            <div>$ sudo nano index.html</div>
+                            <div class="text-neutral-border mt-2"># Your website is now live at http://your-ec2-ip</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Key Configuration Options -->
+    <div class="mb-16">
+        <h2 class="text-3xl font-bold text-neutral-body mb-6">Key configuration options</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6">
+                <h3 class="text-lg font-bold text-neutral-body mb-3 flex items-center">
+                    <svg class="w-6 h-6 text-brand-blue mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
+                    </svg>
+                    Storage (EBS Volumes)
+                </h3>
+                <p class="text-sm text-neutral-muted mb-3">Persistent block storage for your instance</p>
+                <ul class="space-y-2 text-sm text-neutral-muted">
+                    <li><strong>GP3:</strong> General purpose SSD (cost-effective)</li>
+                    <li><strong>IO2:</strong> High-performance SSD (databases)</li>
+                    <li><strong>Snapshots:</strong> Backup your volumes</li>
+                </ul>
+            </div>
+
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6">
+                <h3 class="text-lg font-bold text-neutral-body mb-3 flex items-center">
+                    <svg class="w-6 h-6 text-brand-blue mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                    </svg>
+                    Elastic IP
+                </h3>
+                <p class="text-sm text-neutral-muted mb-3">Static public IP address for your instance</p>
+                <ul class="space-y-2 text-sm text-neutral-muted">
+                    <li><strong>Benefit:</strong> IP doesn't change on restart</li>
+                    <li><strong>Use case:</strong> Production websites</li>
+                    <li><strong>Cost:</strong> Free if attached to running instance</li>
+                </ul>
+            </div>
+
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6">
+                <h3 class="text-lg font-bold text-neutral-body mb-3 flex items-center">
+                    <svg class="w-6 h-6 text-brand-blue mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    Auto Scaling
+                </h3>
+                <p class="text-sm text-neutral-muted mb-3">Automatically adjust instance count based on demand</p>
+                <ul class="space-y-2 text-sm text-neutral-muted">
+                    <li><strong>Scale out:</strong> Add instances during high traffic</li>
+                    <li><strong>Scale in:</strong> Remove instances when idle</li>
+                    <li><strong>Cost savings:</strong> Pay only for what you need</li>
+                </ul>
+            </div>
+
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border p-6">
+                <h3 class="text-lg font-bold text-neutral-body mb-3 flex items-center">
+                    <svg class="w-6 h-6 text-brand-blue mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    User Data (Bootstrapping)
+                </h3>
+                <p class="text-sm text-neutral-muted mb-3">Script that runs when instance launches</p>
+                <ul class="space-y-2 text-sm text-neutral-muted">
+                    <li><strong>Automate:</strong> Install software automatically</li>
+                    <li><strong>Example:</strong> Install web server on boot</li>
+                    <li><strong>Format:</strong> Shell script or cloud-init</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Best Practices -->
+    <div class="bg-gradient-to-br from-semantic-success/10 to-semantic-info/10 rounded-xl border border-semantic-success/30 p-8 mb-8">
+        <h2 class="text-2xl font-bold text-neutral-body mb-4">Best practices</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+            <div class="flex items-start">
+                <svg class="w-6 h-6 text-semantic-success mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                <span class="text-neutral-muted"><strong>Always tag your instances</strong> for easy identification and cost tracking</span>
+            </div>
+            <div class="flex items-start">
+                <svg class="w-6 h-6 text-semantic-success mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                <span class="text-neutral-muted"><strong>Use IAM roles</strong> instead of storing credentials on the instance</span>
+            </div>
+            <div class="flex items-start">
+                <svg class="w-6 h-6 text-semantic-success mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                <span class="text-neutral-muted"><strong>Enable CloudWatch monitoring</strong> to track performance metrics</span>
+            </div>
+            <div class="flex items-start">
+                <svg class="w-6 h-6 text-semantic-success mr-3 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                <span class="text-neutral-muted"><strong>Regular backups</strong> using AMIs and EBS snapshots</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center">
+        <a href="/" class="inline-block px-8 py-4 bg-brand-orange text-brand-squidink font-semibold rounded-lg hover:bg-brand-orange/90 transition-colors text-lg">
+            Back to dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

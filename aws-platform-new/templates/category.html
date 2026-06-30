@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category_title }} - AWS Learning Platform{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Category Header -->
+    <div class="mb-8">
+        <a href="/" class="text-brand-blue hover:underline mb-3 inline-flex items-center">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to dashboard
+        </a>
+        <h1 class="text-4xl font-bold text-neutral-body mb-2">{{ category_title }}</h1>
+    </div>
+
+    <!-- Category Description -->
+    <div class="bg-gradient-to-br from-brand-squidink to-brand-anchor rounded-xl p-8 mb-8 text-white">
+        {% if category_name == 'compute' %}
+        <h2 class="text-2xl font-bold mb-3">Master AWS compute services</h2>
+        <p class="text-neutral-border mb-4">Learn about EC2, Lambda, ECS, EKS, and other compute services that power applications in the cloud.</p>
+        <ul class="grid md:grid-cols-2 gap-3 text-sm">
+            <li class="flex items-center">
+                <svg class="w-5 h-5 text-brand-orange mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                EC2 - Virtual servers
+            </li>
+            <li class="flex items-center">
+                <svg class="w-5 h-5 text-brand-orange mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                Lambda - Serverless functions
+            </li>
+            <li class="flex items-center">
+                <svg class="w-5 h-5 text-brand-orange mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                ECS/EKS - Container orchestration
+            </li>
+            <li class="flex items-center">
+                <svg class="w-5 h-5 text-brand-orange mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                Auto Scaling - Dynamic scaling
+            </li>
+        </ul>
+        {% elif category_name == 'storage' %}
+        <h2 class="text-2xl font-bold mb-3">Storage & database services</h2>
+        <p class="text-neutral-border mb-4">Master AWS storage solutions including S3, EBS, EFS, and database services like RDS, DynamoDB, and Aurora.</p>
+        <ul class="grid md:grid-cols-2 gap-3 text-sm">
+            <li class="flex items-center">
+                <svg class="w-5 h-5 text-brand-orange mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                S3 - Object storage
+            </li>
+            <li class="flex items-center">
+                <svg class="w-5 h-5 text-brand-orange mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                RDS - Relational databases
+            </li>
+            <li class="flex items-center">
+                <svg class="w-5 h-5 text-brand-orange mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                DynamoDB - NoSQL database
+            </li>
+            <li class="flex items-center">
+                <svg class="w-5 h-5 text-brand-orange mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                ElastiCache - In-memory caching
+            </li>
+        </ul>
+        {% elif category_name == 'security' %}
+        <h2 class="text-2xl font-bold mb-3">Security & identity services</h2>
+        <p class="text-neutral-border mb-4">Learn IAM, security groups, KMS, Secrets Manager, and other security services to protect your AWS infrastructure.</p>
+        <ul class="grid md:grid-cols-2 gap-3 text-sm">
+            <li class="flex items-center">
+                <svg class="w-5 h-5 text-brand-orange mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                IAM - Identity management
+            </li>
+            <li class="flex items-center">
+                <svg class="w-5 h-5 text-brand-orange mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                Security Groups - Firewall rules
+            </li>
+            <li class="flex items-center">
+                <svg class="w-5 h-5 text-brand-orange mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                KMS - Key management
+            </li>
+            <li class="flex items-center">
+                <svg class="w-5 h-5 text-brand-orange mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                Secrets Manager - Credentials
+            </li>
+        </ul>
+        {% elif category_name == 'networking' %}
+        <h2 class="text-2xl font-bold mb-3">Networking services</h2>
+        <p class="text-neutral-border mb-4">Master VPC, Route 53, CloudFront, API Gateway, and other networking services for building scalable applications.</p>
+        <ul class="grid md:grid-cols-2 gap-3 text-sm">
+            <li class="flex items-center">
+                <svg class="w-5 h-5 text-brand-orange mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                VPC - Virtual networks
+            </li>
+            <li class="flex items-center">
+                <svg class="w-5 h-5 text-brand-orange mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                Route 53 - DNS service
+            </li>
+            <li class="flex items-center">
+                <svg class="w-5 h-5 text-brand-orange mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                CloudFront - CDN
+            </li>
+            <li class="flex items-center">
+                <svg class="w-5 h-5 text-brand-orange mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                </svg>
+                ELB - Load balancing
+            </li>
+        </ul>
+        {% endif %}
+    </div>
+
+    <!-- Courses Grid -->
+    <div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for course in courses %}
+            <div class="bg-neutral-surface rounded-xl border border-neutral-border overflow-hidden hover:shadow-lg transition-shadow">
+                <div class="relative">
+                    <img src="{{ course.thumbnail }}" alt="{{ course.title }}" class="w-full h-48 object-cover">
+                </div>
+
+                <div class="p-5">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-neutral-body mb-1">{{ course.title }}</h3>
+                            <p class="text-sm text-neutral-muted">{{ course.instructor }}</p>
+                        </div>
+                        <span class="px-2.5 py-1 bg-neutral-page text-neutral-muted text-xs font-semibold rounded-full whitespace-nowrap ml-2">
+                            {{ course.difficulty }}
+                        </span>
+                    </div>
+
+                    <div class="flex items-center space-x-4 text-sm text-neutral-muted mb-4">
+                        <div class="flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            {{ course.duration }}
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+                            </svg>
+                            {{ course.lessons }} lessons
+                        </div>
+                    </div>
+
+                    <a href="/course/{{ course.id }}" class="block w-full bg-brand-blue text-white font-semibold py-2.5 px-4 rounded-lg hover:bg-brand-blue/90 transition-colors text-center">
+                        Start learning
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
